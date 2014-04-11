@@ -1,0 +1,9 @@
+CREATE TABLE IF NOT EXISTS user (
+    user_id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(80) NOT NULL,
+    level INT(2) NOT NULL,
+    pwd VARCHAR(40) NOT NULL,
+    INDEX(name, pwd)
+)ENGINE=InnoDB;
+
+INSERT INTO user (name, level, pwd) VALUES ('UNAME', 1, 'PWD');

@@ -1,0 +1,22 @@
+<!--FORM-->
+<form id="{formid}" method="{method}" action="{action}"
+    enctype="multipart/form-data">
+    {fields}
+</form>
+<!--FORM-->
+
+<!--LABEL--><label for="{fieldid}" class="labelform">{labeltext}</label><!--LABEL-->
+<!--INPUT--><br><input type="{type}" name="{fieldname}" id="{fieldid}" 
+    placeholder="{labeltext}" value="{value}"{extras}><br><!--INPUT-->
+<!--TEXTAREA--><textarea name="{fieldname}" placeholder="{labeltext}" 
+    id="{fieldid}">{value}</textarea><!--TEXTAREA-->
+<!--SELECT-->
+<br><select name="{fieldname}" id="{fieldid}">
+    <!--OPTION--><option value="{value}"{extras}>{text}</option><!--OPTION-->
+</select><br>
+<!--SELECT-->
+
+<!--CHECKBOX-RADIO-->
+    <input type="{type}" name="{groupname}[]" id="{groupname}{value}"
+        value="{value}"{extras}>&nbsp;<label for="{groupname}{value}">{text}</label><br>
+<!--CHECKBOX-RADIO-->

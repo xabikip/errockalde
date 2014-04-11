@@ -1,0 +1,36 @@
+<link rel="stylesheet" type="text/css" href="/static/css/demo_table.css"/>
+<p class="link_addnew"><a href="{action}/agregar" title="Agregar nuevo"><img 
+src="/static/img/add.png"> Agregar nuevo</a></p>
+<table id="{tableid}" class="display">
+  <thead>
+    <tr>
+        <!--tdtitle--><th>{tdtitle}</th><!--tdtitle-->
+        <!--thver--><th>&nbsp;</th><!--thver-->
+        <!--theditar--><th>&nbsp;</th><!--theditar-->
+        <!--theliminar--><th>&nbsp;</th><!--theliminar-->
+    </tr>
+  </thead>
+  <tbody>
+    <!--listado-->
+    <tr>
+        <!--tdvalue--><td>{tdvalue}</td><!--tdvalue-->
+        <!--ver--><td><a href="{action}/ver/{id}" title="Ver/Descargar"><img 
+            src="/static/img/bajar.png"></a></td><!--ver-->
+        <!--editar--><td><a href="{action}/editar/{id}" title="Editar"><img 
+            src="/static/img/editar.png"></a></td><!--editar-->
+        <!--eliminar--><td><a href="{action}/eliminar/{id}" 
+            title="eliminar"><img src="/static/img/eliminar.png"></a></td><!--eliminar-->
+    </tr>
+    <!--listado-->
+    
+  </tbody>
+</table>
+
+
+<script type="text/javascript" language="javascript" src="/static/js/jquery.js"></script>
+<script type="text/javascript" language="javascript" src="/static/js/jquery.dataTables.js"></script>
+<script type="text/javascript" charset="utf-8">
+	$(document).ready(function() {
+		$('#{tableid}').dataTable();
+	} );
+</script>

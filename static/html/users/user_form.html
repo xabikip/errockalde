@@ -1,0 +1,38 @@
+<p></p>
+<script language="javascript" type="text/javascript" 
+    src="/static/js/forms.js"></script>
+<form method="POST" action="/users/user/guardar">
+    <a href="/users/user/listar"><img src="/static/img/back-big.png"
+    title="Volver al listado" style="float: right; margin-left: 18px;"></a>
+    <h3>{titulo} Usuario</h3>
+    <input type="hidden" name="id" value="{user_id}">
+    <label for="name">Nombre de usuario:</label><br/>
+    <input type="text" name="user" id="name" class="s{style}" value="{user}"
+    onkeyup="verificar_nombre();"/><br/>
+    <span class='error' id="usererror"> {error}</span>
+    <em>Mínimo: 6 caracteres</em>
+    <br/><br/>
+    
+    <label for="passwd">Contraseña:</label><br/>
+    <input type="password" name="pwd" id="passwd" class="m{stylep}" value="{pwd}"/>
+    <input type="button" value="Generar clave segura" class="generator"
+    onclick="generar_pwd('passwd');"/>
+    <!--<a href="#" onclick="generar_pwd('passwd'); return false;">Generar clave 
+    segura</a>--><code id="pwd_generada"></code><br/>
+    <span class='error' id="errorpwd"> {errorp}</span>
+    <em>Mínimo: 6 caracteres (espacios en blanco no son computables)</em>
+    <br/><br/>
+    
+    <label for="level">Nivel de Acceso:</label><br/>
+    <select name="level" id="level" class="m" onchange="habilitar('otro');">
+        <option value=1{opt1}>1 (primer nivel: administrador)</option>
+        <option value=2{opt2}>2 (segundo nivel)</option>
+        <option value=3{opt3}>3 (tercer nivel)</option>
+        <option value=4{opt4}>4 (cuarto nivel)</option>
+        <option value=5{opt5}>5 (quinto nivel)</option>
+        <option value=0{opt0}>Otro...</option>
+    </select> <label for="otro">nivel personalizado:</label> <input type="text" 
+    name="otro" id="otro" class="xxs" {disabled} maxlength="2" value="{level}"/>
+    <em>número entre 0 y 99</em><br/><br/>
+    <input type="submit" value="{titulo} usuario">
+</form>

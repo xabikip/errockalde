@@ -1,0 +1,12 @@
+<?php
+
+class ClassName extends StandardObject {
+
+    public function __construct() {
+        $this->property_id = 0;
+        # ...
+    }
+
+}
+
+?>

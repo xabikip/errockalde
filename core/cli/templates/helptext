@@ -1,0 +1,44 @@
+
+  EuropioEngine Shell - Command Line Interface
+  Copyright © 2010-2013 Eugenia Bahit <ebahit@member.fsf.org>
+  License: GNU GPL version 3  <http://gnu.org/licenses/gpl.html>.
+  This is free software: you are free to change and redistribute it.
+  There is NO WARRANTY, to the extent permitted by law.
+
+    
+    \033[1mSINTAXIS\033[22m
+        \033[1m./europio\033[22m OPCIÓN... [ARGUMENTO]...
+    
+    \033[1mOPCIONES\033[22m
+        \033[1m-c, --create\033[22m MODULE_NAME
+            Crea la estructura de directorios para un nuevo módulo
+
+        \033[1m-d, --delete\033[22m MODULE_NAME
+            Elimina un módulo existente
+
+        \033[1m-f, --files\033[22m MODULE_NAME CLASS_NAME
+            Crea los archivos model, view y controller para la clase CLASS_NAME
+            dentro del módulo MODULE_NAME
+
+        \033[1m--help\033[22m
+            Muestra este archivo de ayuda
+
+        \033[1m-t, --table\033[22m
+            Muestra el modo interactivo para crear tablas en la base de datos
+
+        \033[1m--user-setup\033[22m DATABASE
+            Crea la tabla de usuarios y un usuario administrador en la base de
+            datos especificada. Notar que DATABASE debe ser una base de datos
+            existente. Si no existe, deberá crearla primero.
+ 
+    \033[1mEjemplos:\033[22m
+
+        Crear el módulo llamado mi_modulo:
+            ./europio -c mi_modulo
+        
+        Eliminar el módulo llamado mi_modulo:
+            ./europio -d mi_modulo
+        
+        Crear el modelo, vista y controlador del objeto Foo en el módulo bar:
+            ./europio -f bar Foo
+            

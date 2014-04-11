@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Permisos Insuficientes</title>
+        <meta charset='utf-8'>
+        <link rel="stylesheet" href="http://openfontlibrary.org/face/news-cycle" type="text/css"/>
+        <style>
+            body {
+                font-size: 16px;
+                width: 60%;
+                margin: 7% auto;
+                font-family: 'News Cycle';
+                font-weight: normal;
+                color: #999;
+                line-height: 200%;
+            }
+            
+            h1 {
+                font-size: 4.5em;
+                font-family: 'News Cycle';
+                font-weight: 800;
+                color: #ccc;
+            }
+            
+            p {
+                margin: 0;
+                font-size: 1.4em;
+            }
+            
+            a {
+                color: #666;
+                border-bottom: 1px dotted #666;
+                text-decoration: none;
+            }
+            
+            a:hover {
+                color: #000;
+                border-bottom: 1px dotted #000;
+                text-decoration: none;
+            }
+            
+            small {
+                color: #333;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Permisos insuficientes :(</h1>
+        <p><b>No cuenta con los permisos necesarios para acceder al recurso solicitado.</b></p>
+        <p>Pruebe <a href="#" onclick="history.back();">regresar a la vista anterior</a> o 
+        intente <a href="/users/user/logout">cerrar su sesión actual</a> e
+        <a href="/users/user/login">iniciar sesión</a> nuevamente con un usuario con mayores
+        privilegios.</p>
+        <p>&nbsp;</p>
+        <p><small>HTTP/1.1 403 Forbidden</small></p>
+    </body>
+</html>

@@ -1,0 +1,50 @@
+<multiplier>
+CREATE TABLE IF NOT EXISTS <compositor><compuesto> (
+
+    rel_id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY
+
+    , compuesto INT(11) NOT NULL
+    , INDEX (compuesto)
+    , FOREIGN KEY (compuesto)
+        REFERENCES <compuesto> (<compuesto>_id)
+        ON DELETE CASCADE
+
+    , compositor INT(11) NOT NULL
+    , INDEX (compositor)
+    , FOREIGN KEY (compositor)
+        REFERENCES <compositor> (<compositor>_id)
+        ON DELETE CASCADE
+
+    , rel INT(4)
+ 
+)ENGINE=InnoDB;
+</multiplier>
+
+
+<connector>
+CREATE TABLE IF NOT EXISTS <compositor><compuesto> (
+
+    connector_id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY
+
+    , compuesto INT(11) NOT NULL
+    , INDEX (compuesto)
+    , FOREIGN KEY (compuesto)
+        REFERENCES <compuesto> (<compuesto>_id)
+        ON DELETE CASCADE
+
+    , compositor INT(11) NOT NULL
+    , INDEX (compositor)
+    , FOREIGN KEY (compositor)
+        REFERENCES <compositor> (<compositor>_id)
+        ON DELETE CASCADE
+ 
+)ENGINE=InnoDB;
+</connector>
+
+
+<serialized>
+CREATE TABLE IF NOT EXISTS <obj> (
+    <obj>_id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY
+    , <obj> BLOB
+)ENGINE=InnoDB;
+</serialized>

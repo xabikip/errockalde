@@ -1,0 +1,50 @@
+
+
+                          NOTIFICACIÓN CRÍTICA!!!
+                        POR FAVOR, LEER CON ATENCIÓN
+
+                                    ***
+
+
+                 ** ARCHIVO SETTINGS.PHP.DIST DEPRECADO **
+
+A partir de la versión 3.4.4, actualizada el domingo 29 de marzo de 2014, la
+configuración de la aplicación deberá hacerse en el archivo ./config.ini 
+
+                                    ***
+
+                  ** INCORPORACIÓN ARCHIVO CONFIG.PHP **
+
+El archivo config.ini DEBE ser CREADO POR EL PROGRAMADOR utilizando el config
+de distribución (ARCHIVO: config.ini.dist) como base.
+
+                                    ***
+
+                ** ARCHIVO SETTINGS.PHP NO MODIFICABLE **
+
+Por favor, no realizar modificaciones al nuevo archivo settings.php 
+El mismo ya no se encontrará ignorado el repositorio y será actualizado cada
+vez que se realice un pull.
+
+                                    ***
+
+RESUMEN:
+    - Copiar el archivo config.ini.dist como config.ini 
+    - Customizar las variables del archivo config.ini (de no hacerlo, la app
+      fallará)
+    - No modificar el archivo settings.php 
+
+SOLUCIÓN A PROBLEMAS FRECUENTES:
+    Si anteriormente tenía código propio en el archivo settings.php, siga los
+    siguientes pasos:
+
+    1) Ejecute un: bzr revert
+    2) Cree una copia de seguridad (backup) del archivo settings.php
+       recuperado
+    3) Ejecute: bzr revno y tome nota del número de revisión actual (A) 
+    4) Ejecute: bzr revert -rA (reemplace A por el número apuntado en el paso
+       anterior)
+    5) Utilice su copia de seguridad para recuperar el código propio de su
+       antiguo archivo settings.php. TENGA A BIEN NO MODIFICAR LOS ARCHIVOS
+       QUE INTEGRAN EL PAQUETE DE EUROPIO ENGINE.
+

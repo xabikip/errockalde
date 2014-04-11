@@ -1,0 +1,50 @@
+#!/bin/bash
+
+# EuropioEngine CLI
+# @package    EuropioEngine
+# @subpackage core.cli
+# @license    http://www.gnu.org/licenses/gpl.txt  GNU GPL 3.0
+# @author     Eugenia Bahit <ebahit@member.fsf.org>
+# @link       http://www.europio.org
+
+
+cd sources
+source delete_module.sh
+source create_module.sh
+source create_table.sh
+source create_files.sh
+source user_setup.sh
+cd ..
+
+
+# Mostrar opciones de ayuda
+function mostrar_ayuda() {
+    ayuda=`cat templates/helptext`
+    echo -e "$ayuda"
+}
+
+
+# Mostrar un mensaje de error frente a opción incorrecta
+function mostrar_mensaje_error() {
+    echo "<$1> orden no encontrada"
+    echo "ejecute './europio --help' o './europio -h' para obtener ayuda"
+}
+
+
+# Inicializar el script
+function start() {
+    case "$1" in
+        -c | --create) create_module $2;;
+        -d | --delete) delete_module $2;;
+        -f | --files) create_files $2 $3;;
+        -h | --help) mostrar_ayuda $1;;
+        -t | --table) crear_tabla FOO;;
+        --user-setup) user_setup $2;;
+        *) mostrar_mensaje_error $1;;
+    esac
+}
+
+
+# Llamada automática al inicializador
+start $1 $2 $3
+
