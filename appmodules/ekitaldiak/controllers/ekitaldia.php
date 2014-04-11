@@ -4,10 +4,12 @@ import('appmodules.ekitaldiak.models.ekitaldia');
 import('appmodules.ekitaldiak.views.ekitaldia');
 
 
-class EkitaldiaController extends Controller { 
+class EkitaldiaController extends Controller {
 
     public function agregar() {
-        $this->view->agregar();
+        $ekitaldimota_collector = CollectorObject::get('EkitaldiMota');
+        $ekitaldimotak = $ekitaldimota_collector->collection;
+        $this->view->agregar($ekitaldimotak);
     }
 
     public function editar($id=0) {
@@ -23,7 +25,7 @@ class EkitaldiaController extends Controller {
         $this->model->save();
         HTTPHelper::go("/ekitaldiak/ekitaldia/listar");
     }
-    
+
     public function listar() {
         $collection = CollectorObject::get('Ekitaldia');
         $list = $collection->collection;
