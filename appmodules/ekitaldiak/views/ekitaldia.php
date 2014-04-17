@@ -2,14 +2,17 @@
 
 class EkitaldiaView {
 
-    public function agregar() {
-        $this->prepare_collection($ekitaldimotak, 'deitura');
+    public function agregar($ekitaldimotak) {
+        Dict::set_dict_for_webform($ekitaldimotak, 'deitura');
 
         $form = new WebForm('/ekitaldiak/ekitaldia/guardar');
-        $form->add_text('izena', 'Izena');
-        $form->add_select('ekitaldi mota', $ekitaldimotak);
-        $form->add_text('data', 'Data');
-        $form->add_text('ordua', 'Ordua');
+        $form->add_text('izenaekitaldi', 'Ekitaldiaren Izena');
+        $form->add_select('ekitaldimota', $ekitaldimotak, 'Ekitaldi Mota');
+        $form->add_text('data');
+        $form->add_text('ordua');
+        $form->add_text('izena', 'Lekuaren Izena');
+        $form->add_text('helbidea');
+        $form->add_text('herria');
         $form->add_submit('Ekitaldia gehitu');
         $str = $form->show();
         print Template('Ekitaldia gehitu')->show($str);
@@ -23,18 +26,13 @@ class EkitaldiaView {
     }
 
     public function listar($coleccion=array()) {
-        $str = file_get_contents(
-            STATIC_DIR . "html/ekitaldiak/ekitaldia_listar.html");
-        $html = Template($str)->render_regex('LISTADO', $coleccion);
-        print Template('Listado de Ekitaldia')->show($html);
-    }
-
-    private function prepare_collection(&$coleccion, $text) {
-        $idproperty = strtolower(get_class($coleccion[0])) . "_id";
-        foreach($coleccion as &$obj) {
-            $obj->value = $obj->$idproperty;
-            $obj->text = $obj->$text;
+        foreach ($coleccion as &$obj) {
+            $obj->lekua = $obj->lekua->izena;
+            $obj->ekitaldimota = $obj->ekitaldimota->deitura;
         }
+        $tabla = CollectorViewer($coleccion, 'ekitaldiak',  'ekitaldia',
+            False, True, True)->get_table();
+        print Template('Listado de Ekitaldia')->show($tabla);
     }
 
 
