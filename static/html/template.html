@@ -14,7 +14,10 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <title>{TITLE}</title>
         <link rel="stylesheet" type="text/css" href="/static/css/style.css"/>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
         <script language="javascript" type="text/javascript" src="/static/js/europio_code.js"></script>
+        <script language="javascript" type="text/javascript" src="/static/js/jquery.js"></script>
+        <script language="javascript" type="text/javascript" src="/static/js/jquery-ui-1.10.4.custom.min.js"></script>
     </head>
 
     <body>
@@ -23,15 +26,30 @@
             <nav>
                 <input type="button" value="Default View"
                   onclick="location.href='/'"/>
-                  
+
                 <input type="button" value="Desconexión" class="login"
                   onclick="location.href='/users/user/logout'"/>
             </nav>
             <p>&nbsp;</p>
         </header>
         {CONTENIDO}
+        <script type="text/javascript">
+           window.onload = function() {
+                document.getElementById('data2').id = 'datepicker';
+                $(function() {
+                    $( "#datepicker" ).datepicker(
+                    {
+                        showOtherMonths: true,
+                        selectOtherMonths: true,
+                        dateFormat: "yy-mm-dd",
+                        dayNamesMin: [ "Ig", "Al", "As", "Az", "Og", "Or", "Lr"],
+                        firstDay: 1
+                    });
+                });
+            };
+        </script>
         <footer>
-        EuropioEngine GNU GPL v3.0 - <a 
+        EuropioEngine GNU GPL v3.0 - <a
             href="http://www.europio.org">www.europio.org</a>
         </footer>
     </body>
