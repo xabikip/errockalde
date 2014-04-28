@@ -11,14 +11,14 @@
 ; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ; GNU General Public License for more details.
 ; You should have received a copy of the GNU General Public License
-; along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+; along with EuropioEngine.  If not, see <http://www.gnu.org/licenses/>.
 ;
 ;
 ; @package    EuropioEngine
 ; @license    http://www.gnu.org/licenses/gpl.txt  GNU GPL 3.0
 ; @author     Eugenia Bahit <ebahit@member.fsf.org>
 ; @link       http://www.europio.org
-; @version    3.4.10
+; @version    3.4.24
 ;
 ; COPIAR ESTE ARCHIVO COMO config.ini 
 ; MODIFICAR EL VALOR DE LAS VARIABLES EN LAS QUE CORRESPONDA
@@ -46,6 +46,7 @@ API_ENABLED = false                ; true para habilitar la API, false para desh
 DEFAULT_VIEW = /users/user/login   ; ruta Web relativa de la vista por defecto
 AUTOLOAD_MODULE = true             ; carga automática de módulos mediante el archivo __init__.php
 
+
 [GUI]
 CUSTOM_TEMPLATE =        ; ruta física del template HTML (nulo para el template por defecto)
 CUSTOM_LOGIN_TEMPLATE =  ; ruta física del login HTML (nulo para el template por defecto)
@@ -58,7 +59,7 @@ HTTP_ERROR_404 =      ; ruta física absoluta del archivo HTML para error 404
 
 
 [SESSIONS]
-SESSION_LIFE_TIME = 1800      ; tiempo máximo de inactividad
+SESSION_LIFE_TIME = 1200      ; tiempo máximo de inactividad (en segundos)
 SESSION_STRICT_LEVEL = false  ; false para utilizar privilegios escalados
 
 
@@ -66,6 +67,8 @@ SESSION_STRICT_LEVEL = false  ; false para utilizar privilegios escalados
 SECURITY_LAYER_ENGINE = 'On'          ; off para desactivar la capa de seguridad
 SECURITY_LAYER_STRICT_MODE = false    ; true para filtrar formularios con htmlentities y strip_tags
 SECURITY_LAYER_SANITIZE_ARRAY = true  ; true para convertir a enteros los campos de selección múltiple
+SECURITY_LAYER_ENCRYPT_PASSWORD = false    ; false para no encriptar campos de contraseña ni filtrarlos
+SECURITY_LAYER_ENCRYPT_PASSWORD_HASH = md5 ; Algoritmo de cifrado a utilizar solo si ENCRYPT_PASSWORD es true
 
 
 [PLUGINS]

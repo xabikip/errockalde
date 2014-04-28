@@ -40,6 +40,7 @@ function start() {
         -h | --help) mostrar_ayuda $1;;
         -t | --table) crear_tabla FOO;;
         --user-setup) user_setup $2;;
+        --update) ./sources/update.sh $2;;
         *) mostrar_mensaje_error $1;;
     esac
 }

@@ -8,6 +8,7 @@ import('core.orm_engine.objects.logicalconnector');
 import('tests.core.orm_engine.objects.fakes');
 ini_set('include_path', $actual_path);
 
+
 class ComposerObjectTest extends PHPUnit_Framework_TestCase {
 
     function setUp() {

@@ -36,6 +36,34 @@ function set_view() {
 }
 
 
+# Genera el código para el helper
+function set_helper() {
+    filename=`php -r "print strtolower('$1');"`
+    contenido=`replace MODELO $1 < templates/helper`
+    echo "$contenido" > ../../appmodules/$2/helpers/$filename.php
+}
+
+
+# Agrega query al SQL
+function set_sql() {
+    modelo=`php -r "print strtolower('$1');"`
+    contenido=`replace MODELO $modelo < templates/sql`
+    echo "$contenido" >> ../../appmodules/$2/$2.sql
+}
+
+
+# Agrega imports al init
+function add_imports() {
+    filename=`php -r "print strtolower('$1');"`
+    modelo="import('appmodules.$2.models.$filename');"
+    vista="import('appmodules.$2.views.$filename');"
+    helper="import('appmodules.$2.helpers.$filename');"
+    echo $modelo >>  ../../appmodules/$2/__init__.php
+    echo $vista >>  ../../appmodules/$2/__init__.php
+    echo $helper >>  ../../appmodules/$2/__init__.php
+}
+
+
 # Crear los archivos models, views y controllers
 function create_files() {
     modulo=`php -r "print strtolower('$1');"`
@@ -45,6 +73,9 @@ function create_files() {
         set_model $2 $1
         set_controller $2 $1
         set_view $2 $1
+        set_helper $2 $1
+        set_sql $2 $1
+        add_imports $2 $1
         echo "Listo!"
     fi
 }

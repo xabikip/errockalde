@@ -18,6 +18,37 @@ class TemplateTest extends PHPUnit_Framework_TestCase {
         $this->assertStringEndsWith("eget ultricies.\n", $result);
     }
 
+    function test_render_safe() {
+        $base_string = "
+        <b>{key1}</b>
+        <p>Texto: {key2}</p>
+        <!--key3--><i>{key3}</i><!--key3-->
+        Texto texto<br>
+        <!--key4--><i>{key4}</i><!--key4-->
+        Más texto aquí: {key5}, y aquí
+        ";
+
+        $expected = "
+        <b>Clave Uno</b>
+        <p>Texto: Clave Dos</p>
+        
+        Texto texto<br>
+        <i>Clave Cuatro</i>
+        Más texto aquí: , y aquí
+        ";
+
+        $dict = array(
+            "key1"=>"Clave Uno",
+            "key2"=>"Clave Dos",
+            "key3"=>"",
+            "key4"=>"Clave Cuatro",
+            "key5"=>""
+        );
+
+        $actual = Template($base_string)->render_safe($dict);
+        $this->assertEquals($expected, $actual);
+    }
+
 }
 
 ?>

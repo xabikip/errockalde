@@ -24,11 +24,29 @@ class SecurityLayer {
     }
 
     public function encode_string($key='') {
-        $options = array('flags'=>FILTER_FLAG_STRIP_LOW);
-        $_POST[$key] = filter_var($_POST[$key],
-            FILTER_SANITIZE_SPECIAL_CHARS, $options);
+        if(!self::is_password($key)) {
+            $options = array('flags'=>FILTER_FLAG_ENCODE_LOW);
+            $_POST[$key] = filter_var($_POST[$key],
+                FILTER_SANITIZE_SPECIAL_CHARS, $options);
+        } else {
+            self::hashing_password($key);
+        }
     }
-    
+
+    private static function is_password($key='') {
+        $password_names = array('pass', 'clave', 'contrasenia');
+        foreach($password_names as $name) {
+            if(strpos($key, $name) !== False) return True;
+        }
+    }
+
+    private static function hashing_password($key='') {
+        if(SECURITY_LAYER_ENCRYPT_PASSWORD) {
+            $hash = SECURITY_LAYER_ENCRYPT_PASSWORD_HASH;
+            $_POST[$key] = hash($hash, $_POST[$key]);
+        }
+    }
+
     public function purge_email($key='') {
         $_POST[$key] = filter_var($_POST[$key], FILTER_SANITIZE_EMAIL);
     }

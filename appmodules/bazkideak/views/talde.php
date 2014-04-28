@@ -2,13 +2,14 @@
 
 class TaldeView {
 
-    public function agregar() {
+    public function agregar($errores = array()) {
         $form = new WebForm('/bazkideak/talde/guardar');
-        $form->add_text('izena');
-        $form->add_text('web', 'Web orria');
-        $form->add_text('emaila');
-        $form->add_text('telefonoa');
+        $form->add_text('izena', 'izena', @$_POST['izena']);
+        $form->add_text('web', 'Web orria', @$_POST['web']);
+        $form->add_text('emaila', 'emaila', @$_POST['emaila']);
+        $form->add_text('telefonoa', 'telefonoa', @$_POST['telefonoa']);
         $form->add_submit('Taldea gehitu');
+        $form->add_error_zone($errores);
         print Template('Talde berria')->show($form->show());
     }
 
@@ -22,7 +23,7 @@ class TaldeView {
 
     public function listar($coleccion=array()) {
         $str = CollectorViewer($coleccion, 'bazkideak', 'talde',
-            True, True, True)->get_table();
+            false, True, True)->get_table();
         print Template('Listado de Talde')->show($str);
     }
 }

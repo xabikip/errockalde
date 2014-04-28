@@ -1,6 +1,6 @@
 <?php
 
-define('DB_TESTING', 'europio_testing');
+if(!defined('DB_TESTING')) define('DB_TESTING', 'europio_testing');
 
 
 class Compuesto extends StandardObject {
@@ -82,18 +82,18 @@ class STFake extends StandardObject {
 }
 
 
-class User extends StandardObject {
-
-    public function __construct() {
-        $this->user_id = 1;
-        $this->name = 'foo';
+if(!class_exists('User')) {
+    eval("class User extends StandardObject {
+        function __construct() {
+            \$this->user_id = 0;
+            \$this->name = '';
+            \$this->level = 0;
+        }
+        public function __clone() {
+            \$this->user_id++;
+        }
     }
-
-    public function __clone() {
-        $this->user_id++;
-    }
-
+    ");
 }
-
 
 ?>

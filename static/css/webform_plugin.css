@@ -1,0 +1,30 @@
+.msg_error {
+    background: url('/static/img/error.png') left center no-repeat;
+    color: #c00;
+    font-weight: bold;
+    margin-left: 1em;
+    padding-left: 1.5em;
+    font-size: 0.9em;
+}
+
+.msg_error_pass {
+    background: url('/static/img/true.png') left center no-repeat;
+    color: transparent;
+    margin-left: 1em;
+    padding-left: 1.5em;
+    font-size: 0.9em;
+}
+
+.field_error {
+    border: 1px solid #c00;
+    box-shadow: 0 0 5px #c00;
+    padding: 2px 5px;
+    border-radius: 4px;
+}
+
+.field_ok {
+    border: 1px solid #690;
+    box-shadow: 0 0 5px #690;
+    padding: 2px 5px;
+    border-radius: 4px;
+}

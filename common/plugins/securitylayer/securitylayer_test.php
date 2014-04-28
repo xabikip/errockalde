@@ -23,6 +23,7 @@ class SafeTest extends PHPUnit_Framework_TestCase {
         $_POST['opciones_con_error'] = array('5manzanas', 'string', '28');
         $_POST['nonascii'] = 'Ñandú';
         $_POST['nonascii2'] = "Ñ'an<b>d\"ú</b>";
+        $_POST['password'] = "Ja:C1n;T>0";
         $this->original = $_POST;
     }
 
@@ -39,6 +40,13 @@ class SafeTest extends PHPUnit_Framework_TestCase {
         SecurityLayer(False)->clean_post_data();
         $expected = "Ñ&#39;an&#60;b&#62;d&#34;ú&#60;/b&#62;";
         $this->assertEquals($expected, $_POST['nonascii2']);
+    }
+
+    #password
+    function test_hashing_password() {
+        $expected = "a87a4cfaca3d80a56c8992fdfcb5e8a8"; # MD5 de Ja:C1n;T>0
+        SecurityLayer(False)->clean_post_data();
+        $this->assertEquals($expected, $_POST['password']);
     }
 
     # E-mail

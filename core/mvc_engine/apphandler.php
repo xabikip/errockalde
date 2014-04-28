@@ -14,6 +14,7 @@ import('core.helpers.http');
 class ApplicationHandler {
 
     private static $uri = '';
+    private static $_REQUEST_URI = NULL;
     private static $peticiones = array();
 
     protected static $modulo = '';
@@ -23,11 +24,12 @@ class ApplicationHandler {
     protected static $api = False;
 
 
-    static function handler() {
-        self::set_uristr();
-        self::set_array();
-        self::set_peticiones();
-        self::check();
+    # Manejador principal de peticiones del usuario
+    static function handler($rerouting=False) {
+        self::clean_uri();
+        self::explode_uri();
+        self::analyze_uri();
+        if($rerouting) self::rerouting();
         return array(self::$modulo, 
                      self::$modelo,
                      self::$recurso,
@@ -35,8 +37,11 @@ class ApplicationHandler {
                      self::$api);
     }
 
-    private static function set_uristr() {
-        $srvuri = $_SERVER['REQUEST_URI'];
+    # Limpia la URI para que se puedan extraer las solicitudes del usuario
+    private static function clean_uri() {
+        $real_uri = $_SERVER['REQUEST_URI'];
+        $virtual_uri = self::$_REQUEST_URI;
+        $srvuri = (!is_null($virtual_uri)) ? $virtual_uri : $real_uri;
         if(WEB_DIR != "/") {
             self::$uri = str_replace(WEB_DIR, "", $srvuri);
         } else {
@@ -44,7 +49,8 @@ class ApplicationHandler {
         }
     }
 
-    private static function set_array() {
+    # Extrae las solicitudes de la URI
+    private static function explode_uri() {
         self::$peticiones = explode("/", self::$uri);
         if(self::$peticiones[0] == 'api') {
             array_shift(self::$peticiones);
@@ -52,21 +58,42 @@ class ApplicationHandler {
         }
     }
 
-    private static function set_peticiones() {
-        if(count(self::$peticiones) == 3) {
-            list(self::$modulo, self::$modelo,
-                self::$recurso) = self::$peticiones;
-        } elseif(count(self::$peticiones) == 4) {
-            list(self::$modulo, self::$modelo, self::$recurso,
-                self::$arg) = self::$peticiones;
+    # Analiza las solicitudes extraídas de la URI
+    private static function analyze_uri($i=0) {
+        $properties = array('modulo', 'modelo', 'recurso', 'arg');
+        foreach(self::$peticiones as $param) {
+            if(isset($properties[$i])) {
+                $name = $properties[$i];
+                self::$$name = $param;
+            } else {
+                settype(self::$arg, 'array');
+                self::$arg = array_merge(self::$arg, array($param));
+            }
+            $i++;
         }
     }
 
-    private static function check() {
-        $mu = empty(self::$modulo);
-        $mo = empty(self::$modelo);
-        $re = empty(self::$recurso);
-        if($mu || $mo || $re) HTTPHelper::go(DEFAULT_VIEW);
+    # Enrutador personalizado
+    # Solo se acciona cuando el enrutamiento MVC estándar falla
+    # Si no se encuentra definida una URL personalizada que coincida con la URI
+    # solicitada por el usuario, se redirige a la vista por defecto
+    public static function rerouting() {
+        $pass = False;
+        $urls_file = APP_DIR . "urls.php";
+        if(file_exists($urls_file)) {
+            eval(file_get_contents($urls_file));
+            $resource = $_SERVER['REQUEST_URI'];
+            foreach($urls as $regex=>$to_url) {
+                preg_match($regex, $resource, $matches);
+                if(isset($matches[0])) {
+                    self::$_REQUEST_URI = "$to_url{$resource}";
+                    $pass = True;
+                    self::handler();
+                    break;
+                }
+            }
+        }
+        if(!$pass) HTTPHelper::go(DEFAULT_VIEW);
     }
 
 }

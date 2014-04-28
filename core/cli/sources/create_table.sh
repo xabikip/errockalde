@@ -58,6 +58,11 @@ function crear_tabla() {
     fi
 
     creacion=`php -f scripts/createtable.php $type $obj $compositor`
+
+    echo "QUERY:"
+    echo "================================================================="
+    echo $creacion
+
     echo "$creacion" > .europioengine.sql.tmp
     mysql -uroot -p $DB < .europioengine.sql.tmp
     rm .europioengine.sql.tmp

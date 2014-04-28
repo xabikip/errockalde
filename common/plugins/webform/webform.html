@@ -9,7 +9,7 @@
 <!--INPUT--><br><input type="{type}" name="{fieldname}" id="{fieldid}" 
     placeholder="{labeltext}" value="{value}"{extras}><br><!--INPUT-->
 <!--TEXTAREA--><textarea name="{fieldname}" placeholder="{labeltext}" 
-    id="{fieldid}">{value}</textarea><!--TEXTAREA-->
+    id="{fieldid}">{value}</textarea><br><!--TEXTAREA-->
 <!--SELECT-->
 <br><select name="{fieldname}" id="{fieldid}">
     <!--OPTION--><option value="{value}"{extras}>{text}</option><!--OPTION-->
@@ -20,3 +20,39 @@
     <input type="{type}" name="{groupname}[]" id="{groupname}{value}"
         value="{value}"{extras}>&nbsp;<label for="{groupname}{value}">{text}</label><br>
 <!--CHECKBOX-RADIO-->
+
+<!--LINK--><a href="{href}" class="WebFormLink WebFormLink_{name}">{anchor}</a><!--LINK-->
+
+<!--ERROR-ZONE-->
+<script>
+var EuWF_campos_error = {errores};
+
+for(var EuWF_key in EuWF_campos_error) {
+    EuWF_add_style();
+    var EuWF_mensaje_error = document.createElement("span");
+    var EuWF_texto = document.createTextNode(EuWF_campos_error[EuWF_key]);
+    EuWF_mensaje_error.appendChild(EuWF_texto);
+    EuWF_mensaje_error.setAttribute('class', 'msg_error');
+    var EuWF_nodo_error = document.getElementsByName(EuWF_key)[0];
+    var EuWF_form = document.getElementById('{formid}');
+    EuWF_form.insertBefore(EuWF_mensaje_error, EuWF_nodo_error.nextSibling);
+    EuWF_nodo_error.setAttribute('class', 'field_error');
+    EuWF_nodo_error.onkeyup = function() {
+        if(EuWF_nodo_error.value != '') {
+            EuWF_nodo_error.setAttribute('class', 'field_ok');
+            EuWF_nodo_error.nextSibling.className = 'msg_error_pass';
+        } else {
+            EuWF_nodo_error.setAttribute('class', 'field_error');
+            EuWF_nodo_error.nextSibling.className = 'msg_error';
+        }
+    };
+}
+
+function EuWF_add_style() {
+    var stylesheet = document.createElement("style");
+    var content = document.createTextNode("@import url('/static/css/webform_plugin.css');");
+    stylesheet.appendChild(content);
+    document.head.appendChild(stylesheet);
+}
+</script>
+<!--ERROR-ZONE-->

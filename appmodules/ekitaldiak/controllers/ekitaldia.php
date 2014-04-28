@@ -7,6 +7,7 @@ import('appmodules.ekitaldiak.models.lekua');
 
 class EkitaldiaController extends Controller {
 
+
     public function agregar() {
         $ekitaldimota_collector = CollectorObject::get('EkitaldiMota');
         $ekitaldimotak = $ekitaldimota_collector->collection;
@@ -21,20 +22,34 @@ class EkitaldiaController extends Controller {
 
     public function guardar() {
         $id = (isset($_POST['id'])) ? $_POST['id'] : 0;
+
         $ekitaldimota = Pattern::factory('EkitaldiMota', $_POST['ekitaldimota']);
         $lekua = new Lekua();
         $lekua->izena = $_POST['izena'];
         $lekua->herria = $_POST['herria'];
         $lekua->helbidea = $_POST['helbidea'];
         $lekua->save();
-        $this->model->ekitaldia_id = $id;
-        $this->model->lekua = Pattern::composite('Lekua', $lekua);
-        $this->model->data = $_POST['data'];
-        $this->model->izena = $_POST['izenaekitaldi'];
-        $this->model->ordua = $_POST['ordua'];
-        $this->model->ekitaldimota = Pattern::composite('EkitaldiMota', $ekitaldimota);
-        $this->model->save();
-        HTTPHelper::go("/ekitaldiak/ekitaldia/listar");
+
+        $errores = array();
+        $requeridos = array("data", "ordua", "ekitaldi_izena" );
+
+        foreach ($requeridos as $key => $value) {
+            $val = isset($_POST[$value]) ? $_POST[$value] : '';
+            if(!$val) $errores[$value] = ''. $value . ' beharrezkoa da';
+        }
+
+        if($errores) {
+            $this->view->agregar($errores);
+        } else {
+            $this->model->ekitaldia_id = $id;
+            $this->model->lekua = Pattern::composite('Lekua', $lekua);
+            $this->model->data = $_POST['data'];
+            $this->model->izena = $_POST['ekitaldi_izena'];
+            $this->model->ordua = $_POST['ordua'];
+            $this->model->ekitaldimota = Pattern::composite('EkitaldiMota', $ekitaldimota);
+            $this->model->save();
+            HTTPHelper::go("/ekitaldiak/ekitaldia/listar");
+        }
     }
 
     public function listar() {

@@ -8,3 +8,11 @@ fi
 
 clear
 phpunit --verbose --colors --test-suffix _test.php $DEBUG .
+
+echo "
+****************************************
+ TESTING DATAHANDLER/DATAHELPER
+****************************************
+"
+
+phpunit --verbose --colors --test-suffix .php $DEBUG tests/core/data/

@@ -26,6 +26,11 @@
         \033[1m-t, --table\033[22m
             Muestra el modo interactivo para crear tablas en la base de datos
 
+        \033[1m--update\033[22m [PATH]
+            Actualiza la versión de EuropioEngine a la más reciente en la
+            ruta de la apliación PATH. Si PATH no se pasa como argumento,
+            le será solicitado.
+
         \033[1m--user-setup\033[22m DATABASE
             Crea la tabla de usuarios y un usuario administrador en la base de
             datos especificada. Notar que DATABASE debe ser una base de datos

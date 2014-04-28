@@ -144,7 +144,7 @@ class WebFormTest extends PHPUnit_Framework_TestCase {
         $this->assertRegExp("/(.|n){1,}Consulta:<\/label>(.|n){1,}/", $element);
         $this->assertRegExp("/(.){1,}name=\"msg\"(.){1,}/", $element);
         $this->assertRegExp("/(.){1,}id=\"msg2\"(.){1,}/", $element);
-        $this->assertRegExp("/(.|\n){1,}><\/textarea>$/", $element);
+        $this->assertRegExp("/(.|\n){1,}><\/textarea><br>$/", $element);
         $this->assertRegExp("/(.){1,}placeholder=\"Consulta:\"(.){1,}/",
             $element);
     }
@@ -219,6 +219,15 @@ class WebFormTest extends PHPUnit_Framework_TestCase {
         $this->assertRegExp("/(.|\n){1,}<textarea (.|\n){1,}/", $result);
     }
 
+    function test_add_link() {
+        $href = "/foo/bar/foobar";
+        $name = "foobar";
+        $anchor = "Foo Bar";
+        $this->coverage->add_link($href, $anchor, $name);
+        $actual = $this->coverage->fields[2];
+        $expected = "<a href=\"$href\" class=\"WebFormLink WebFormLink_$name\">$anchor</a>";
+        $this->assertEquals($expected, $actual);
+    }
 }
 
 

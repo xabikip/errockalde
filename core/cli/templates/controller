@@ -1,9 +1,5 @@
 <?php
 
-import('appmodules.MODULO.models.ARCHIVO');
-import('appmodules.MODULO.views.ARCHIVO');
-
-
 class ClassNameController extends Controller { 
 
     public function agregar() {

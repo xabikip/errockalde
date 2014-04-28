@@ -18,10 +18,19 @@ class EkitaldiMotaController extends Controller {
 
     public function guardar() {
         $id = (isset($_POST['id'])) ? $_POST['id'] : 0;
-        $this->model->ekitaldimota_id = $id;
-        $this->model->deitura = $_POST['deitura'];
-        $this->model->save();
-        HTTPHelper::go("/ekitaldiak/ekitaldimota/listar");
+
+        $errores = array();
+        $deitura = isset($_POST['deitura']) ? $_POST['deitura'] : '';
+        if(!$deitura) $errores['Ekitaldi mota'] = 'Izena beharrezkoa da';
+
+        if($errores) {
+            $this->view->agregar($errores);
+        } else {
+            $this->model->ekitaldimota_id = $id;
+            $this->model->deitura = $_POST['deitura'];
+            $this->model->save();
+            HTTPHelper::go("/ekitaldiak/ekitaldimota/listar");
+        }
     }
 
     public function listar() {

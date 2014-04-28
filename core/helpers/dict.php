@@ -53,13 +53,15 @@ class Dict {
     *                            defecto en el select
     * @return void
     */
-    public static function set_dict_for_webform(&$collection, $text, $id=0) {
+    public static function set_dict_for_webform(&$collection, $text, $id=0,
+      $keeping='selected') {
+        if(!is_array($id)) $id = array($id);
         $pid = strtolower(get_class($collection[0])) . "_id";
         foreach($collection as &$obj) {
             if(!property_exists($obj, $pid)) $pid = self::get_real_name($obj);
             $obj->value = $obj->$pid;
             $obj->text = $obj->$text;
-            $obj->extras = ($obj->value == $id) ? ' selected' : '';
+            $obj->extras = in_array($obj->value, $id) ? " $keeping" : '';
         }
     }
 

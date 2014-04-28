@@ -16,14 +16,14 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 * GNU General Public License for more details.
 * You should have received a copy of the GNU General Public License
-* along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+* along with EuropioEngine.  If not, see <http://www.gnu.org/licenses/>.
 *
 *
 * @package    EuropioEngine
 * @license    http://www.gnu.org/licenses/gpl.txt  GNU GPL 3.0
 * @author     Eugenia Bahit <ebahit@member.fsf.org>
 * @link       http://www.europio.org
-* @version    3.4.10
+* @version    3.4.24
 */
 
 require_once 'settings.php';
@@ -39,6 +39,8 @@ import('core.helpers.files');
 import('core.helpers.dict');
 
 import('core.libs.europio_code');
+
+import('core.data.datahandler');
 
 import('core.orm_engine.mysqlilayer');
 

@@ -14,6 +14,7 @@ DROP TABLE IF EXISTS user;
 CREATE TABLE user (
     user_id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY
     , name VARCHAR(5)
+    , level INT(1)
 ) ENGINE=InnoDB;
 
 
@@ -105,7 +106,7 @@ CREATE TABLE compositorcompuesto (
 
 
 INSERT INTO stfake (stfake_id, name) VALUES (1, 'foo');
-INSERT INTO user (user_id, name) VALUES (1, 'bar1'), (2, 'bar2'), (3, 'bar3');
+INSERT INTO user (user_id, name, level) VALUES (1, 'bar1', 1), (2, 'bar2', 1), (3, 'bar3', 25);
 INSERT INTO foo (foo_id, name) VALUES (1, 'lala1'), (2, 'lala2');
 INSERT INTO userstfake (compuesto, compositor) VALUES (1, 1), (1, 2), (1, 3);
 INSERT INTO foostfake (compuesto, compositor) VALUES (1, 1), (1, 2);

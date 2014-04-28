@@ -44,7 +44,8 @@ class WebForm {
     }
 
     private function set_labeltext($text, $name) {
-        return ($text != "") ? "{$text}:" : ucwords($name) . ":";
+        $symbol = defined('WEBFORM_SYMBOL') ? WEBFORM_SYMBOL : ':';
+        return ($text != "") ? "{$text}{$symbol}" : ucwords($name) . "$symbol";
     }
 
     private function set_extras($extras) {
@@ -65,6 +66,14 @@ class WebForm {
 
     private function get_label_and_input() {
         return $this->get_label() . $this->get_input();
+    }
+
+    private function get_link() {
+        return Template($this->form_template)->get_regex("LINK");
+    }
+
+    private function get_error_zone() {
+        return Template($this->form_template)->get_regex("ERROR-ZONE");
     }
 
     function add_text($name, $text='', $value='') {
@@ -181,10 +190,27 @@ class WebForm {
         $this->add_field($label . $txt, $dict);
     }
 
+    function add_link($href, $anchor, $name='') {
+        $dict = array("href"=>$href, "name"=>$name, "anchor"=>$anchor);
+        $this->add_field($this->get_link(), $dict);
+    }
+
+    function add_error_zone($errors=array()) {
+        $dict = array(
+            'errores'=>json_encode($errors),
+            'formid'=>$this->set_formid()
+        );
+        $this->add_field($this->get_error_zone(), $dict);
+    }
+
+    private function set_formid() {
+        return "EuropioWebForm_" . spl_object_hash($this);
+    }
+
     function show() {
         $frm = Template($this->form_template)->get_regex('FORM');
         $dict = array(
-            "formid"=>"EuropioWebForm_" . spl_object_hash($this),
+            "formid"=>$this->set_formid(),
             "method"=>$this->method,
             "action"=>$this->action,
             "fields"=>implode(chr(10), $this->fields)

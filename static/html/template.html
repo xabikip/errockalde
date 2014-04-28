@@ -14,10 +14,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <title>{TITLE}</title>
         <link rel="stylesheet" type="text/css" href="/static/css/style.css"/>
-        <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
         <script language="javascript" type="text/javascript" src="/static/js/europio_code.js"></script>
-        <script language="javascript" type="text/javascript" src="/static/js/jquery.js"></script>
-        <script language="javascript" type="text/javascript" src="/static/js/jquery-ui-1.10.4.custom.min.js"></script>
     </head>
 
     <body>
@@ -30,22 +27,22 @@
                 <input type="button" value="Desconexión" class="login"
                   onclick="location.href='/users/user/logout'"/>
 
-                <input type="button" value="Ekitaldiak" class="login"
-                  onclick="location.href='/ekitaldiak/ekitaldia/listar'"/>
-
-                <input type="button" value="Ekitaldi motak" class="login"
-                  onclick="location.href='/ekitaldiak/ekitaldimota/listar'"/>
-
                 <input type="button" value="Bazkideak" class="login"
                   onclick="location.href='/bazkideak/bazkide/listar'"/>
 
                 <input type="button" value="Taldeak" class="login"
                   onclick="location.href='/bazkideak/talde/listar'"/>
+
+                <input type="button" value="Ekitaldiak" class="login"
+                  onclick="location.href='/ekitaldiak/ekitaldia/listar'"/>
+
+                <input type="button" value="Ekitaldi motak" class="login"
+                  onclick="location.href='/ekitaldiak/ekitaldimota/listar'"/>
             </nav>
             <p>&nbsp;</p>
         </header>
         {CONTENIDO}
-        <script type="text/javascript">
+         <script type="text/javascript">
            window.onload = function() {
                 document.getElementById('data2').id = 'datepicker';
                 $(function() {
