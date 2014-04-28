@@ -26,6 +26,10 @@ class TaldeController extends Controller {
             if(!$val) $errores[$value] = ''. $value . ' beharrezkoa da';
         }
 
+        if(!$errores){
+            if(!filter_var($_POST['emaila'], FILTER_VALIDATE_EMAIL)) $errores['emaila'] = 'Emaila ez da egokia';
+        }
+
         if($errores) {
             $this->view->agregar($errores);
         } else {
