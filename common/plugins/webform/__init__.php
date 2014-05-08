@@ -56,6 +56,10 @@ class WebForm {
         return Template($this->form_template)->get_regex("INPUT");
     }
 
+    private function get_button() {
+        return Template($this->form_template)->get_regex("BUTTON");
+    }
+
     private function get_label() {
         return Template($this->form_template)->get_regex("LABEL");
     }
@@ -132,7 +136,7 @@ class WebForm {
             "value"=>$value,
             "extras"=>""
         );
-        $this->add_field($this->get_input(), $dict);
+        $this->add_field($this->get_button(), $dict);
     }
 
     function prepare_select($name, $text) {
