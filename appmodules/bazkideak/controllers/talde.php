@@ -30,17 +30,16 @@ class TaldeController extends Controller {
             if(!filter_var($_POST['emaila'], FILTER_VALIDATE_EMAIL)) $errores['emaila'] = 'Emaila ez da egokia';
         }
 
-        if($errores) {
-            $this->view->agregar($errores);
-        } else {
-            $this->model->talde_id = $id;
-            $this->model->izena = $_POST['izena'];
-            $this->model->web = $_POST['web'];
-            $this->model->emaila = $_POST['emaila'];
-            $this->model->telefonoa = $_POST['telefonoa'];
-            $this->model->save();
-            HTTPHelper::go("/bazkideak/talde/listar");
-        }
+        if($errores) $this->view->agregar($errores);exit;
+
+        $this->model->talde_id = $id;
+        $this->model->izena = $_POST['izena'];
+        $this->model->web = $_POST['web'];
+        $this->model->emaila = $_POST['emaila'];
+        $this->model->telefonoa = $_POST['telefonoa'];
+        $this->model->save();
+        HTTPHelper::go("/bazkideak/talde/listar");
+
     }
 
     public function listar() {

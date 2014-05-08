@@ -14,8 +14,8 @@ class EkitaldiaView {
         $form->add_text('helbidea', 'helbidea', @$_POST['helbidea']);
         $form->add_text('herria', 'herria', @$_POST['helbidea']);
         $form->add_submit('Ekitaldia gehitu');
-        $str = $form->show();
         $form->add_error_zone($errores);
+        $str = $form->show();
         print Template('Ekitaldi berria')->show($str);
     }
 

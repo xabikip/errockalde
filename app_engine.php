@@ -62,7 +62,7 @@ import('core.aliases');
 # Importación de plugins
 $apps = isset($options['PLUGINS']) ? $options['PLUGINS'] : array();
 foreach($apps as $plugin=>$enabled) {
-    if($enabled) import("common.plugins.$plugin.__init__"); 
+    if($enabled) import("common.plugins.$plugin.__init__");
 }
 
 
