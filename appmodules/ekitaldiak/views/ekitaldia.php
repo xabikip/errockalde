@@ -33,7 +33,7 @@ class EkitaldiaView {
         }
         $tabla = CollectorViewer($coleccion, 'ekitaldiak',  'ekitaldia',
             False, True, True)->get_table();
-        print Template('Listado de Ekitaldia')->show($tabla);
+        print Template('Ekitaldien zerrenda')->show($tabla);
     }
 
 

@@ -18,13 +18,13 @@ class TaldeView {
         $form->add_hidden('id', $obj->MODELO_id);
         # ...
         $form->add_submit('Agregar');
-        print Template('Editar Talde')->show($form->show());
+        print Template('Taldea editatu')->show($form->show());
     }
 
     public function listar($coleccion=array()) {
         $str = CollectorViewer($coleccion, 'bazkideak', 'talde',
             false, True, True)->get_table();
-        print Template('Listado de Talde')->show($str);
+        print Template('Taldeen zerrenda')->show($str);
     }
 }
 

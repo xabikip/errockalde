@@ -31,17 +31,16 @@ class BazkideController extends Controller {
             if(!filter_var($_POST['emaila'], FILTER_VALIDATE_EMAIL)) $errores['emaila'] = 'Emaila ez da egokia';
         }
 
-        if($errores) {
-            $this->view->agregar($errores);
-        } else {
-            $this->model->izena = $_POST['izena'];
-            $this->model->abizena = $_POST['abizena'];
-            $this->model->goitizena = $_POST['goitizena'];
-            $this->model->emaila = $_POST['emaila'];
-            $this->model->telefonoa = $_POST['telefonoa'];
-            $this->model->save();
-            HTTPHelper::go("/bazkideak/bazkide/listar");
-        }
+        if($errores) {$this->view->agregar($errores);exit;}
+
+        $this->model->izena = $_POST['izena'];
+        $this->model->abizena = $_POST['abizena'];
+        $this->model->goitizena = $_POST['goitizena'];
+        $this->model->emaila = $_POST['emaila'];
+        $this->model->telefonoa = $_POST['telefonoa'];
+        $this->model->save();
+        HTTPHelper::go("/bazkideak/bazkide/listar");
+
 
     }
 

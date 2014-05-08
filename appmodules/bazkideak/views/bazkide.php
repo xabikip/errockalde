@@ -20,13 +20,13 @@ class BazkideView {
         $form->add_hidden('id', $obj->MODELO_id);
         # ...
         $form->add_submit('Agregar');
-        print Template('Editar Bazkide')->show($form->show());
+        print Template('Bazkideta editatu')->show($form->show());
     }
 
     public function listar($coleccion=array()) {
         $str = CollectorViewer($coleccion, 'bazkideak', 'bazkide',
             False, True, True)->get_table();
-        print Template('Listado de Bazkide')->show($str);
+        print Template('Bazkide zerrenda')->show($str);
     }
 }
 

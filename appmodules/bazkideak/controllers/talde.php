@@ -5,8 +5,8 @@ import('appmodules.bazkideak.views.talde');
 
 class TaldeController extends Controller {
 
-    public function agregar() {
-        $this->view->agregar();
+    public function agregar($errores) {
+        $this->view->agregar($errores);
     }
 
     public function editar($id=0) {
@@ -30,7 +30,7 @@ class TaldeController extends Controller {
             if(!filter_var($_POST['emaila'], FILTER_VALIDATE_EMAIL)) $errores['emaila'] = 'Emaila ez da egokia';
         }
 
-        if($errores) $this->view->agregar($errores);exit;
+        if($errores) {$this->view->agregar($errores);exit;}
 
         $this->model->talde_id = $id;
         $this->model->izena = $_POST['izena'];
