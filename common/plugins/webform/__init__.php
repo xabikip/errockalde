@@ -5,7 +5,7 @@
 * Generador de formularios HTML para EuropioEngine
 *
 * This file is part of Europio WebForm PlugIn.
-* Europio WebForm PlugIn is free software: you can redistribute it and/or 
+* Europio WebForm PlugIn is free software: you can redistribute it and/or
 * modify it under the terms of the GNU General Public License as published by
 * the Free Software Foundation, either version 3 of the License, or
 * (at your option) any later version.
@@ -38,7 +38,7 @@ class WebForm {
     private function add_field($str, $dict) {
         $this->fields[] = Template($str)->render($dict);
     }
-    
+
     private function set_id($name) {
         return $name . count($this->fields);
     }
@@ -151,12 +151,12 @@ class WebForm {
         $this->fields[] = Template($select)->render_regex('OPTION', $options);
     }
 
-    function add_checkbox($groupname, $options=array(), 
+    function add_checkbox($groupname, $options=array(),
             $title='Seleccione las opciones de su preferencia') {
         $this->add_choices("checkbox", $groupname, $options, $title);
     }
 
-    function add_radio($groupname, $options=array(), 
+    function add_radio($groupname, $options=array(),
             $title='Seleccione la opción de su preferencia') {
         $this->add_choices("radio", $groupname, $options, $title);
     }
