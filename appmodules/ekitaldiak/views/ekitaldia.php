@@ -15,15 +15,23 @@ class EkitaldiaView {
         $form->add_text('herria', 'herria', @$_POST['helbidea']);
         $form->add_submit('Ekitaldia gehitu');
         $form->add_error_zone($errores);
-        $str = $form->show();
-        print Template('Ekitaldi berria')->show($str);
+        print Template('Ekitaldi berria')->show($form->show());
     }
 
-    public function editar($obj=array()) {
-        $str = file_get_contents(
-            STATIC_DIR . "html/ekitaldiak/ekitaldia_editar.html");
-        $html = Template($str)->render($obj);
-        print Template('Editar Ekitaldia')->show($html);
+    public function editar($ekitaldimotak, $obj=array()) {
+        Dict::set_dict_for_webform($ekitaldimotak, 'deitura', $obj->deitura);
+
+        $form = new WebForm('/ekitaldiak/ekitaldia/guardar');
+        $form->add_hidden('id', $obj->ekitaldi_id);
+        $form->add_text('ekitaldi_izena', 'Ekitaldiaren Izena',$obj->ekitaldi_izena);
+        $form->add_select('ekitaldimota', $ekitaldimotak, 'Ekitaldi Mota');
+        $form->add_text('data', 'data', $obj->data);
+        $form->add_text('ordua', 'ordua', $obj->ordua);
+        $form->add_text('izena', 'Lekuaren Izena', $obj->izena);
+        $form->add_text('helbidea', 'helbidea', $obj->helbidea);
+        $form->add_text('herria', 'herria', $obj->helbidea);
+        $form->add_submit('Ekitaldia gehitu');
+        print Template('Ekitaldi berria')->show($form->show());
     }
 
     public function listar($coleccion=array()) {

@@ -10,10 +10,10 @@ class EkitaldiMotaController extends Controller {
         $this->view->agregar();
     }
 
-    public function editar($id=0) {
+    public function editar($id=0, $errores=array()) {
         $this->model->ekitaldimota_id = $id;
         $this->model->get();
-        $this->view->editar($this->model);
+        $this->view->editar($this->model, $errores);
     }
 
     public function guardar() {
@@ -32,10 +32,12 @@ class EkitaldiMotaController extends Controller {
             if ($$value == null) $errores[$value]  = "$value beharrezkoa da";
         }
 
-        if($errores) { $this->view->agregar($errores);next;}
+        if($errores and $id == 0) {$this->agregar($errores);exit;}
+
+        if($errores and $id !== 0) {$this->editar($id, $errores);exit;}
 
         $this->model->ekitaldimota_id = $id;
-        $this->model->deitura = $_POST['deitura'];
+        $this->model->deitura = $deitura;
         $this->model->save();
         HTTPHelper::go("/ekitaldiak/ekitaldimota/listar");
     }

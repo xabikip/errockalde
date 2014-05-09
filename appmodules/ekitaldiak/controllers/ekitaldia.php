@@ -15,9 +15,11 @@ class EkitaldiaController extends Controller {
     }
 
     public function editar($id=0) {
+        $ekitaldimota_collector = CollectorObject::get('EkitaldiMota');
+        $ekitaldimotak = $ekitaldimota_collector->collection;
         $this->model->ekitaldia_id = $id;
         $this->model->get();
-        $this->view->editar($this->model);
+        $this->view->editar($ekitaldimotak, $this->model);
     }
 
     public function guardar() {

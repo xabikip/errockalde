@@ -13,11 +13,15 @@ class TaldeView {
         print Template('Talde berria')->show($form->show());
     }
 
-    public function editar($obj=array()) {
+    public function editar($obj=array(), $errores=array()) {
         $form = new WebForm('/bazkideak/talde/guardar');
-        $form->add_hidden('id', $obj->MODELO_id);
-        # ...
-        $form->add_submit('Agregar');
+        $form->add_hidden('id', $obj->talde_id);
+        $form->add_text('izena', 'izena', $obj->izena);
+        $form->add_text('web', 'Web orria', $obj->web);
+        $form->add_text('emaila', 'emaila', $obj->emaila);
+        $form->add_text('telefonoa', 'telefonoa', $obj->telefonoa);
+        $form->add_submit('Gorde');
+        $form->add_error_zone($errores);
         print Template('Taldea editatu')->show($form->show());
     }
 

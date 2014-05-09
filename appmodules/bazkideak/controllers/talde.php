@@ -9,10 +9,10 @@ class TaldeController extends Controller {
         $this->view->agregar($errores);
     }
 
-    public function editar($id=0) {
+    public function editar($id=0, $errores=array()) {
         $this->model->talde_id = $id;
         $this->model->get();
-        $this->view->editar($this->model);
+        $this->view->editar($this->model, $errores);
     }
 
     public function guardar() {
@@ -38,13 +38,15 @@ class TaldeController extends Controller {
             if(!filter_var($_POST['emaila'], FILTER_VALIDATE_EMAIL)) $errores['emaila'] = 'Emaila ez da egokia';
         }
 
-        if($errores) {$this->view->agregar($errores);exit;}
+        if($errores and $id == 0) {$this->agregar($errores);exit;}
+
+        if($errores and $id !== 0) {$this->editar($id, $errores);exit;}
 
         $this->model->talde_id = $id;
-        $this->model->izena = $_POST['izena'];
-        $this->model->web = $_POST['web'];
-        $this->model->emaila = $_POST['emaila'];
-        $this->model->telefonoa = $_POST['telefonoa'];
+        $this->model->izena = $izena;
+        $this->model->web = $web;
+        $this->model->emaila = $emaila;
+        $this->model->telefonoa = $telefonoa;
         $this->model->save();
         HTTPHelper::go("/bazkideak/talde/listar");
 

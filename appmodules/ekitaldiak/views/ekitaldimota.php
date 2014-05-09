@@ -7,15 +7,16 @@ class EkitaldiMotaView {
         $form->add_text('deitura', 'Ekitaldi mota', @$_POST['deitura']);
         $form->add_submit('Ekitaldi mota gehitu');
         $form->add_error_zone($errores);
-        $str = $form->show();
-        print Template('Ekitaldi Mota gehitu')->show($str);
+        print Template('Ekitaldi Mota gehitu')->show($form->show());
     }
 
-    public function editar($obj=array()) {
-        $str = file_get_contents(
-            STATIC_DIR . "html/ekitaldiak/ekitaldimota_editar.html");
-        $html = Template($str)->render($obj);
-        print Template('Editar Ekitaldi Mota')->show($html);
+    public function editar($obj=array(), $errores=array()) {
+        $form = new WebForm('/ekitaldiak/ekitaldimota/guardar');
+        $form->add_hidden('id', $obj->ekitaldimota_id);
+        $form->add_text('deitura', 'Ekitaldi mota', $obj->deitura);
+        $form->add_submit('Aldaketak gorde');
+        $form->add_error_zone($errores);
+        print Template('Ekitaldi Mota gehitu')->show($form->show());
     }
 
     public function listar($coleccion=array()) {

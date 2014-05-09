@@ -2,7 +2,7 @@
 
 class BazkideView {
 
-    public function agregar($errores = array()) {
+    public function agregar($errores=array()) {
 
         $form = new WebForm('/bazkideak/bazkide/guardar');
         $form->add_text('izena','izena', @$_POST['izena']);
@@ -15,11 +15,16 @@ class BazkideView {
         print Template('Bazkide berria')->show($form->show());
     }
 
-    public function editar($obj=array()) {
+    public function editar($obj=array(), $errores=array()) {
         $form = new WebForm('/bazkideak/bazkide/guardar');
-        $form->add_hidden('id', $obj->MODELO_id);
-        # ...
-        $form->add_submit('Agregar');
+        $form->add_hidden('id', $obj->bazkide_id);
+        $form->add_text('izena','izena', $obj->izena);
+        $form->add_text('abizena', 'abizena', $obj->abizena);
+        $form->add_text('goitizena', 'goitizena', $obj->goitizena);
+        $form->add_text('emaila', 'emaila', $obj->emaila);
+        $form->add_text('telefonoa', 'telefonoa', $obj->telefonoa);
+        $form->add_submit('Aldaketak gorde');
+        $form->add_error_zone($errores);
         print Template('Bazkideta editatu')->show($form->show());
     }
 
