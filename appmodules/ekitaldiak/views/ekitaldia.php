@@ -6,7 +6,7 @@ class EkitaldiaView {
         Dict::set_dict_for_webform($ekitaldimotak, 'deitura', @$_POST['deitura']);
 
         $form = new WebForm('/ekitaldiak/ekitaldia/guardar');
-        $form->add_text('ekitaldi_izena', 'Ekitaldiaren Izena',@$_POST['izena']);
+        $form->add_text('ekitaldi_izena', 'Ekitaldiaren Izena',@$_POST['ekitaldi_izena']);
         $form->add_select('ekitaldimota', $ekitaldimotak, 'Ekitaldi Mota');
         $form->add_text('data', 'data', @$_POST['data']);
         $form->add_text('ordua', 'ordua', @$_POST['ordua']);

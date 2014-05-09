@@ -23,7 +23,7 @@ class EkitaldiaController extends Controller {
     public function guardar() {
 
         function get_data($campo){
-            return isset($_POST[$campo]) ? $_POST[$campo] : 0;
+            return isset($_POST[$campo]) ? $_POST[$campo] : null;
         }
 
         $id = get_data('id');
@@ -39,10 +39,10 @@ class EkitaldiaController extends Controller {
         $requeridos = array("data", "ordua", "ekitaldi_izena", "ekitaldimota", "izena");
 
         foreach ($requeridos as $value) {
-            if ($$value == 0) $errores[$value]  = "$value beharrezkoa da";
+            if ($$value == null) $errores[$value]  = "$value beharrezkoa da";
         }
 
-        if($errores)  $this->agregar($errores);exit;
+        if($errores)  {$this->agregar($errores);exit;}
 
         $lekua = new Lekua();
         $lekua->izena = $izena;

@@ -15,16 +15,24 @@ class BazkideController extends Controller {
         $this->view->editar($this->model);
     }
 
-
     public function guardar() {
-        $id = (isset($_POST['id'])) ? $_POST['id'] : 0;
+
+        function get_data($campo){
+            return isset($_POST[$campo]) ? $_POST[$campo] : null;
+        }
+
+        $id = get_data('id');
+        $izena = get_data('izena');
+        $abizena = get_data('abizena');
+        $goitizena = get_data('goitizena');
+        $emaila = get_data('emaila');
+        $telefonoa = get_data('telefonoa');
 
         $errores = array();
         $requeridos = array("izena", "emaila" );
 
-        foreach ($requeridos as $key => $value) {
-            $val = isset($_POST[$value]) ? $_POST[$value] : '';
-            if(!$val) $errores[$value] = ''. $value . ' beharrezkoa da';
+        foreach ($requeridos as $value) {
+            if ($$value == null) $errores[$value]  = "$value beharrezkoa da";
         }
 
         if(!$errores){

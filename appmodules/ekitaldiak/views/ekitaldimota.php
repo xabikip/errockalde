@@ -6,8 +6,8 @@ class EkitaldiMotaView {
         $form = new WebForm('/ekitaldiak/ekitaldimota/guardar');
         $form->add_text('deitura', 'Ekitaldi mota', @$_POST['deitura']);
         $form->add_submit('Ekitaldi mota gehitu');
-        $str = $form->show();
         $form->add_error_zone($errores);
+        $str = $form->show();
         print Template('Ekitaldi Mota gehitu')->show($str);
     }
 
