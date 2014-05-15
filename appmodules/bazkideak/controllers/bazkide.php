@@ -17,10 +17,6 @@ class BazkideController extends Controller {
 
     public function guardar() {
 
-        function get_data($campo){
-            return isset($_POST[$campo]) ? $_POST[$campo] : null;
-        }
-
         $id = get_data('id');
         $izena = get_data('izena');
         $abizena = get_data('abizena');
@@ -42,6 +38,13 @@ class BazkideController extends Controller {
         if($errores and $id == 0) {$this->agregar($errores);exit;}
 
         if($errores and $id !== 0) {$this->editar($id, $errores);exit;}
+
+        $user = new User();
+        $user->name = $_POST['erabiltzailea'];
+        $user->level = 1;
+        $user->save(md5($_POST['pasahitza']));
+
+        $this->model->user = $user->user_id;
 
         $this->model->bazkide_id = $id;
         $this->model->izena = $izena;

@@ -2,9 +2,12 @@
 
 class TaldeView {
 
-    public function agregar($errores = array()) {
+    public function agregar($bazkideak, $errores = array()) {
+        Dict::set_dict_for_webform($bazkideak, 'izena', @$_POST['izena']);
+
         $form = new WebForm('/bazkideak/talde/guardar');
         $form->add_text('izena', 'izena', @$_POST['izena']);
+        $form->add_checkbox('bazkideak', $bazkideak, 'Partaideak');
         $form->add_text('web', 'Web orria', @$_POST['web']);
         $form->add_text('emaila', 'emaila', @$_POST['emaila']);
         $form->add_text('telefonoa', 'telefonoa', @$_POST['telefonoa']);
@@ -26,6 +29,14 @@ class TaldeView {
     }
 
     public function listar($coleccion=array()) {
+        foreach ($coleccion as &$obj) {
+            $obj->partaideak = array();
+            foreach ($obj->bazkide_collection as $bazkide) {
+                $obj->partaideak[] = $bazkide->izena;
+            }
+            unset($obj->bazkide_collection, $obj->talde_id);
+            $obj->partaideak = nl2br(implode("\n", $obj->partaideak));
+        }
         $str = CollectorViewer($coleccion, 'bazkideak', 'talde',
             false, True, True)->get_table();
         print Template('Taldeen zerrenda')->show($str);

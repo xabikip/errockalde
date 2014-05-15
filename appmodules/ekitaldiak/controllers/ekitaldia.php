@@ -24,10 +24,6 @@ class EkitaldiaController extends Controller {
 
     public function guardar() {
 
-        function get_data($campo){
-            return isset($_POST[$campo]) ? $_POST[$campo] : null;
-        }
-
         $id = get_data('id');
         $ekitaldimota = get_data('ekitaldimota');
         $data = get_data('data');

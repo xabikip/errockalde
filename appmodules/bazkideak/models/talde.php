@@ -8,6 +8,11 @@ class Talde extends StandardObject {
         $this->web = '';
         $this->emaila = '';
         $this->telefonoa = '';
+        $this->bazkide_collection = array();
+    }
+
+    public function add_bazkide(Bazkide $obj) {
+        $this->bazkide_collection[] = $obj;
     }
 
 }

@@ -5,8 +5,10 @@ import('appmodules.bazkideak.views.talde');
 
 class TaldeController extends Controller {
 
-    public function agregar($errores) {
-        $this->view->agregar($errores);
+    public function agregar($errores=array()) {
+        $bazkide_collector = CollectorObject::get('Bazkide');
+        $bazkideak = $bazkide_collector->collection;
+        $this->view->agregar($bazkideak, $errores);
     }
 
     public function editar($id=0, $errores=array()) {
@@ -17,21 +19,18 @@ class TaldeController extends Controller {
 
     public function guardar() {
 
-        function get_data($campo){
-            return isset($_POST[$campo]) ? $_POST[$campo] : null;
-        }
-
         $id = get_data('id');
         $izena = get_data('izena');
+        $bazkideak = get_data('bazkideak');
         $web = get_data('web');
         $emaila = get_data('emaila');
         $telefonoa = get_data('telefonoa');
 
         $errores = array();
-        $requeridos = array("izena", "emaila" );
+        $requeridos = array("izena", "emaila", "bazkideak" );
 
         foreach ($requeridos as $value) {
-            if ($$value == null) $errores[$value]  = "$value beharrezkoa da";
+            if ( is_null($$value)) $errores[$value]  = "$value beharrezkoa da";
         }
 
         if(!$errores){
@@ -48,6 +47,13 @@ class TaldeController extends Controller {
         $this->model->emaila = $emaila;
         $this->model->telefonoa = $telefonoa;
         $this->model->save();
+
+        foreach ($bazkideak as $bazkide) {
+            $this->model->add_bazkide(Pattern::factory('Bazkide', $bazkide));
+        }
+
+        $lc = new LogicalConnector($this->model, 'bazkide');
+        $lc->save();
         HTTPHelper::go("/bazkideak/talde/listar");
 
     }

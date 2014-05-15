@@ -9,6 +9,7 @@ class Bazkide extends StandardObject {
         $this->goitizena = '';
         $this->emaila = '';
         $this->telefonoa = '';
+        $this->user = '';
     }
 
 }

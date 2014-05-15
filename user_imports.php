@@ -1,0 +1,5 @@
+<?php
+
+import("common.helper");
+
+?>

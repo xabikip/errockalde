@@ -10,6 +10,8 @@ class BazkideView {
         $form->add_text('goitizena', 'goitizena', @$_POST['goitizena']);
         $form->add_text('emaila', 'emaila', @$_POST['emaila']);
         $form->add_text('telefonoa', 'telefonoa', @$_POST['telefonoa']);
+        $form->add_text('erabiltzailea', 'erabiltzailea', @$_POST['erabiltzailea']);
+        $form->add_text('pasahitza', 'pasahitza', @$_POST['pasahitza']);
         $form->add_submit('Bazkidea gehitu');
         $form->add_error_zone($errores);
         print Template('Bazkide berria')->show($form->show());
@@ -29,6 +31,10 @@ class BazkideView {
     }
 
     public function listar($coleccion=array()) {
+        foreach ($coleccion as $obj) {
+            unset($obj->user, $obj->bazkide_id);
+        }
+        unset($coleccion->user);
         $str = CollectorViewer($coleccion, 'bazkideak', 'bazkide',
             False, True, True)->get_table();
         print Template('Bazkide zerrenda')->show($str);

@@ -15,7 +15,8 @@ class EkitaldiaView {
         $form->add_text('herria', 'herria', @$_POST['helbidea']);
         $form->add_submit('Ekitaldia gehitu');
         $form->add_error_zone($errores);
-        print Template('Ekitaldi berria')->show($form->show());
+        print Template('Ekitaldi berria')->show($form->show().
+            file_get_contents(STATIC_DIR ."js/datepickerCustom.js"));
     }
 
     public function editar($ekitaldimotak, $obj=array()) {
@@ -38,6 +39,7 @@ class EkitaldiaView {
         foreach ($coleccion as &$obj) {
             $obj->lekua = $obj->lekua->izena;
             $obj->ekitaldimota = $obj->ekitaldimota->deitura;
+            unset($obj->ekitaldia_id);
         }
         $tabla = CollectorViewer($coleccion, 'ekitaldiak',  'ekitaldia',
             False, True, True)->get_table();

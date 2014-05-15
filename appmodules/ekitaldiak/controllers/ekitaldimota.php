@@ -18,10 +18,6 @@ class EkitaldiMotaController extends Controller {
 
     public function guardar() {
 
-        function get_data($campo){
-            return isset($_POST[$campo]) ? $_POST[$campo] : null;
-        }
-
         $id = get_data('id');
         $deitura = get_data('deitura');
 
