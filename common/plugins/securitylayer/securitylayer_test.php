@@ -23,6 +23,7 @@ class SafeTest extends PHPUnit_Framework_TestCase {
         $_POST['opciones_con_error'] = array('5manzanas', 'string', '28');
         $_POST['nonascii'] = 'Ñandú';
         $_POST['nonascii2'] = "Ñ'an<b>d\"ú</b>";
+        $_POST['telefono'] = "54365487698062";
         $_POST['password'] = "Ja:C1n;T>0";
         $this->original = $_POST;
     }
@@ -63,6 +64,7 @@ class SafeTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals(1278.45, $_POST['float']);
         $this->assertEquals(989.33, $_POST['floatcolon']);
         $this->assertEquals(123, $_POST['integer']);
+        $this->assertEquals(54365487698062, $_POST['telefono']);
     }
     
     # String strip & convert

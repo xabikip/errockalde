@@ -1,37 +1,19 @@
 <!--FORM-->
-<div class="row">
-    <div class="col-lg-6">
-        <form id="{formid}" method="{method}" action="{action}"
-            enctype="multipart/form-data">
-            {fields}
-        </form>
-    </div>
-</div>
+<form id="{formid}" method="{method}" action="{action}"
+    enctype="multipart/form-data">
+    {fields}
+</form>
 <!--FORM-->
 
-<!--LABEL-->
-    <label for="{fieldid}" class="labelform">{labeltext}</label>
-<!--LABEL-->
-
-<!--INPUT-->
-    <br><input class="form-control" type="{type}" name="{fieldname}"
-    id="{fieldid}" placeholder="{labeltext}" value="{value}"{extras}><br>
-<!--INPUT-->
-
-<!--TEXTAREA-->
-    <textarea name="{fieldname}" placeholder="{labeltext}"
-    id="{fieldid}">{value}</textarea><br>
-<!--TEXTAREA-->
-
-<!--BUTTON-->
-    <button class="btn btn-success btn-lg btn-block" name="{fieldname}" placeholder="{labeltext}"
-    id="{fieldid}">{value}</button><br>
-<!--BUTTON-->
-
+<!--LABEL--><label for="{fieldid}" class="labelform">{labeltext}</label><!--LABEL-->
+<!--INPUT--><br><input type="{type}" name="{fieldname}" id="{fieldid}"
+    placeholder="{labeltext}" value="{value}"{extras}><br><!--INPUT-->
+<!--TEXTAREA--><textarea name="{fieldname}" placeholder="{labeltext}"
+    id="{fieldid}">{value}</textarea><br><!--TEXTAREA-->
 <!--SELECT-->
-    <br><select class="form-control" name="{fieldname}" id="{fieldid}">
-        <!--OPTION--><option value="{value}"{extras}>{text}</option><!--OPTION-->
-    </select><br>
+<br><select name="{fieldname}" id="{fieldid}">
+    <!--OPTION--><option value="{value}"{extras}>{text}</option><!--OPTION-->
+</select><br>
 <!--SELECT-->
 
 <!--CHECKBOX-RADIO-->

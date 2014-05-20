@@ -13,7 +13,8 @@ class SecurityLayer {
             if($array) $this->sanitize_array($key);
             if($this->strict && !$array) $this->remove_and_convert($key);
             if(strpos($key, 'mail') !== False) $this->purge_email($key);
-            if(is_numeric(str_replace(',', '', $value))
+            $mocknum = str_replace(',', '', $value);
+            if(is_numeric($mocknum) && (strlen($mocknum)) < 11
                 ) $this->sanitize_number($key);
             if(!$array) $this->encode_string($key);
         }

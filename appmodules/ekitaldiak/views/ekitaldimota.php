@@ -20,9 +20,9 @@ class EkitaldiMotaView {
     }
 
     public function listar($coleccion=array()) {
-        $tabla = CollectorViewer($coleccion, 'ekitaldiak',  'ekitaldimota',
-            False, True, True)->get_table();
-        print Template('Ekitaldi moten zerrenda')->show($tabla);
+        $tabla = new CustomCollectorViewer($coleccion, 'ekitaldiak',  'ekitaldimota',
+            False, True, True);
+        print Template('Ekitaldi moten zerrenda')->show($tabla->get_table());
     }
 }
 
