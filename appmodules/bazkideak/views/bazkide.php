@@ -18,23 +18,26 @@ class BazkideView {
     }
 
     public function editar($obj=array(), $errores=array()) {
+
         $form = new WebFormPRO('/bazkideak/bazkide/guardar');
+
         $form->add_hidden('id', $obj->bazkide_id);
         $form->add_text('izena','izena', $obj->izena, null);
         $form->add_text('abizena', 'abizena', $obj->abizena);
         $form->add_text('goitizena', 'goitizena', $obj->goitizena);
         $form->add_text('emaila', 'emaila', $obj->emaila);
         $form->add_text('telefonoa', 'telefonoa', $obj->telefonoa);
+        $form->add_text('erabiltzailea', 'erabiltzailea', $obj->user->name);
         $form->add_submit('Aldaketak gorde');
         $form->add_errorzone($errores);
         print Template('Bazkideta editatu')->show($form->get_form());
     }
 
     public function listar($coleccion=array()) {
-        foreach ($coleccion as $obj) {
+        foreach ($coleccion as &$obj) {
+            $obj->erabiltzailea = $obj->user->name;
             unset($obj->user);
         }
-        unset($coleccion->user);
         $str = new CustomCollectorViewer($coleccion, 'bazkideak', 'bazkide',
             False, True, True);
         print Template('Bazkide zerrenda')->show($str->get_table());
