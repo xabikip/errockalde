@@ -1,4 +1,5 @@
 RewriteEngine On
-RewriteRule !(^static|favicon) app_engine.php
+RewriteRule !(^static|favicon|^artxibo|^dokumentuak) app_engine.php
 AddType image/x-icon .ico
 RewriteRule ^favicon favicon.ico [NC,L]
+RewriteRule ^artxibo dokumentuak.php

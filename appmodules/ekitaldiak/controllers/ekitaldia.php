@@ -40,6 +40,13 @@ class EkitaldiaController extends Controller {
             if ($$value == null) $errores[$value]  = "$value beharrezkoa da";
         }
 
+        $tipo_permitido = array("image/png", "image/jpeg", "image/gif", "image/bmp", "image/jpg");
+        $tipo = isset($_FILES['kartela']) ? $_FILES['kartela']['type'] : "image/bmp";
+
+        if (!in_array($tipo, $tipo_permitido) OR $_FILES['kartela']['error'] > 1){
+            $errores['kartela'] = "Formatua edo tamaina ez da egokia.";
+        }
+
         if($errores)  {$this->agregar($errores);exit;}
 
         $lekua = new Lekua();
@@ -56,6 +63,14 @@ class EkitaldiaController extends Controller {
         $ekitaldimota = Pattern::factory('EkitaldiMota', $ekitaldimota );
         $this->model->ekitaldimota = Pattern::composite('EkitaldiMota', $ekitaldimota);
         $this->model->save();
+
+        $ruta = WRITABLE_DIR . "/ekitaldiak/ekitaldia/kartelak/{$this->model->ekitaldia_id}";
+
+        if(isset($_FILES['kartela']['tmp_name'])){
+            move_uploaded_file($_FILES['kartela']['tmp_name'], $ruta);
+        }
+        //ruta del src para imagen /artxibo?dokumentua=/ekitaldiak/ekitaldia/kartelak/ekitaldia_id
+
         HTTPHelper::go("/ekitaldiak/ekitaldia/listar");
 
     }

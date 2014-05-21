@@ -13,6 +13,7 @@ class EkitaldiaView {
         $form->add_text('izena', 'Lekuaren Izena', @$_POST['izena']);
         $form->add_text('helbidea', 'helbidea', @$_POST['helbidea']);
         $form->add_text('herria', 'herria', @$_POST['helbidea']);
+        $form->add_file('kartela', 'kartela', @$_POST['file']);
         $form->add_submit('Ekitaldia gehitu');
         $form->add_errorzone($errores);
         print Template('Ekitaldi berria')->show($form->get_form().
@@ -20,7 +21,7 @@ class EkitaldiaView {
     }
 
     public function editar($ekitaldimotak, $obj=array()) {
-        //print_r($obj);exit;
+
         Dict::set_dict_for_webform($ekitaldimotak, 'deitura');
 
         $form = new WebForm('/ekitaldiak/ekitaldia/guardar');
