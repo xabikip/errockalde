@@ -23,42 +23,15 @@
             <nav>
                 <input type="button" value="Default View"
                   onclick="location.href='/'"/>
-
+                  
                 <input type="button" value="Desconexión" class="login"
                   onclick="location.href='/users/user/logout'"/>
-
-                <input type="button" value="Bazkideak" class="login"
-                  onclick="location.href='/bazkideak/bazkide/listar'"/>
-
-                <input type="button" value="Taldeak" class="login"
-                  onclick="location.href='/bazkideak/talde/listar'"/>
-
-                <input type="button" value="Ekitaldiak" class="login"
-                  onclick="location.href='/ekitaldiak/ekitaldia/listar'"/>
-
-                <input type="button" value="Ekitaldi motak" class="login"
-                  onclick="location.href='/ekitaldiak/ekitaldimota/listar'"/>
             </nav>
             <p>&nbsp;</p>
         </header>
         {CONTENIDO}
-         <script type="text/javascript">
-           window.onload = function() {
-                document.getElementById('data2').id = 'datepicker';
-                $(function() {
-                    $( "#datepicker" ).datepicker(
-                    {
-                        showOtherMonths: true,
-                        selectOtherMonths: true,
-                        dateFormat: "yy-mm-dd",
-                        dayNamesMin: [ "Ig", "Al", "As", "Az", "Og", "Or", "Lr"],
-                        firstDay: 1
-                    });
-                });
-            };
-        </script>
         <footer>
-        EuropioEngine GNU GPL v3.0 - <a
+        EuropioEngine GNU GPL v3.0 - <a 
             href="http://www.europio.org">www.europio.org</a>
         </footer>
     </body>

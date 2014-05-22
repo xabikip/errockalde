@@ -5,15 +5,15 @@ class TaldeView {
     public function agregar($bazkideak, $errores = array()) {
         Dict::set_dict_for_webform($bazkideak, 'izena', @$_POST['izena']);
 
-        $form = new WebForm('/bazkideak/talde/guardar');
+        $form = new WebFormPRO('/bazkideak/talde/guardar');
         $form->add_text('izena', 'izena', @$_POST['izena']);
-        $form->add_checkbox('bazkideak', $bazkideak, 'Partaideak');
+        $form->add_checkbox('bazkideak', 'Taldekideak', $bazkideak);
         $form->add_text('web', 'Web orria', @$_POST['web']);
         $form->add_text('emaila', 'emaila', @$_POST['emaila']);
         $form->add_text('telefonoa', 'telefonoa', @$_POST['telefonoa']);
         $form->add_submit('Taldea gehitu');
-        $form->add_error_zone($errores);
-        print Template('Talde berria')->show($form->show());
+        $form->add_errorzone($errores);
+        print Template('Talde berria')->show($form->get_form());
     }
 
     public function editar($obj=array(), $errores=array()) {
@@ -34,12 +34,12 @@ class TaldeView {
             foreach ($obj->bazkide_collection as $bazkide) {
                 $obj->partaideak[] = $bazkide->izena;
             }
-            unset($obj->bazkide_collection, $obj->talde_id);
+            unset($obj->bazkide_collection);
             $obj->partaideak = nl2br(implode("\n", $obj->partaideak));
         }
-        $str = CollectorViewer($coleccion, 'bazkideak', 'talde',
-            false, True, True)->get_table();
-        print Template('Taldeen zerrenda')->show($str);
+        $str = new CustomCollectorViewer($coleccion, 'bazkideak', 'talde',
+            false, True, True);
+        print Template('Taldeen zerrenda')->show($str->get_table());
     }
 }
 

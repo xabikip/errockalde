@@ -1,0 +1,256 @@
+
+    Europio Engine
+    Motor de Software para aplicaciones MVC modulares en PHP con MySQL
+    Versión: 3.4.20 (y posteriores)
+    Copyright (C) 2014, Eugenia Bahit <ebahit@member.fsf.org>
+    Licencia: GNU GPL v3.0
+
+   ===========================================================================
+    Europio Engine is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+    Europio Engine is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+    You should have received a copy of the GNU General Public License
+    along with EuropioEngine.  If not, see <http://www.gnu.org/licenses/>.
+   ===========================================================================
+
+    REPORTE DE BUGS:
+        https://bugs.launchpad.net/europioexperimental/+filebug
+    
+    
+    ASISTENCIA DE LA COMUNIDAD:
+        https://answers.launchpad.net/europioexperimental
+        Hacer una consulta:
+        https://answers.launchpad.net/europioexperimental/+addquestion
+
+
+    TUTORÍA PERSONALIZADA
+        http://www.cursosdeprogramacionadistancia.com
+
+                                    *****
+
+    POR CUESTIONES DE SEGURIDAD Y PERFORMANCE, MANTENGA ESTA APLICACIÓN AL DÍA,
+    ACTUALIZÁNDOLA A TRAVÉS DEL REPOSITORIO OFICIAL:
+    https://launchpad.net/europioexperimental
+    
+    Para crear un branch ejecute: 
+    bzr branch lp:europioexperimental
+
+    Luego, mantenga su branch actualizado ejecutando periódicamente:
+    bzr pull lp:europioexperimental
+
+                                    *****
+
+   ---------------------------------------------------------------------------
+    REQUERIMIENTOS:
+   ---------------------------------------------------------------------------
+        - Apache 2 sobre GNU/Linux
+        - PHP 5.3.10 (o posterior)
+        - Módulo MySQL para PHP 5 (php5-mysql)
+        - PHP CLI (php5-cli)
+        - MySQL 5.5 (o posterior)
+        
+        Si desea correr los test, necesitará además:
+        - PHPUnit 3.7.19 (o posterior)
+    
+        Para mantener actualizado Europio Engine, necesita:
+        - Bazaar 2.5 (bzr)
+
+                  Instalación del entorno de desarrollo en Debian
+        ======================================================================
+        **** NO UTILICE PAQUETES DE *AMP PARA LA INSTALACIÓN DEL ENTORNO ****
+        ======================================================================
+
+            # Instalar Apache
+            apt-get install apache2
+
+            # Instalar MySQL
+            apt-get install mysql-server
+
+            # Instalar PHP
+            apt-get php5 php5-cli php5-mysql
+
+   ---------------------------------------------------------------------------
+    ADVERTENCIA:
+   ---------------------------------------------------------------------------
+    Europio Engine no es un marco de trabajo ni le guiará en el proceso de
+    desarrollo. Para crear aplicaciones con este núcleo, es recomendable contar
+    con conocimientos avanzados de programación orientada a objetos y de 
+    arquitecturas MVC modulares.
+
+    Es aconsejable leer el libro Teoría sintáctico-gramatical de objetos para
+    entender la forma en la que Europio trata a los mismos.
+    Una versión libre y gratuita en formato PDF puede descargarla en:
+    http://www.bubok.es/libros/219288/Teoria-sintacticogramatical-de-objetos
+    
+    Para probar Europio Engine por primera vez, siga los pasos de instalación
+    enunciados a continuación y luego, busque más abajo el «TUTORIAL RÁPIDO»
+
+        ***** Europio Engine SOLO FUNCIONA EN ENTORNOS GNU/LINUX *****
+
+   ---------------------------------------------------------------------------
+    INSTALACIÓN:
+   ---------------------------------------------------------------------------
+
+    Si está accediendo a esta guía sin contar con los archivos de EuropioEngine
+    necesitará obtenerlos haciendo un branch del repositorio alojado en 
+    Launchpad.
+    
+    Si nunca utilizó Bazaar, antes de crear el branch ejecute (en Debian y
+    derivados):
+
+        apt-get install bzr
+        bzr whoami "Su Nombre <suemail>"
+
+    Para crear el branch, ejecute:
+        bzr branch lp:europioexperimental
+
+    Ahora, continúe leyendo.
+
+    Si está instalando Europio Engine por primera vez, siga los pasos listados
+    a continuación. Si solo está actualizando desde una versión anterior a la 
+    3.4.4, asegúrese de leer el archivo LEAME_VERSION_3_4_4.
+        
+        0. Antes de comenzar tenga en cuenta que ésta será la carpeta raíz de su 
+           aplicación. Asegúrese de que la misma contenga el archivo .htaccess
+           Si no lo posee, cree uno con el siguiente contenido:
+           RewriteEngine On
+           RewriteRule !(^static|^favicon) app_engine.php
+
+        1. Copie el archivo config.ini.dist como config.ini y edite las 
+           variables que sean necesarias.
+           Este archivo no será modificado cuando actualice a futuras versiones
+
+        2. Cree dos archivos nuevos: user_imports.php y urls.php
+           Estos archivos son opcionales pero podrían serle muy últiles.
+           Dentro de user_imports.php podrá incluir todos los archivos que 
+           considere necesarios para que sean cargados por el núcleo de forma
+           automática.
+           Lea más bajo CUSTOMS URL para aprender sobre el archivo urls.php y
+           sobre como utilizar URLs personalizadas junto a Europio Engine.
+
+        3. Cree un Virtual Host para su aplicación. Si necesita uno de ejemplo,
+           le recomiendo seguir el publicado en http://pastebin.com/dsbJUZ8e
+           Habilite el nuevo Host y reinicie Apache.
+        
+        4. Habilite el módulo rewrite de Apache (necesita hacerlo como root):
+           a2enmod rewrite
+           y reinicie Apache nuevamente
+        
+        5. Pruebe ingresar en su nuevo host mediante el navegador Web (recuerde
+           anteceder http:// al hostname, al menos la primera vez que ingrese).
+           Si al acceder no ve la pantalla de Login o no funciona la aplicación,
+           revise el archivo .htaccess (ver paso 0) y asegúrese de:
+           - Haber creado el VirtualHOst y que éste tenga las rutas bien 
+             asignadas
+           - Haber habilitado el ServerName en su archivo de hosts locales
+           - Haber habilitado el nuevo sitio en Apache 
+             (a2ensite su-nuevo-server-name)
+           Si los problemas persisten, reinicie Apache y verifique el log de 
+           errores del sitio o de Apache, según el tipo de error que se esté
+           produciendo.
+        
+        6. Si ya desea crear un administrador, utilice Europio CLI, la interfaz
+           de línea de comandos para Europio Engine. Para crear un nuevo 
+           usuario, ejecute:
+           cd core/cli
+           ./europio --user-setup NOMBRE_DE_LA_BASE_DE_DATOS
+           Si no tiene una base de datos creada, cree una ejecutando:
+           mysql -u root -p -e "CREATE DATABASE nombre_de_la_db_nueva;"
+
+   ---------------------------------------------------------------------------
+
+    El CLI de Europio Engine lo ayudará además, a crear módulos completos y 
+    los archivos MVC necesarios para cada módulo. Simplemente ejecute:
+    cd core/cli 
+    ./europio -h
+    Para aprender más sobre Europio CLI. 
+
+
+    Encontrará documentación en http://www.europio.org/docs y guías más 
+    recientes en http://library.originalhacker.org
+
+    Si desea recibir una tutoría personalizada para desarrollar aplicaciones
+    con Europio Engine, visite http://cursos.eugeniabahit.com
+    Allí podrá acceder a mayor información sobre los cursos de Ingeniería de 
+    Software http://cursos.eugeniabahit.com/curso-ingenieria y
+    de MVC con Europio Engine http://cursos.eugeniabahit.com/curso-mvc
+
+   ---------------------------------------------------------------------------
+    TUTORIAL RÁPIDO:
+   ---------------------------------------------------------------------------
+    Para dar sus primeros pasos con Europio Engine, le recomiendo seguir estos
+    pasos:
+
+        0) Siga TODOS los pasos de la instalación. Al finalizar, continúe con 
+           el paso 1.
+
+        1) Cree un módulo de prueba:
+           ./europio -c demo
+
+        2) Agregue los archivos para un nuevo modelo:
+           ./europio -f demo ModeloDePrueba
+        
+        3) Complete las propiedades en su nuevo modelo
+           Archivo: appmodules/demo/models/modelodeprueba.php
+           
+                <code>
+                    # Dentro del constructor
+                    $this->denominacion = "";
+                    $this->numeracion = 0;
+                </code>
+        
+        4) Mapee su nuevo modelo completando el archivo 
+           appmodules/demo/demo.sql
+
+                <code>
+                    # debajo de demo_id...
+                    , denominacion VARCHAR(50)
+                    , numeracion INT(6)
+                </code>
+        
+        5) Cree la nueva tabla importando el archivo demo.sql:
+           mysql -u root -p NOMBRE_DE_LA_DB < appmodules/demo/demo.sql
+        
+        6) Complete el método agregar() de la vista, agregando los campos de
+           formulario necesarios.
+           Archivo: appmodules/demo/views/modelodeprueba.php
+
+                <code>
+                    # debajo de la línea 7
+                    $form->add_text('denominacion');
+                    $form->add_text('numeracion');
+                </code>
+
+           Ayuda para usar el plugin WebForm:
+           http://library.originalhacker.org/biblioteca/articulo/ver/114
+        
+        7) Complete el método guardar() del controlador, modificando las
+           propiedades del modelo.
+           Archivo: appmodules/demo/controllers/modelodeprueba.php
+
+                <code>
+                    # debajo de la línea 17
+                    $this->model->denominacion = $_POST['denominacion'];
+                    $this->model->numeracion = $_POST['numeracion'];
+                </code>
+
+        8) Pruebe los recursos agregar, guardar y listar en su navegador,
+           ingresando en http://su-host-virtual/demo/prueba/agregar
+
+        9) Restrinja ahora el acceso a los recursos agregar y guardar.
+           Archivo: appmodules/demo/controllers/modelodeprueba.php
+
+                <code>
+                    # Incluya esta línea como primera instrucción de los
+                    # métodos agregar() y guardar()
+                    @SessionHandler()->check_state(1);
+                </code>
+
+        10) Acceda ahora a http://su-host-virtual/demo/prueba/agregar
+            e inserte el usuario y clave que configuró durante la instalación
+

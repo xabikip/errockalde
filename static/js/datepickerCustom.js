@@ -1,6 +1,6 @@
 <script>
 window.onload = function() {
-    document.getElementById('data2').id = 'datepicker';
+    document.getElementById('data_3').id = 'datepicker';
     $(function() {
         $( "#datepicker" ).datepicker(
         {

@@ -31,6 +31,7 @@ foreach($options as $section=>$config) {
 #                           CONFIGURACIÓN DE PHP
 # ==============================================================================
 ini_set('include_path', APP_DIR);
+ini_set('session.gc_maxlifetime', SESSION_LIFE_TIME);
 
 if(!PRODUCTION) {
     ini_set('error_reporting', E_ALL | E_NOTICE | E_STRICT);
