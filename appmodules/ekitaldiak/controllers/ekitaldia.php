@@ -41,13 +41,15 @@ class EkitaldiaController extends Controller {
         }
 
         $tipo_permitido = array("image/png", "image/jpeg", "image/gif", "image/bmp", "image/jpg");
-        $tipo = isset($_FILES['kartela']) ? $_FILES['kartela']['type'] : "image/bmp";
+        $tipo = isset($_FILES['kartela']['type']) ? $_FILES['kartela']['type'] : "image/jpg";
 
-        if (!in_array($tipo, $tipo_permitido) OR $_FILES['kartela']['error'] > 1){
-            $errores['kartela'] = "Formatua edo tamaina ez da egokia.";
+        if (!in_array($tipo, $tipo_permitido) AND $_FILES['kartela']['error'] !== 4){
+            $errores['kartela'] = "Formatua ez da egokia.";
         }
 
-        if($errores)  {$this->agregar($errores);exit;}
+        if($errores and $id == 0)  {$this->agregar($errores);exit;}
+
+        if($errores and $id !== 0) {$this->editar($id, $errores);exit;}
 
         $lekua = new Lekua();
         $lekua->izena = $izena;
@@ -65,11 +67,11 @@ class EkitaldiaController extends Controller {
         $this->model->save();
 
         $ruta = WRITABLE_DIR . "/ekitaldiak/ekitaldia/kartelak/{$this->model->ekitaldia_id}";
+        //ruta del src para ver la imagen /artxibo?dokumentua=/ekitaldiak/ekitaldia/kartelak/ekitaldia_id
 
         if(isset($_FILES['kartela']['tmp_name'])){
             move_uploaded_file($_FILES['kartela']['tmp_name'], $ruta);
         }
-        //ruta del src para imagen /artxibo?dokumentua=/ekitaldiak/ekitaldia/kartelak/ekitaldia_id
 
         HTTPHelper::go("/ekitaldiak/ekitaldia/listar");
 

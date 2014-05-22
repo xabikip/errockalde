@@ -2,7 +2,7 @@
 /**
 * Manejador del Mapeador relacional de objetos
 *
-* Analiza el objeto, obteniendo todos los datos necesarios para crear las 
+* Analiza el objeto, obteniendo todos los datos necesarios para crear las
 * sentencias SQL
 *
 * @package    EuropioEngine
@@ -31,14 +31,14 @@ class ORMHandler {
 
     # alias
     public static function analyze($obj) { self::analize($obj); }
-    
+
     public static function get_idname($obj) {
         $cls = strtolower(get_class($obj));
         $parent = self::is_parent($obj);
         $idname = (!$parent) ? "{$cls}_id" : "{$parent}_id";
         return $idname;
     }
-    
+
     private static function is_parent($obj) {
         $parent = strtolower(get_parent_class($obj));
         $objects = array('standardobject', 'composerobject');
