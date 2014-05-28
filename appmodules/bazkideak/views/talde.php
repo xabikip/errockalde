@@ -41,6 +41,23 @@ class TaldeView {
             false, True, True);
         print Template('Taldeen zerrenda')->show($str->get_table());
     }
+
+    public function hasiera($taldeak=array(), $ekitaldiak=array()) {
+
+        foreach ($ekitaldiak as $obj) $obj->ekitaldi_izena = $obj->izena;
+
+        $dict = new DictCollection();
+        $dict->set($ekitaldiak);
+        $ekitaldi_zerrenda = $dict->collection;
+
+        $plantilla = file_get_contents( STATIC_DIR . '/html/hasiera.html');
+
+        $render_taldeak = Template($plantilla)->render_regex('TALDEAK', $taldeak);
+        $render_final = Template($render_taldeak)->render_regex('EKITALDIAK', $ekitaldi_zerrenda);
+
+        print($render_final);
+
+    }
 }
 
 ?>

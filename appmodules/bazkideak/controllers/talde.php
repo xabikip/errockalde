@@ -58,6 +58,15 @@ class TaldeController extends Controller {
         $this->view->listar($list);
     }
 
+    public function hasiera() {
+        $collection = CollectorObject::get('Talde');
+        $taldeak = $collection->collection;
+        $ruta = SERVER_URI ."/api/ekitaldiak/ekitaldia/get-eventos";
+        $json = file_get_contents($ruta);
+        $ekitaldiak = json_decode($json);
+        $this->view->hasiera($taldeak, $ekitaldiak);
+    }
+
     public function eliminar($id=0) {
         $this->model->talde_id = $id;
         $this->model->destroy();

@@ -76,6 +76,12 @@ class EkitaldiaController extends Controller {
         HTTPHelper::go("/ekitaldiak/ekitaldia/listar");
     }
 
+    public function get_eventos() {
+        $collection = CollectorObject::get('Ekitaldia');
+        $list = $collection->collection;
+        $this->apidata = $list;
+    }
+
 }
 
 ?>
