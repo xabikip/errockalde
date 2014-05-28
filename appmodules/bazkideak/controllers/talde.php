@@ -17,43 +17,37 @@ class TaldeController extends Controller {
         $this->view->editar($this->model, $errores);
     }
 
-    public function guardar() {
-
-        $id = get_data('id');
-        $izena = get_data('izena');
-        $bazkideak = get_data('bazkideak');
-        $web = get_data('web');
-        $emaila = get_data('emaila');
-        $telefonoa = get_data('telefonoa');
-
-        $errores = array();
-        $requeridos = array("izena", "emaila", "bazkideak" );
-
-        foreach ($requeridos as $value) {
-            if ( is_null($$value)) $errores[$value]  = "$value beharrezkoa da";
-        }
-
-        if(!$errores){
-            if(!filter_var($_POST['emaila'], FILTER_VALIDATE_EMAIL)) $errores['emaila'] = 'Emaila ez da egokia';
-        }
-
-        if($errores and $id == 0) {$this->agregar($errores);exit;}
-
-        if($errores and $id !== 0) {$this->editar($id, $errores);exit;}
-
-        $this->model->talde_id = $id;
-        $this->model->izena = $izena;
-        $this->model->web = $web;
-        $this->model->emaila = $emaila;
-        $this->model->telefonoa = $telefonoa;
-        $this->model->save();
-
+    private function guardar_bazkide($bazkideak){
         foreach ($bazkideak as $bazkide) {
             $this->model->add_bazkide(Pattern::factory('Bazkide', $bazkide));
         }
-
         $lc = new LogicalConnector($this->model, 'bazkide');
         $lc->save();
+    }
+
+    public function guardar() {
+
+        $errores = array();
+
+        $requeridos = array("izena", "emaila", "bazkideak" );
+        $errores = validar_requeridos($errores, $requeridos);
+
+        $campoMail = 'emaila';
+        $errores = validar_formato_mail($errores, $campoMail);
+
+        if($errores and get_data('id') == 0) {$this->agregar($errores);exit;}
+        if($errores and get_data('id') !== 0) {$this->editar($id, $errores);exit;}
+
+        $this->model->talde_id = get_data('id');
+        $this->model->izena = get_data('izena');
+        $this->model->web = get_data('web');
+        $this->model->emaila = get_data('emaila');
+        $this->model->telefonoa = get_data('telefonoa');
+        $this->model->save();
+
+        $bazkideak = get_data('bazkideak');
+        $this->guardar_bazkide($bazkideak);
+
         HTTPHelper::go("/bazkideak/talde/listar");
 
     }

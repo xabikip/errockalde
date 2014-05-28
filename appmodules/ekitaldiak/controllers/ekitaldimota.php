@@ -18,23 +18,18 @@ class EkitaldiMotaController extends Controller {
 
     public function guardar() {
 
-        $id = get_data('id');
-        $deitura = get_data('deitura');
-
         $errores = array();
+
         $requeridos = array("deitura");
+        $errores= validar_requeridos($errores, $requeridos);
 
-        foreach ($requeridos as $value) {
-            if ($$value == null) $errores[$value]  = "$value beharrezkoa da";
-        }
+        if($errores and get_data('id') == 0) {$this->agregar($errores);exit;}
+        if($errores and get_data('id') !== 0) {$this->editar($id, $errores);exit;}
 
-        if($errores and $id == 0) {$this->agregar($errores);exit;}
-
-        if($errores and $id !== 0) {$this->editar($id, $errores);exit;}
-
-        $this->model->ekitaldimota_id = $id;
-        $this->model->deitura = $deitura;
+        $this->model->ekitaldimota_id = get_data('id');;
+        $this->model->deitura = get_data('deitura');
         $this->model->save();
+
         HTTPHelper::go("/ekitaldiak/ekitaldimota/listar");
     }
 

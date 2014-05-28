@@ -3,13 +3,14 @@
 class EkitaldiaView {
 
     public function agregar($ekitaldimotak, $errores = array()) {
+
         Dict::set_dict_for_webform($ekitaldimotak, 'deitura', @$_POST['deitura']);
 
         $form = new WebFormPRO('/ekitaldiak/ekitaldia/guardar');
         $form->add_text('ekitaldi_izena', 'Ekitaldiaren Izena',@$_POST['ekitaldi_izena']);
         $form->add_select('ekitaldimota', 'Ekitaldi Mota', $ekitaldimotak);
         $form->add_text('data', 'data', @$_POST['data']);
-        $form->add_text('ordua', 'ordua', @$_POST['ordua']);
+        $form->add_text('de', 'ordua', @$_POST['ordua']) ;
         $form->add_text('izena', 'Lekuaren Izena', @$_POST['izena']);
         $form->add_text('helbidea', 'helbidea', @$_POST['helbidea']);
         $form->add_text('herria', 'herria', @$_POST['helbidea']);

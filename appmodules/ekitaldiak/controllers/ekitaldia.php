@@ -40,8 +40,7 @@ class EkitaldiaController extends Controller {
 
         $campoImagen = 'kartela';
         $tipo_permitido = array("image/png", "image/jpeg", "image/gif", "image/bmp", "image/jpg");
-        $tipo = isset($_FILES['kartela']['type']) ? $_FILES['kartela']['type'] : "image/jpg";
-        $errores= validar_tipoImagen($errores, $tipo_permitido, $tipo, $campoImagen);
+        $errores= validar_tipoImagen($errores, $tipo_permitido, $campoImagen);
 
         if($errores and get_data('id') == 0)  {$this->agregar($errores);exit;}
         if($errores and get_data('id') !== 0) {$this->editar($id, $errores);exit;}
