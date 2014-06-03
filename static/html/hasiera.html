@@ -31,10 +31,9 @@
 		</ul>
 		<div class="col-sm-3 col-md-3 pull-right">
       <p class="lead">
-        <a href="/bazkideak/bazkide/listar">
-          <span class="label label-default goimargin">kudeatzailea</span>
-         <!--  <button class="btn btn-default goimargin">kudeatzailea</button> -->
-         </a>
+        <a href="/bazkideak/bazkide/listar" class="btn btn-default btn-sm goimargin-btn" role="button">
+          kudeatzailea
+        </a>
       </p>
 		</div>
 	</div>
@@ -42,14 +41,18 @@
 
 <div class="container-fluid goimargin">
 
-  <!--left-->
+  <!--AGENDA-->
   <div class="col-sm-3">
         <h2>Agenda</h2>
 
       <!--EKITALDIAK-->
     	<div class="panel panel-default">
-         	<div class="panel-heading"><strong>{stdclass.deitura}</strong> {stdclass.data} {stdclass.ordua}</div>
+         	<div class="panel-heading">
+            <strong>{stdclass.deitura}</strong>
+            <span class="eskuinalin">{stdclass.ordua}</span>
+          </div>
          	<div class="panel-body">
+            {stdclass.data}
             <h4>{stdclass.ekitaldi_izena}</h4>
             <p>{stdclass.herria}</p>
           </div>
@@ -57,9 +60,10 @@
       <hr>
       <!--EKITALDIAK-->
 
-  </div><!--/left-->
+  </div>
+  <!--AGENDA-->
 
-  <!--center-->
+  <!--ALBISTEAK-->
   <div class="col-sm-6">
     <div class="row">
       <div class="col-xs-12">
@@ -100,7 +104,7 @@
       </div>
     </div>
     <hr>
-  </div><!--/center-->
+  </div><!--/ALBISTEAK-->
 
   <!--right-->
   <div class="col-sm-3">
@@ -113,7 +117,6 @@
           </ul>
         </div>
   </div><!--/right-->
-  <hr>
 </div><!--/container-fluid-->
 	<!-- script references -->
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>

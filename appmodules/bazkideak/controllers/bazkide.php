@@ -53,6 +53,8 @@ class BazkideController extends Controller {
     }
 
     public function listar() {
+        $level = 1; # Nivel de acceso mínimo requerido para el recurso
+        @SessionHandler()->check_state($level);
         $collection = CollectorObject::get('Bazkide');
         $list = $collection->collection;
         $this->view->listar($list);

@@ -4,6 +4,15 @@
   margin-top: 70px;
 }
 
+.eskuinalin{
+  float: right;
+}
+
+.goimargin-btn{
+  margin-top: 10px;
+}
+
+
 /*----------------------------------TAULAK-----------------------------------*/
 .link_addnew{
   float: right;
