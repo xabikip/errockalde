@@ -49,7 +49,10 @@ class TaldeView {
 
     public function hasiera($taldeak=array(), $ekitaldiak=array()) {
 
-        foreach ($ekitaldiak as $obj) $obj->ekitaldi_izena = $obj->izena;
+        foreach ($ekitaldiak as $obj) {
+            $obj->ekitaldi_izena = $obj->izena;
+            $obj->ordua = substr($obj->ordua, 0,5);
+        }
 
         $dict = new DictCollection();
         $dict->set($ekitaldiak);
@@ -69,6 +72,15 @@ class TaldeView {
         $plantilla = file_get_contents( STATIC_DIR . '/html/taldeak.html');
 
         $render_taldeak = Template($plantilla)->render_regex('TALDEAK', $taldeak);
+
+        foreach ($taldeak as $talde) {
+            $ruta = WRITABLE_DIR . "/bazkideak/taldea/irudiak/{$talde->talde_id}";
+            if (!file_exists($ruta)){
+                $identificador = "IRUDIA{$talde->talde_id}";
+                $bloque_eliminar = Template($render_taldeak)->get_substr($identificador);
+                $render_taldeak = str_replace($bloque_eliminar, "", $render_taldeak);
+            }
+        }
 
         print($render_taldeak);
 
