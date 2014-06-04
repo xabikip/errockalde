@@ -12,9 +12,11 @@ class TaldeController extends Controller {
     }
 
     public function editar($id=0, $errores=array()) {
+        $bazkide_collector = CollectorObject::get('Bazkide');
+        $bazkideak = $bazkide_collector->collection;
         $this->model->talde_id = $id;
         $this->model->get();
-        $this->view->editar($this->model, $errores);
+        $this->view->editar($this->model, $bazkideak, $errores);
     }
 
     private function guardar_bazkide($bazkideak){
@@ -35,8 +37,12 @@ class TaldeController extends Controller {
         $campoMail = 'emaila';
         $errores = validar_formato_mail($errores, $campoMail);
 
+        $campoImagen = 'argazkia';
+        $tipo_permitido = array("image/png", "image/jpeg", "image/gif", "image/bmp", "image/jpg");
+        $errores= validar_tipoImagen($errores, $tipo_permitido, $campoImagen);
+
         if($errores and get_data('id') == 0) {$this->agregar($errores);exit;}
-        if($errores and get_data('id') !== 0) {$this->editar($id, $errores);exit;}
+        if($errores and get_data('id') !== 0) {$this->editar(get_data('id'), $errores);exit;}
 
         $this->model->talde_id = get_data('id');
         $this->model->izena = get_data('izena');
@@ -48,6 +54,10 @@ class TaldeController extends Controller {
         $bazkideak = get_data('bazkideak');
         $this->guardar_bazkide($bazkideak);
 
+        //ruta del src para ver la imagen /artxibo?dokumentua=/ekitaldiak/ekitaldia/kartelak/ekitaldia_id
+        $ruta = WRITABLE_DIR . "/ekitaldiak/ekitaldia/kartelak/{$this->model->talde_id}";
+        guardar_imagen($ruta, $campoImagen);
+
         HTTPHelper::go("/bazkideak/talde/listar");
 
     }
@@ -56,6 +66,12 @@ class TaldeController extends Controller {
         $collection = CollectorObject::get('Talde');
         $list = $collection->collection;
         $this->view->listar($list);
+    }
+
+    public function taldeak() {
+        $collection = CollectorObject::get('Talde');
+        $list = $collection->collection;
+        $this->view->taldeak($list);
     }
 
     public function hasiera() {

@@ -11,21 +11,26 @@ class TaldeView {
         $form->add_text('web', 'Web orria', @$_POST['web']);
         $form->add_text('emaila', 'emaila', @$_POST['emaila']);
         $form->add_text('telefonoa', 'telefonoa', @$_POST['telefonoa']);
+        $form->add_file('argazkia', 'argazkia', @$_POST['file']);
         $form->add_submit('Taldea gehitu');
         $form->add_errorzone($errores);
         print Template('Talde berria')->show($form->get_form());
     }
 
-    public function editar($obj=array(), $errores=array()) {
-        $form = new WebForm('/bazkideak/talde/guardar');
+    public function editar($obj=array(), $bazkideak=array(), $errores=array()) {
+        Dict::set_dict_for_webform($bazkideak, 'izena', @$_POST['izena']);
+
+        $form = new WebFormPRO('/bazkideak/talde/guardar');
         $form->add_hidden('id', $obj->talde_id);
         $form->add_text('izena', 'izena', $obj->izena);
+        $form->add_checkbox('bazkideak', 'Taldekideak', $bazkideak);
         $form->add_text('web', 'Web orria', $obj->web);
         $form->add_text('emaila', 'emaila', $obj->emaila);
         $form->add_text('telefonoa', 'telefonoa', $obj->telefonoa);
+        $form->add_file('argazkia', 'argazkia', @$_POST['file']);
         $form->add_submit('Gorde');
-        $form->add_error_zone($errores);
-        print Template('Taldea editatu')->show($form->show());
+        $form->add_errorzone($errores);
+        print Template('Taldea editatu')->show($form->get_form());
     }
 
     public function listar($coleccion=array()) {
@@ -56,6 +61,16 @@ class TaldeView {
         $render_final = Template($render_taldeak)->render_regex('EKITALDIAK', $ekitaldi_zerrenda);
 
         print($render_final);
+
+    }
+
+    public function taldeak($taldeak=array()) {
+
+        $plantilla = file_get_contents( STATIC_DIR . '/html/taldeak.html');
+
+        $render_taldeak = Template($plantilla)->render_regex('TALDEAK', $taldeak);
+
+        print($render_taldeak);
 
     }
 }
