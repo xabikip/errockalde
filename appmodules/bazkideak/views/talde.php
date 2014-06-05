@@ -58,12 +58,17 @@ class TaldeView {
         $dict->set($ekitaldiak);
         $ekitaldi_zerrenda = $dict->collection;
 
-        $plantilla = file_get_contents( STATIC_DIR . '/html/hasiera.html');
+        $plantilla_taldeak = file_get_contents( STATIC_DIR . '/html/taldeak_hasiera.html');
+        $plantilla_ekitaldiak = file_get_contents( STATIC_DIR . '/html/agenda_hasiera.html');
+        $plantilla_albisteak = file_get_contents( STATIC_DIR . '/html/albisteak_hasiera.html');
 
-        $render_taldeak = Template($plantilla)->render_regex('TALDEAK', $taldeak);
-        $render_final = Template($render_taldeak)->render_regex('EKITALDIAK', $ekitaldi_zerrenda);
+        $render_taldeak = Template($plantilla_taldeak)->render_regex('TALDEAK', $taldeak);
+        $render_ekitaldiak = Template($plantilla_ekitaldiak)->render_regex('EKITALDIAK', $ekitaldi_zerrenda);
+        $render_albisteak = Template($plantilla_albisteak)->render();
 
-        print($render_final);
+        $render_final = $render_ekitaldiak . $render_albisteak . $render_taldeak;
+
+        print Template('RockHeltzia', CUSTOM_PUBLIC_TEMPLATE)->show($render_final);
 
     }
 
@@ -82,7 +87,7 @@ class TaldeView {
             }
         }
 
-        print($render_taldeak);
+        print Template('Taldeak', CUSTOM_PUBLIC_TEMPLATE)->show($render_taldeak);
 
     }
 }
