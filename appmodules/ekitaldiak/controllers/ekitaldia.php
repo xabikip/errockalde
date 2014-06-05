@@ -56,7 +56,6 @@ class EkitaldiaController extends Controller {
         $this->model->ekitaldimota = Pattern::composite('EkitaldiMota', $ekitaldimota);
         $this->model->save();
 
-        //ruta del src para ver la imagen /artxibo?dokumentua=/ekitaldiak/ekitaldia/kartelak/ekitaldia_id
         $ruta = WRITABLE_DIR . "/ekitaldiak/ekitaldia/kartelak/{$this->model->ekitaldia_id}";
         guardar_imagen($ruta, $campoImagen);
 

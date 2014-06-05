@@ -41,7 +41,21 @@ class EkitaldiMotaController extends Controller {
 
     public function eliminar($id=0) {
         $this->model->ekitaldimota_id = $id;
-        $this->model->destroy();
+        $ruta = SERVER_URI ."/api/ekitaldiak/ekitaldia/get-eventos";
+        $json = file_get_contents($ruta);
+        $ekitaldiak = json_decode($json);
+        $ekitaldimota_exist = array();
+        foreach ($ekitaldiak as $ekitaldia) {
+            if (!in_array($ekitaldia->ekitaldimota->ekitaldimota_id, $ekitaldimota_exist)) {
+                $ekitaldimota_exist[] = $ekitaldia->ekitaldimota->ekitaldimota_id;
+            }
+        }
+        if (in_array($id, $ekitaldimota_exist)) {
+            HTTPHelper::go("/ekitaldiak/ekitaldimota/listar");
+        }else{
+            $this->model->destroy();
+        }
+
         HTTPHelper::go("/ekitaldiak/ekitaldimota/listar");
     }
 

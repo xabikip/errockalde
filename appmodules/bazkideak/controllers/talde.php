@@ -54,7 +54,6 @@ class TaldeController extends Controller {
         $bazkideak = get_data('bazkideak');
         $this->guardar_bazkide($bazkideak);
 
-        //ruta del src para ver la imagen /artxibo?dokumentua=/ekitaldiak/ekitaldia/kartelak/ekitaldia_id
         $ruta = WRITABLE_DIR . "/bazkideak/taldea/irudiak/{$this->model->talde_id}";
         guardar_imagen($ruta, $campoImagen);
 
