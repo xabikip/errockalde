@@ -11,6 +11,7 @@ class TaldeView {
         $form->add_text('web', 'Web orria', @$_POST['web']);
         $form->add_text('emaila', 'emaila', @$_POST['emaila']);
         $form->add_text('telefonoa', 'telefonoa', @$_POST['telefonoa']);
+        $form->add_textarea('deskribapena', 'deskribapena', @$_POST['deskribapena']);
         $form->add_file('argazkia', 'argazkia', @$_POST['file']);
         $form->add_submit('Taldea gehitu');
         $form->add_errorzone($errores);
@@ -27,6 +28,7 @@ class TaldeView {
         $form->add_text('web', 'Web orria', $obj->web);
         $form->add_text('emaila', 'emaila', $obj->emaila);
         $form->add_text('telefonoa', 'telefonoa', $obj->telefonoa);
+        $form->add_textarea('deskribapena', 'deskribapena', @$_POST['deskribapena']);
         $form->add_file('argazkia', 'argazkia', @$_POST['file']);
         $form->add_submit('Gorde');
         $form->add_errorzone($errores);

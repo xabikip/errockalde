@@ -49,6 +49,7 @@ class TaldeController extends Controller {
         $this->model->web = get_data('web');
         $this->model->emaila = get_data('emaila');
         $this->model->telefonoa = get_data('telefonoa');
+        $this->model->deskribapena = get_data('deskribapena');
         $this->model->save();
 
         $bazkideak = get_data('bazkideak');
@@ -76,7 +77,7 @@ class TaldeController extends Controller {
     public function taldea($id=0) {
         $bazkide_collector = CollectorObject::get('Bazkide');
         $bazkideak = $bazkide_collector->collection;
-        $this->model->talde_id = $id;
+        $this->model->talde_id = $id[1];
         $this->model->get();
         $this->view->taldea($this->model, $bazkideak);
     }
