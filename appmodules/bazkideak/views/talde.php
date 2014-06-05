@@ -90,6 +90,24 @@ class TaldeView {
         print Template('Taldeak', CUSTOM_PUBLIC_TEMPLATE)->show($render_taldeak);
 
     }
+
+    public function taldea($taldea=array()) {
+
+        $plantilla = file_get_contents( STATIC_DIR . '/html/taldea.html');
+
+        $render_taldea = Template($plantilla)->render($taldea);
+
+        $ruta = WRITABLE_DIR . "/bazkideak/taldea/irudiak/{$taldea->talde_id}";
+
+        if (!file_exists($ruta)){
+            $identificador = "IRUDIA{$taldea->talde_id}";
+            $bloque_eliminar = Template($render_taldea)->get_substr($identificador);
+            $render_taldea = str_replace($bloque_eliminar, "", $render_taldea);
+        }
+
+        print Template('Taldeak', CUSTOM_PUBLIC_TEMPLATE)->show($render_taldea);
+
+    }
 }
 
 ?>

@@ -73,6 +73,14 @@ class TaldeController extends Controller {
         $this->view->taldeak($list);
     }
 
+    public function taldea($id=0) {
+        $bazkide_collector = CollectorObject::get('Bazkide');
+        $bazkideak = $bazkide_collector->collection;
+        $this->model->talde_id = $id;
+        $this->model->get();
+        $this->view->taldea($this->model, $bazkideak);
+    }
+
     public function hasiera() {
         $collection = CollectorObject::get('Talde');
         $taldeak = $collection->collection;
