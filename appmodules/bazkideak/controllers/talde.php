@@ -3,6 +3,7 @@
 import('appmodules.bazkideak.models.talde');
 import('appmodules.bazkideak.views.talde');
 import('appmodules.bazkideak.models.customURLTalde');
+import('appmodules.bazkideak.models.slugger');
 
 class TaldeController extends Controller {
 
@@ -29,8 +30,11 @@ class TaldeController extends Controller {
     }
 
     private function guardar_customurl($talde){
+        $slugger = new Slugger();
+        $slug = $slugger->slugify(get_data('izena'));
+
         $customurl = new CustomURLTalde($talde);
-        $customurl->deitura = get_data('customurl');
+        $customurl->deitura = $slug;
         $customurl->save();
     }
 
