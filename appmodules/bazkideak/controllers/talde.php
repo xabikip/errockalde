@@ -2,6 +2,7 @@
 
 import('appmodules.bazkideak.models.talde');
 import('appmodules.bazkideak.views.talde');
+import('appmodules.bazkideak.models.customURLTalde');
 
 class TaldeController extends Controller {
 
@@ -25,6 +26,12 @@ class TaldeController extends Controller {
         }
         $lc = new LogicalConnector($this->model, 'bazkide');
         $lc->save();
+    }
+
+    private function guardar_customurl($talde){
+        $customurl = new CustomURLTalde($talde);
+        $customurl->deitura = get_data('customurl');
+        $customurl->save();
     }
 
     public function guardar() {
@@ -55,6 +62,8 @@ class TaldeController extends Controller {
         $bazkideak = get_data('bazkideak');
         $this->guardar_bazkide($bazkideak);
 
+        $this->guardar_customurl($this->model);
+
         $ruta = WRITABLE_DIR . "/bazkideak/taldea/irudiak/{$this->model->talde_id}";
         guardar_imagen($ruta, $campoImagen);
 
@@ -75,16 +84,32 @@ class TaldeController extends Controller {
     }
 
     public function taldea($id=0) {
+
+        $customurl = DataHandler('customurltalde', DH_FORMAT_OBJECT)->filter("deitura=$id[1]");
+
         $bazkide_collector = CollectorObject::get('Bazkide');
         $bazkideak = $bazkide_collector->collection;
-        $this->model->talde_id = $id[1];
+        $this->model->talde_id = $customurl[0]->talde->talde_id;
         $this->model->get();
         $this->view->taldea($this->model, $bazkideak);
     }
 
     public function hasiera() {
-        $collection = CollectorObject::get('Talde');
-        $taldeak = $collection->collection;
+
+        $collection_customurl = CollectorObject::get('Customurltalde');
+        $customurlak = $collection_customurl->collection;
+
+        $collection_talde = CollectorObject::get('Talde');
+        $taldeak = $collection_talde->collection;
+
+        foreach ($taldeak as $talde) {
+            foreach ($customurlak as $customurl) {
+                if ($customurl->talde->talde_id == $talde->talde_id){
+                    $talde->customurl = $customurl->deitura;
+                }
+            }
+        }
+
         $ruta = SERVER_URI ."/api/ekitaldiak/ekitaldia/get-eventos";
         $json = file_get_contents($ruta);
         $ekitaldiak = json_decode($json);

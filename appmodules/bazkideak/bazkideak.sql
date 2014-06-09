@@ -19,6 +19,14 @@ CREATE TABLE IF NOT EXISTS talde (
     deskribapena VARCHAR(250),
 ) ENGINE=InnoDB;
 
+CREATE TABLE IF NOT EXISTS customurltalde (
+    customurltalde_id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    deitura VARCHAR(45) NOT NULL,
+    talde INT(11) NOT NULL,
+        FOREIGN KEY(talde) REFERENCES talde(talde_id)
+) ENGINE=InnoDB;
+
+
 ALTER TABLE bazkide ADD user INT(11) NOT NULL;
 
 ALTER TABLE bazkide ADD FOREIGN KEY(user) REFERENCES user(user_id);
