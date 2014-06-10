@@ -16,14 +16,8 @@ CREATE TABLE IF NOT EXISTS talde (
     web VARCHAR(45),
     emaila VARCHAR(30) NOT NULL,
     telefonoa VARCHAR(20),
+    customurl VARCHAR(40),
     deskribapena VARCHAR(250),
-) ENGINE=InnoDB;
-
-CREATE TABLE IF NOT EXISTS customurltalde (
-    customurltalde_id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    deitura VARCHAR(45) NOT NULL,
-    talde INT(11) NOT NULL,
-        FOREIGN KEY(talde) REFERENCES talde(talde_id)
 ) ENGINE=InnoDB;
 
 
@@ -32,6 +26,8 @@ ALTER TABLE bazkide ADD user INT(11) NOT NULL;
 ALTER TABLE bazkide ADD FOREIGN KEY(user) REFERENCES user(user_id);
 
 ALTER TABLE talde ADD deskribapena VARCHAR(250);
+
+ALTER TABLE talde ADD customurl VARCHAR(40);
 
 INSERT INTO talde (izena, web, emaila, telefonoa, deskribapena) VALUES
 ("RO", " www.nireweb.com", "emailanomar@domeinua.com", "654 376 876","Muy lejos, más allá de las montañas de palabras, alejados de los países de las vocales y las consonantes, viven los textos simulados. Viven aislados en casas de letras, en la costa de la semántica, un gran océano de lenguas. Un riachuelo llamado Pons"),

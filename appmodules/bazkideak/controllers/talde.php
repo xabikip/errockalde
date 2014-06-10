@@ -2,8 +2,6 @@
 
 import('appmodules.bazkideak.models.talde');
 import('appmodules.bazkideak.views.talde');
-import('appmodules.bazkideak.models.customURLTalde');
-import('appmodules.bazkideak.models.slugger');
 
 class TaldeController extends Controller {
 
@@ -29,14 +27,12 @@ class TaldeController extends Controller {
         $lc->save();
     }
 
-    private function guardar_customurl($talde){
+    private function crear_slug(){
         $slugger = new Slugger();
-        $slug = $slugger->slugify(get_data('izena'));
-
-        $customurl = new CustomURLTalde($talde);
-        $customurl->deitura = $slug;
-        $customurl->save();
+        $customurl = $slugger->slugify(get_data('izena'));
+        $this->model->customurl = $customurl;
     }
+
 
     public function guardar() {
 
@@ -55,6 +51,8 @@ class TaldeController extends Controller {
         if($errores and get_data('id') == 0) {$this->agregar($errores);exit;}
         if($errores and get_data('id') !== 0) {$this->editar(get_data('id'), $errores);exit;}
 
+        get_data('id') == 0 ? $this->crear_slug() : $this->model->customurl = get_data('customurl');
+
         $this->model->talde_id = get_data('id');
         $this->model->izena = get_data('izena');
         $this->model->web = get_data('web');
@@ -65,8 +63,6 @@ class TaldeController extends Controller {
 
         $bazkideak = get_data('bazkideak');
         $this->guardar_bazkide($bazkideak);
-
-        $this->guardar_customurl($this->model);
 
         $ruta = WRITABLE_DIR . "/bazkideak/taldea/irudiak/{$this->model->talde_id}";
         guardar_imagen($ruta, $campoImagen);
@@ -88,32 +84,15 @@ class TaldeController extends Controller {
     }
 
     public function taldea($id=0) {
-
-        $customurl = DataHandler('customurltalde', DH_FORMAT_OBJECT)->filter("deitura=$id[1]");
-
-        $bazkide_collector = CollectorObject::get('Bazkide');
-        $bazkideak = $bazkide_collector->collection;
-        $this->model->talde_id = $customurl[0]->talde->talde_id;
+        $taldea = DataHandler('talde')->filter("customurl=$id[1]");
+        $this->model->talde_id = $taldea[0]['talde_id'];
         $this->model->get();
-        $this->view->taldea($this->model, $bazkideak);
+        $this->view->taldea($this->model);
     }
 
     public function hasiera() {
-
-        $collection_customurl = CollectorObject::get('Customurltalde');
-        $customurlak = $collection_customurl->collection;
-
         $collection_talde = CollectorObject::get('Talde');
         $taldeak = $collection_talde->collection;
-
-        foreach ($taldeak as $talde) {
-            foreach ($customurlak as $customurl) {
-                if ($customurl->talde->talde_id == $talde->talde_id){
-                    $talde->customurl = $customurl->deitura;
-                }
-            }
-        }
-
         $ruta = SERVER_URI ."/api/ekitaldiak/ekitaldia/get-eventos";
         $json = file_get_contents($ruta);
         $ekitaldiak = json_decode($json);

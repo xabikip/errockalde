@@ -10,6 +10,7 @@ class TaldeView {
             bukaeran zer ageri nahi den izango da. Ezingo da hutsunerik jarri,
             Adib: http://www.errocka.lde.net/taldeak/nire-taldea');
         $form->add_text('izena', 'Taldearen izena', @$_POST['izena']);
+        $form->add_hidden('customurl', 'customurl', @$_POST['izena']);
         $form->add_checkbox('bazkideak', 'Taldekideak', $bazkideak);
         $form->add_text('web', 'Web orria', @$_POST['web']);
         $form->add_text('emaila', 'Emaila', @$_POST['emaila']);
@@ -27,11 +28,12 @@ class TaldeView {
         $form = new WebFormPRO('/bazkideak/talde/guardar');
         $form->add_hidden('id', $obj->talde_id);
         $form->add_text('izena', 'izena', $obj->izena);
+        $form->add_text('customurl', 'customurl', $obj->customurl);
         $form->add_checkbox('bazkideak', 'Taldekideak', $bazkideak);
         $form->add_text('web', 'Web orria', $obj->web);
         $form->add_text('emaila', 'emaila', $obj->emaila);
         $form->add_text('telefonoa', 'telefonoa', $obj->telefonoa);
-        $form->add_textarea('deskribapena', 'deskribapena', @$_POST['deskribapena']);
+        $form->add_textarea('deskribapena', 'deskribapena', $obj->deskribapena);
         $form->add_file('argazkia', 'argazkia', @$_POST['file']);
         $form->add_submit('Gorde');
         $form->add_errorzone($errores);
@@ -98,6 +100,10 @@ class TaldeView {
 
     public function taldea($taldea=array()) {
 
+        foreach ($taldea->bazkide_collection as $obj) {
+            $obj->bazkide_izena = $obj->izena;
+        }
+
         $plantilla = file_get_contents( STATIC_DIR . '/html/taldea.html');
 
         $render_taldea = Template($plantilla)->render($taldea);
@@ -110,7 +116,9 @@ class TaldeView {
             $render_taldea = str_replace($bloque_eliminar, "", $render_taldea);
         }
 
-        print Template('Taldeak', CUSTOM_PUBLIC_TEMPLATE)->show($render_taldea);
+        $render_bazkidea = Template($render_taldea)->render_regex('BAZKIDEAK', $taldea->bazkide_collection);
+
+        print Template('Taldeak', CUSTOM_PUBLIC_TEMPLATE)->show($render_bazkidea);
 
     }
 }
