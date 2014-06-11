@@ -27,14 +27,14 @@ class BazkideController extends Controller {
 
         $errores = array();
 
-        $requeridos = array("izena", "emaila", "erabiltzailea", "pasahitza" );
+        $requeridos = array("izena", "emaila", "erabiltzailea" );
         $errores= validar_requeridos($errores, $requeridos);
 
         $campoMail = 'emaila';
         $errores = validar_formato_mail($errores, $campoMail);
 
         if($errores and get_data('id') == 0) {$this->agregar($errores);exit;}
-        if($errores and get_data('id') !== 0) {$this->editar($id, $errores);exit;}
+        if($errores and get_data('id') !== 0) {$this->editar(get_data('id'), $errores);exit;}
 
         $user = $this->userGorde();
 
