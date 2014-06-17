@@ -24,6 +24,14 @@ class EkitaldiMotaView {
             False, True, True);
         print Template('Ekitaldi moten zerrenda')->show($tabla->get_table());
     }
+
+    public function eventos_a_borrar($ekitaldiak=array()) {
+
+        $plantilla = file_get_contents( STATIC_DIR . 'html/ezabatu_mezua.html');
+
+        $render_ekitaldiak = Template($plantilla)->render_regex('EKITALDIAK', $ekitaldiak);
+        print Template()->show($render_ekitaldiak);
+    }
 }
 
 ?>

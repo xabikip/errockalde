@@ -49,11 +49,30 @@ class EkitaldiMotaController extends Controller {
         $ekitaldiak = DataHandler('ekitaldia')->filter("ekitaldimota=$id");
 
         if (count($ekitaldiak) != 0) {
-            HTTPHelper::go("/ekitaldiak/ekitaldimota/listar");
+            $this->view->eventos_a_borrar($ekitaldiak);
         }else{
             $this->model->destroy();
             HTTPHelper::go("/ekitaldiak/ekitaldimota/listar");
         }
+
+    }
+
+    public function ezabatu_ekitaldiekin() {
+
+        $id = get_data('ekitaldimota');
+
+        $this->model->ekitaldimota_id = $id;
+
+        $ekitaldiak = DataHandler('ekitaldia')->filter("ekitaldimota=$id");
+
+        foreach ($ekitaldiak as $ekitaldia) {
+            $obj = Pattern::factory('Ekitaldia', $ekitaldia['ekitaldia_id']);
+            $obj->destroy();
+        }
+
+        $this->model->destroy();
+
+        HTTPHelper::go("/ekitaldiak/ekitaldimota/listar");
 
     }
 
