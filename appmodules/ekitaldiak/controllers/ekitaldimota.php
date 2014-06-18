@@ -66,7 +66,8 @@ class EkitaldiMotaController extends Controller {
         $ekitaldiak = DataHandler('ekitaldia')->filter("ekitaldimota=$id");
 
         foreach ($ekitaldiak as $ekitaldia) {
-            $obj = Pattern::factory('Ekitaldia', $ekitaldia['ekitaldia_id']);
+            $obj = new Ekitaldia();
+            $obj->ekitaldia_id = $ekitaldia['ekitaldia_id'];
             $obj->destroy();
         }
 
