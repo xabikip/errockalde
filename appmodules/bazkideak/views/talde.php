@@ -16,10 +16,13 @@ class TaldeView {
         $form->add_text('emaila', 'Emaila', @$_POST['emaila']);
         $form->add_text('telefonoa', 'Telefonoa', @$_POST['telefonoa']);
         $form->add_textarea('deskribapena', 'Deskribapena', @$_POST['deskribapena']);
+        $form->add_textarea('bandcamp', 'Bandcamp', @$_POST['bandcamp']);
+        $form->add_text('youtube', 'Youtube', @$_POST['youtube']);
         $form->add_file('argazkia', 'Argazkia', @$_POST['file']);
         $form->add_submit('Taldea gehitu');
         $form->add_errorzone($errores);
-        print Template('Talde berria')->show($form->get_form());
+        print Template('Talde berria')->show($form->get_form() .
+            file_get_contents(STATIC_DIR ."js/europio_onload.js"));
     }
 
     public function editar($obj=array(), $bazkideak=array(), $errores=array()) {
@@ -34,7 +37,9 @@ class TaldeView {
         $form->add_text('emaila', 'emaila', $obj->emaila);
         $form->add_text('telefonoa', 'telefonoa', $obj->telefonoa);
         $form->add_textarea('deskribapena', 'deskribapena', $obj->deskribapena);
-        $form->add_file('argazkia', 'argazkia', @$_POST['file']);
+        $form->add_textarea('bandcamp', 'Bandcamp', @$_POST['bandcamp']);
+        $form->add_text('youtube', 'Youtube', @$_POST['youtube']);
+        $form->add_file('argazkia', 'argazkia');
         $form->add_submit('Gorde');
         $form->add_errorzone($errores);
         print Template('Taldea editatu')->show($form->get_form());
@@ -108,15 +113,34 @@ class TaldeView {
 
         $render_taldea = Template($plantilla)->render($taldea);
 
-        $ruta = WRITABLE_DIR . "/bazkideak/taldea/irudiak/{$taldea->talde_id}";
-
-        if (!file_exists($ruta)){
+        $imagen = WRITABLE_DIR . "/bazkideak/taldea/irudiak/{$taldea->talde_id}";
+        if (!file_exists($imagen)){
             $identificador = "IRUDIA{$taldea->talde_id}";
             $bloque_eliminar = Template($render_taldea)->get_substr($identificador);
             $render_taldea = str_replace($bloque_eliminar, "", $render_taldea);
         }
 
-        $render_bazkidea = Template($render_taldea)->render_regex('BAZKIDEAK', $taldea->bazkide_collection);
+        $bandcamp = WRITABLE_DIR . "/bazkideak/taldea/bandcamp/$taldea->talde_id.ini";
+        if (file_exists($bandcamp)){
+            $bandcamp_parse = parse_ini_file(WRITABLE_DIR . "/bazkideak/taldea/bandcamp/$taldea->talde_id.ini", False);
+            $render_bandcamp = Template($render_taldea)->render($bandcamp_parse);
+        }else{
+            $identificador = "BANDCAMP";
+            $bloque_eliminar = Template($render_taldea)->get_substr($identificador);
+            $render_bandcamp = str_replace($bloque_eliminar, "", $render_taldea);
+        }
+
+        $youtube = WRITABLE_DIR . "/bazkideak/taldea/youtube/$taldea->talde_id.ini";
+         if (file_exists($youtube)){
+            $youtube_parse = parse_ini_file(WRITABLE_DIR . "/bazkideak/taldea/youtube/$taldea->talde_id.ini", False);
+            $render_youtube = Template($render_bandcamp)->render($youtube_parse);
+        }else{
+            $identificador = "YOUTUBE";
+            $bloque_eliminar = Template($render_bandcamp)->get_substr($identificador);
+            $render_youtube = str_replace($bloque_eliminar, "", $render_bandcamp);
+        }
+
+        $render_bazkidea = Template($render_youtube)->render_regex('BAZKIDEAK', $taldea->bazkide_collection);
 
         print Template('Taldeak', CUSTOM_PUBLIC_TEMPLATE)->show($render_bazkidea);
 
