@@ -71,6 +71,8 @@ class EkitaldiaController extends Controller {
 
     public function eliminar($id=0) {
         $this->model->ekitaldia_id = $id;
+        $imagen = WRITABLE_DIR . "/ekitaldiak/ekitaldia/kartelak/{$this->model->ekitaldia_id}";
+        unlink($imagen);
         $this->model->destroy();
         HTTPHelper::go("/ekitaldiak/ekitaldia/listar");
     }

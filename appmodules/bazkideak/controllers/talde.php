@@ -193,8 +193,18 @@ v= \"$video_id\"";
         $this->view->hasiera($taldeak, $ekitaldiak);
     }
 
+    private function eliminar_archivos($id){
+        $imagen = WRITABLE_DIR . "/bazkideak/taldea/irudiak/{$this->model->talde_id}";
+        unlink($imagen);
+        $bandcamp = WRITABLE_DIR . "/bazkideak/taldea/bandcamp/$id.ini";
+        unlink($bandcamp);
+        $youtube = WRITABLE_DIR . "/bazkideak/taldea/youtube/$id.ini";
+        unlink($youtube);
+    }
+
     public function eliminar($id=0) {
         $this->model->talde_id = $id;
+        $this->eliminar_archivos($this->model->talde_id);
         $this->model->destroy();
         HTTPHelper::go("/bazkideak/talde/listar");
     }
