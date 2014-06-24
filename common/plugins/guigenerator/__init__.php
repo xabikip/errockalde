@@ -4,6 +4,6 @@
 */
 import('common.plugins.guigenerator.captcha.captcha');
 import('common.plugins.guigenerator.forms.webformpro');
-// import('common.plugins.guigenerator.template.clases');
+#import('common.plugins.guigenerator.template.clases');
 
 ?>
