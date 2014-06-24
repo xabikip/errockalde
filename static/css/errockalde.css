@@ -28,3 +28,17 @@
 .taldeTestuTxiki{
   float: left;
 }
+
+
+/*----------------------------------FORM-----------------------------------*/
+input[name='izena'], input[name='emaila'], input[name='web'], input[name='helbidea'] {
+  width: 250px;
+}
+
+input[name='youtube'] {
+  width: 400px;
+}
+
+input[name='ekitaldi_izena'] {
+  width: 450px;
+}
