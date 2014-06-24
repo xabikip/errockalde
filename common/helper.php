@@ -32,4 +32,11 @@ function validar_formato_mail($errores=array(), $campoMail){
         return $errores;
 }
 
+function validar_hora($errores=array(), $campoHora){
+        if(!preg_match("/(2[0-3]|[01][0-9]):[0-5][0-9]/", get_data($campoHora))){
+            $errores[$campoHora] = ERROR_MSG_MAIL_FORMAT;
+        }
+        return $errores;
+}
+
 ?>
