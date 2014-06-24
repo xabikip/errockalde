@@ -14,7 +14,7 @@ function validar_requeridos($errores=array(), $requeridos=array()){
 function validar_tipoImagen($errores=array(), $tipo_permitido=array(), $campoImagen){
       $tipo = isset($_FILES[$campoImagen]['type']) ? $_FILES[$campoImagen]['type'] : "image/jpg";
       if (!in_array($tipo, $tipo_permitido) AND $_FILES[$campoImagen]['error'] !== 4){
-                $errores[$campoImagen] = "Formatua ez da egokia.";
+                $errores[$campoImagen] = ERROR_MSG_MYME_TYPE;
             }
       return $errores;
 }
@@ -34,7 +34,7 @@ function validar_formato_mail($errores=array(), $campoMail){
 
 function validar_hora($errores=array(), $campoHora){
         if(!preg_match("/(2[0-3]|[01][0-9]):[0-5][0-9]/", get_data($campoHora))){
-            $errores[$campoHora] = ERROR_MSG_MAIL_FORMAT;
+            $errores[$campoHora] = ERROR_MSG_TIME_FORMAT;
         }
         return $errores;
 }
