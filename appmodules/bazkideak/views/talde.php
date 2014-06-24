@@ -6,9 +6,6 @@ class TaldeView {
         Dict::set_dict_for_webform($bazkideak, 'izena', @$_POST['izena']);
 
         $form = new WebFormPRO('/bazkideak/talde/guardar');
-        $form->add_instructions('customurl datua zure taldearen helbidearen
-            bukaeran zer ageri nahi den izango da. Ezingo da hutsunerik jarri,
-            Adib: http://www.errocka.lde.net/taldeak/nire-taldea');
         $form->add_text('izena', 'Taldearen izena', @$_POST['izena']);
         $form->add_hidden('customurl', 'customurl', @$_POST['izena']);
         $form->add_checkbox('bazkideak', 'Taldekideak', $bazkideak);
@@ -31,7 +28,7 @@ class TaldeView {
         $form = new WebFormPRO('/bazkideak/talde/guardar');
         $form->add_hidden('id', $obj->talde_id);
         $form->add_text('izena', 'izena', $obj->izena);
-        $form->add_text('customurl', 'customurl', $obj->customurl);
+        $form->add_hidden('customurl', 'customurl', $obj->customurl);
         $form->add_checkbox('bazkideak', 'Taldekideak', $bazkideak);
         $form->add_text('web', 'Web orria', $obj->web);
         $form->add_text('emaila', 'emaila', $obj->emaila);
