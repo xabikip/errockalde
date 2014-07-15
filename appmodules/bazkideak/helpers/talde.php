@@ -22,10 +22,4 @@ class ParserTalde {
 
 }
 
-
-class TaldeHelper {
-
-
-}
-
 ?>

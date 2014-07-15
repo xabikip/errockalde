@@ -3,7 +3,6 @@
 class TaldeView {
 
     public function agregar($bazkideak, $errores = array()) {
-
         Dict::set_dict_for_webform($bazkideak, 'izena', @$_POST['izena']);
 
         $form = new WebFormPRO('/bazkideak/talde/guardar');
@@ -19,14 +18,11 @@ class TaldeView {
         $form->add_file('argazkia', 'Argazkia', @$_POST['file']);
         $form->add_submit('Taldea gehitu');
         $form->add_errorzone($errores);
-
         print Template('Talde berria')->show($form->get_form() .
             file_get_contents(STATIC_DIR ."js/europio_onload.js"));
     }
 
-
     public function editar($obj=array(), $bazkideak=array(), $errores=array()) {
-
         Dict::set_dict_for_webform($bazkideak, 'izena', @$_POST['izena']);
 
         $form = new WebFormPRO('/bazkideak/talde/guardar');
@@ -43,13 +39,10 @@ class TaldeView {
         $form->add_file('argazkia', 'argazkia');
         $form->add_submit('Gorde');
         $form->add_errorzone($errores);
-
         print Template('Taldea editatu')->show($form->get_form());
     }
 
-
     public function listar($coleccion=array()) {
-
         foreach ($coleccion as &$obj) {
             $obj->partaideak = array();
             foreach ($obj->bazkide_collection as $bazkide) {
@@ -58,13 +51,10 @@ class TaldeView {
             unset($obj->bazkide_collection);
             $obj->partaideak = nl2br(implode("\n", $obj->partaideak));
         }
-
         $str = new CustomCollectorViewer($coleccion, 'bazkideak', 'talde',
             false, True, True);
-
         print Template('Taldeen zerrenda')->show($str->get_table());
     }
-
 
     public function hasiera($taldeak=array(), $ekitaldiak=array()) {
 
@@ -84,12 +74,12 @@ class TaldeView {
         $render_taldeak = Template($plantilla_taldeak)->render_regex('TALDEAK', $taldeak);
         $render_ekitaldiak = Template($plantilla_ekitaldiak)->render_regex('EKITALDIAK', $ekitaldi_zerrenda);
         $render_albisteak = Template($plantilla_albisteak)->render();
+
         $render_final = $render_ekitaldiak . $render_albisteak . $render_taldeak;
 
         print Template('RockHeltzia', CUSTOM_PUBLIC_TEMPLATE)->show($render_final);
 
     }
-
 
     public function taldeak($taldeak=array()) {
 
@@ -98,7 +88,7 @@ class TaldeView {
         $render_taldeak = Template($plantilla)->render_regex('TALDEAK', $taldeak);
 
         foreach ($taldeak as $talde) {
-            $ruta = WRITABLE_DIR . IRUDI_DIR . "/{$talde->talde_id}";
+            $ruta = WRITABLE_DIR . "/bazkideak/taldea/irudiak/{$talde->talde_id}";
             if (!file_exists($ruta)){
                 $identificador = "IRUDIA{$talde->talde_id}";
                 $bloque_eliminar = Template($render_taldeak)->get_substr($identificador);
@@ -107,8 +97,8 @@ class TaldeView {
         }
 
         print Template('Taldeak', CUSTOM_PUBLIC_TEMPLATE)->show($render_taldeak);
-    }
 
+    }
 
     public function taldea($taldea=array()) {
 
@@ -128,7 +118,7 @@ class TaldeView {
 
         $bandcamp = WRITABLE_DIR . BANDCAMP_DIR . "/{$taldea->talde_id}.ini";
         if (file_exists($bandcamp)){
-            $bandcamp_parse = parse_ini_file($bandcamp, False);
+            $bandcamp_parse = parse_ini_file(WRITABLE_DIR . BANDCAMP_DIR . "/{$taldea->talde_id}.ini", False);
             $render_bandcamp = Template($render_taldea)->render($bandcamp_parse);
         }else{
             $identificador = "BANDCAMP";
@@ -138,7 +128,7 @@ class TaldeView {
 
         $youtube = WRITABLE_DIR . YOUTUBE_DIR . "/{$taldea->talde_id}.ini";
          if (file_exists($youtube)){
-            $youtube_parse = parse_ini_file($youtube, False);
+            $youtube_parse = parse_ini_file(WRITABLE_DIR . YOUTUBE_DIR . "/{$taldea->talde_id}.ini", False);
             $render_youtube = Template($render_bandcamp)->render($youtube_parse);
         }else{
             $identificador = "YOUTUBE";
@@ -149,6 +139,7 @@ class TaldeView {
         $render_bazkidea = Template($render_youtube)->render_regex('BAZKIDEAK', $taldea->bazkide_collection);
 
         print Template('Taldeak', CUSTOM_PUBLIC_TEMPLATE)->show($render_bazkidea);
+
     }
 }
 

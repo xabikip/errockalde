@@ -27,10 +27,10 @@ class TaldeController extends Controller {
         $lc->save();
     }
 
-    private function crear_slug(){
+    private function get_slug(){
         $slugger = new Slugger();
         $customurl = $slugger->slugify(get_data('izena'));
-        $this->model->customurl = $customurl;
+        return $customurl;
     }
 
     private function parse_album_id($albumpartes){
@@ -39,7 +39,7 @@ class TaldeController extends Controller {
         return $album_id;
     }
 
-    private function guardar_bandcamp($id){
+    private function guardar_bandcamp(){
         $bandcamp_encode = isset($_POST['bandcamp']) ? EuropioCode::encode($_POST['bandcamp']) : '';
         $bandcamp_decode = EuropioCode::decode($bandcamp_encode);
 
@@ -52,17 +52,18 @@ class TaldeController extends Controller {
         $grupo = ParserTalde::parse($albumpartes, BY, FINAL_ENDTAG);
 
         $allowed_chars = array("-" => "&#45;", "_" => "&#95;", " " => "&#160;");
-        $talde_slug = str_replace(array_values($allowed_chars), array_keys($allowed_chars), $talde_slug);
-        $album_slug = str_replace(array_values($allowed_chars), array_keys($allowed_chars), $album_slug);
+        $talde_slug = str_replace(array_values($allowed_chars),
+            array_keys($allowed_chars), $talde_slug);
+        $album_slug = str_replace(array_values($allowed_chars),
+            array_keys($allowed_chars), $album_slug);
 
-        $nombre_archivo = WRITABLE_DIR . "/bazkideak/taldea/bandcamp/$id.ini";
         $contenido = "[bandcamp]
 album_id = \"$album_id\"
 talde_slug= \"$talde_slug\"
 album_slug= \"$album_slug\"
 album= \"$album\"
 grupo= \"$grupo\"";
-        file_put_contents($nombre_archivo, $contenido);
+        file_put_contents($this->bandcamp, $contenido);
     }
 
     private function parse_video_id($youtube_decode){
@@ -75,51 +76,66 @@ grupo= \"$grupo\"";
         return $video_id;
     }
 
-    private function guardar_youtube($id){
+    private function guardar_youtube(){
         $youtube_encode = isset($_POST['youtube']) ? EuropioCode::encode($_POST['youtube']) : '';
         $youtube_decode = EuropioCode::decode($youtube_encode);
 
         $video_id = $this->parse_video_id($youtube_decode);
 
         $allowed_chars = array("-" => "&#45;", "_" => "&#95;", " " => "&#160;");
-        $video_id = str_replace(array_values($allowed_chars), array_keys($allowed_chars), $video_id);
+        $video_id = str_replace(array_values($allowed_chars),
+            array_keys($allowed_chars), $video_id);
 
-        $nombre_archivo = WRITABLE_DIR . "/bazkideak/taldea/youtube/$id.ini";
-        $contenido = "[youtube]\nv = $video_id";
-        file_put_contents($nombre_archivo, $contenido);
+        $contenido = "[youtube]\n v = $video_id";
+        file_put_contents($this->youtube, $contenido);
+    }
+
+    public function validaciones(){
+        $errores = array();
+
+        $requeridos = array("izena", "emaila", "bazkideak" );
+        $errores = validar_requeridos($errores, $requeridos);
+
+        $campoMail = 'emaila';
+        $errores = validar_formato_mail($errores, $campoMail);
+
+        $campoImagen = 'argazkia';
+        $tipo_permitido = array("image/png", "image/jpeg", "image/gif",
+            "image/bmp", "image/jpg");
+        $errores= validar_tipoImagen($errores, $tipo_permitido, $campoImagen);
+
+        return $errores;
     }
 
     public function guardar() {
-        $errores = array();
-        $requeridos = array("izena", "emaila", "bazkideak" );
-        $errores = validar_requeridos($errores, $requeridos);
-        $campoMail = 'emaila';
-        $errores = validar_formato_mail($errores, $campoMail);
-        $campoImagen = 'argazkia';
-        $tipo_permitido = array("image/png", "image/jpeg", "image/gif", "image/bmp", "image/jpg");
-        $errores= validar_tipoImagen($errores, $tipo_permitido, $campoImagen);
+        $id = get_data('id');
+        $slug = ($id == 0) ? $this->get_slug() : get_data('customurl');
 
-        if($errores and get_data('id') == 0) {$this->agregar($errores);exit;}
-        if($errores and get_data('id') !== 0) {$this->editar(get_data('id'), $errores);exit;}
+        $errores = $this->validaciones();
+        if($errores) {
+            (!$id) ? $this->agregar($errores) : $this->editar($id, $errores);
+            exit();
+        }
 
-        get_data('id') == 0 ? $this->crear_slug() : $this->model->customurl = get_data('customurl');
-
-        $this->model->talde_id = get_data('id');
+        $this->model->talde_id = $id;
         $this->model->izena = get_data('izena');
         $this->model->web = get_data('web');
         $this->model->emaila = get_data('emaila');
         $this->model->telefonoa = get_data('telefonoa');
         $this->model->deskribapena = get_data('deskribapena');
+        $this->model->customurl = $slug;
         $this->model->save();
 
-        if (get_data('bandcamp') !== "") $this->guardar_bandcamp($this->model->talde_id);
-        if (get_data('youtube') !== "") $this->guardar_youtube($this->model->talde_id);
+        $this->__set_aditional_properties();
+
+        if (get_data('bandcamp') !== "") $this->guardar_bandcamp();
+        if (get_data('youtube') !== "") $this->guardar_youtube();
 
         $bazkideak = get_data('bazkideak');
         $this->guardar_bazkide($bazkideak);
 
-        $ruta = WRITABLE_DIR . "/bazkideak/taldea/irudiak/{$this->model->talde_id}";
-        guardar_imagen($ruta, $campoImagen);
+        $campoImagen = 'argazkia';
+        guardar_imagen($this->imagen, $campoImagen);
 
         HTTPHelper::go("/bazkideak/talde/listar");
 
@@ -153,20 +169,26 @@ grupo= \"$grupo\"";
         $this->view->hasiera($taldeak, $ekitaldiak);
     }
 
-    private function eliminar_archivos($id){
-        $imagen = WRITABLE_DIR . "/bazkideak/taldea/irudiak/{$this->model->talde_id}";
-        unlink($imagen);
-        $bandcamp = WRITABLE_DIR . "/bazkideak/taldea/bandcamp/$id.ini";
-        unlink($bandcamp);
-        $youtube = WRITABLE_DIR . "/bazkideak/taldea/youtube/$id.ini";
-        unlink($youtube);
+    private function eliminar_archivos(){
+        file_put_contents($this->imagen, '');
+        file_put_contents($this->bandcamp, '');
+        file_put_contents($this->youtube, '');
     }
 
     public function eliminar($id=0) {
-        $this->model->talde_id = $id;
-        $this->eliminar_archivos($this->model->talde_id);
+        $this->model->talde_id = (int)$id;
+        $this->__set_aditional_properties();
         $this->model->destroy();
+        $this->eliminar_archivos();
         HTTPHelper::go("/bazkideak/talde/listar");
+    }
+
+    public function __call($funtzioa, $argumentuak=array()) {
+        $ini = "/{$this->model->talde_id}.ini";
+        $img = "/{$this->model->talde_id}";
+        $this->imagen = WRITABLE_DIR . IRUDI_DIR . $img;
+        $this->bandcamp =  WRITABLE_DIR . BANDCAMP_DIR . $ini;
+        $this->youtube = WRITABLE_DIR . YOUTUBE_DIR . $ini;
     }
 
 }

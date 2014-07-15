@@ -1,6 +1,6 @@
 
-    bazkideak
-    Musika taldeen kolektiboko bazkide eta taldeaen kudeatzeko modulua
+    Bazkideak modulua
+    Musika taldeen kolektiboko talde eta hauek osatzen duten bazkideak kudeatzeko
     Versión: 1.0
     Copyright (C) 2014, Xabi Pico xabikip@gmail.com
     Licencia: GNU GPL v3.0
@@ -19,6 +19,5 @@
    ===========================================================================
 
 
-                                    *****
-
-    <indicaciones>
+    Artxibo eta irudi hutsak erabat ezabatzeko
+    Exekutatzeko baimenak eman artxibo honi /common/tools/file/cron.php
