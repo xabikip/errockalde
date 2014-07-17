@@ -2,10 +2,11 @@
 
 class TaldeView {
 
-    public function agregar($bazkideak, $errores = array()) {
-
+    //Mostrar form para agregar talde
+    public function agregar($bazkideak, $errores=array()) {
         Dict::set_dict_for_webform($bazkideak, 'izena', @$_POST['izena']);
 
+        //Armar un formulario
         $form = new WebFormPRO('/bazkideak/talde/guardar');
         $form->add_text('izena', 'Taldearen izena', @$_POST['izena']);
         $form->add_hidden('customurl', 'customurl', @$_POST['customurl']);
@@ -20,15 +21,16 @@ class TaldeView {
         $form->add_submit('Taldea gehitu');
         $form->add_errorzone($errores);
 
-        print Template('Talde berria')->show($form->get_form() .
-            file_get_contents(STATIC_DIR ."js/europio_onload.js"));
+        //Mostrar form para agregar talde
+        $js_europio = file_get_contents(STATIC_DIR ."js/europio_onload.js");
+        $html = $form->get_form() . $js_europio;
+        print Template('Talde berria')->show($html);
     }
 
-
     public function editar($obj=array(), $bazkideak=array(), $errores=array()) {
-
         Dict::set_dict_for_webform($bazkideak, 'izena', @$_POST['izena']);
 
+        //Armar un formulario
         $form = new WebFormPRO('/bazkideak/talde/guardar');
         $form->add_hidden('id', $obj->talde_id);
         $form->add_text('izena', 'izena', $obj->izena);
@@ -44,12 +46,20 @@ class TaldeView {
         $form->add_submit('Gorde');
         $form->add_errorzone($errores);
 
-        print Template('Taldea editatu')->show($form->get_form());
+        //Mostrar form para editar talde
+        $js_europio = file_get_contents(STATIC_DIR ."js/europio_onload.js");
+        $html = $form->get_form() . $js_europio;
+        print Template('Taldea editatu')->show($html);
     }
 
-
     public function listar($coleccion=array()) {
+        $this->preparar_coleccion_listar($coleccion);
+        $str = new CustomCollectorViewer($coleccion, 'bazkideak', 'talde',
+            False, True, True);
+        print Template('Taldeen zerrenda')->show($str->get_table());
+    }
 
+    private function preparar_coleccion_listar(&$coleccion) {
         foreach ($coleccion as &$obj) {
             $obj->partaideak = array();
             foreach ($obj->bazkide_collection as $bazkide) {
@@ -58,98 +68,101 @@ class TaldeView {
             unset($obj->bazkide_collection);
             $obj->partaideak = nl2br(implode("\n", $obj->partaideak));
         }
-
-        $str = new CustomCollectorViewer($coleccion, 'bazkideak', 'talde',
-            false, True, True);
-
-        print Template('Taldeen zerrenda')->show($str->get_table());
     }
-
 
     public function hasiera($taldeak=array(), $ekitaldiak=array()) {
 
-        foreach ($ekitaldiak as $obj) {
+        //Modificar propiedades
+        foreach($ekitaldiak as $obj) {
             $obj->ekitaldi_izena = $obj->izena;
-            $obj->ordua = substr($obj->ordua, 0,5);
+            $obj->ordua = substr($obj->ordua, 0, 5);
         }
+
 
         $dict = new DictCollection();
         $dict->set($ekitaldiak);
         $ekitaldi_zerrenda = $dict->collection;
 
-        $plantilla_taldeak = file_get_contents( STATIC_DIR . '/html/taldeak_hasiera.html');
-        $plantilla_ekitaldiak = file_get_contents( STATIC_DIR . '/html/agenda_hasiera.html');
-        $plantilla_albisteak = file_get_contents( STATIC_DIR . '/html/albisteak_hasiera.html');
-
-        $render_taldeak = Template($plantilla_taldeak)->render_regex('TALDEAK', $taldeak);
-        $render_ekitaldiak = Template($plantilla_ekitaldiak)->render_regex('EKITALDIAK', $ekitaldi_zerrenda);
-        $render_albisteak = Template($plantilla_albisteak)->render();
-        $render_final = $render_ekitaldiak . $render_albisteak . $render_taldeak;
-
-        print Template('RockHeltzia', CUSTOM_PUBLIC_TEMPLATE)->show($render_final);
-
+        //Mostrar
+        $plantilla = file_get_contents(STATIC_DIR . "/html/hasiera.html");
+        $render_albiste = Template($plantilla)->render();;
+        $render_ekitaldiak = Template($render_albiste)->render_regex('EKITALDIAK', $ekitaldi_zerrenda);
+        $render_taldeak = Template($render_ekitaldiak)->render_regex('TALDEAK', $taldeak);
+        print Template('RockHeltzia', CUSTOM_PUBLIC_TEMPLATE)->show($render_taldeak);
     }
 
 
     public function taldeak($taldeak=array()) {
 
-        $plantilla = file_get_contents( STATIC_DIR . '/html/taldeak.html');
-
+        //Render taldeak
+        $plantilla = file_get_contents(STATIC_DIR . '/html/taldeak.html');
         $render_taldeak = Template($plantilla)->render_regex('TALDEAK', $taldeak);
 
+        //Render imagen
         foreach ($taldeak as $talde) {
-            $ruta = WRITABLE_DIR . IRUDI_DIR . "/{$talde->talde_id}";
-            if (!file_exists($ruta)){
-                $identificador = "IRUDIA{$talde->talde_id}";
-                $bloque_eliminar = Template($render_taldeak)->get_substr($identificador);
-                $render_taldeak = str_replace($bloque_eliminar, "", $render_taldeak);
+            $imagen = WRITABLE_DIR . IRUDI_DIR . "/{$talde->talde_id}";
+            if (!file_exists($imagen)){
+                $render_taldeak = $this->eliminar_bloque("IRUDIA{$talde->talde_id}", $render_taldeak);
             }
         }
 
+        //Mostrar
         print Template('Taldeak', CUSTOM_PUBLIC_TEMPLATE)->show($render_taldeak);
     }
 
 
     public function taldea($taldea=array()) {
+        $id = $taldea->talde_id;
 
+        //Añado propiedad
         foreach ($taldea->bazkide_collection as $obj) {
             $obj->bazkide_izena = $obj->izena;
         }
 
+        //Render grupo
         $plantilla = file_get_contents( STATIC_DIR . '/html/taldea.html');
         $render_taldea = Template($plantilla)->render($taldea);
 
-        $imagen = WRITABLE_DIR . IRUDI_DIR . "/{$taldea->talde_id}";
-        if (!file_exists($imagen)){
-            $identificador = "IRUDIA{$taldea->talde_id}";
-            $bloque_eliminar = Template($render_taldea)->get_substr($identificador);
-            $render_taldea = str_replace($bloque_eliminar, "", $render_taldea);
+        //Render imagen
+        $imagen = WRITABLE_DIR . IRUDI_DIR . "/{$id}";
+        if (!file_exists($imagen)) {
+            $render_taldea = $this->eliminar_bloque("IRUDIA{$id}", $render_taldea);
         }
 
-        $bandcamp = WRITABLE_DIR . BANDCAMP_DIR . "/{$taldea->talde_id}.ini";
-        if (file_exists($bandcamp)){
-            $bandcamp_parse = parse_ini_file($bandcamp, False);
-            $render_bandcamp = Template($render_taldea)->render($bandcamp_parse);
-        }else{
-            $identificador = "BANDCAMP";
-            $bloque_eliminar = Template($render_taldea)->get_substr($identificador);
-            $render_bandcamp = str_replace($bloque_eliminar, "", $render_taldea);
-        }
-
-        $youtube = WRITABLE_DIR . YOUTUBE_DIR . "/{$taldea->talde_id}.ini";
-         if (file_exists($youtube)){
-            $youtube_parse = parse_ini_file($youtube, False);
-            $render_youtube = Template($render_bandcamp)->render($youtube_parse);
-        }else{
-            $identificador = "YOUTUBE";
-            $bloque_eliminar = Template($render_bandcamp)->get_substr($identificador);
-            $render_youtube = str_replace($bloque_eliminar, "", $render_bandcamp);
-        }
-
-        $render_bazkidea = Template($render_youtube)->render_regex('BAZKIDEAK', $taldea->bazkide_collection);
-
+        //Mostrar
+        $bandcamp = WRITABLE_DIR . BANDCAMP_DIR . "/{$id}.ini";
+        $youtube  = WRITABLE_DIR . YOUTUBE_DIR . "/{$id}.ini";
+        $render_bandcamp = $this->render_exist($bandcamp, $render_taldea, $id, "BANDCAMP");
+        $render_youtube  = $this->render_exist($youtube, $render_bandcamp, $id, "YOUTUBE");
+        $render_bazkidea = Template($render_youtube)->render_regex('BAZKIDEAK',
+            $taldea->bazkide_collection);
         print Template('Taldeak', CUSTOM_PUBLIC_TEMPLATE)->show($render_bazkidea);
     }
+
+    # ==========================================================================
+    #                       PRIVATE FUNCTIONS: Helpers
+    # ==========================================================================
+
+    private function render_exist($file, $html, $id, $identificador){
+        if (file_exists($file)) {
+            $render = $this->render_ini($file, $html);
+        } else {
+            $render = $this->eliminar_bloque($identificador, $html);
+        }
+        return $render;
+    }
+
+    private function eliminar_bloque($identificador, $plantilla) {
+        $identificador = $identificador;
+        $bloque_eliminar = Template($plantilla)->get_substr($identificador);
+        return $render_eliminado = str_replace($bloque_eliminar, "", $plantilla);
+    }
+
+    private function render_ini($ini, $plantilla){
+         $ini_parse = parse_ini_file($ini, False);
+         return $render_ini = Template($plantilla)->render($ini_parse);
+    }
+
 }
 
 ?>
