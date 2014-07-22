@@ -163,10 +163,16 @@ grupo= \"$grupo\"";
     public function hasiera() {
         $collection_talde = CollectorObject::get('Talde');
         $taldeak = $collection_talde->collection;
+
         $ruta = SERVER_URI ."/api/ekitaldiak/ekitaldia/get-eventos";
         $json = file_get_contents($ruta);
         $ekitaldiak = json_decode($json);
-        $this->view->hasiera($taldeak, $ekitaldiak);
+
+        $ruta = SERVER_URI ."/api/blog/post/get-posts";
+        $json = file_get_contents($ruta);
+        $posts = json_decode($json);
+
+        $this->view->hasiera($taldeak, $ekitaldiak, $posts);
     }
 
     private function eliminar_archivos(){

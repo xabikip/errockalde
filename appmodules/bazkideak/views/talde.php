@@ -70,12 +70,18 @@ class TaldeView {
         }
     }
 
-    public function hasiera($taldeak=array(), $ekitaldiak=array()) {
-
+    public function hasiera($taldeak=array(), $ekitaldiak=array(), $posts=array()) {
         //Modificar propiedades
         foreach($ekitaldiak as $obj) {
             $obj->ekitaldi_izena = $obj->izena;
             $obj->ordua = substr($obj->ordua, 0, 5);
+        }
+
+        foreach ($posts as $post) {
+            $parrafoa = file_get_contents(WRITABLE_DIR . PARRAFO_DIR . "/{$post->post_id}.txt" );
+            $edukia = file_get_contents(WRITABLE_DIR . EDUKI_DIR . "/{$post->post_id}.txt" );
+            $post->parrafoa = $parrafoa;
+            $post->edukia = $edukia;
         }
 
 
@@ -83,11 +89,28 @@ class TaldeView {
         $dict->set($ekitaldiak);
         $ekitaldi_zerrenda = $dict->collection;
 
+        $dict = new DictCollection();
+        $dict->set($posts);
+        $post_zerrenda = $dict->collection;
+
+
+
         //Mostrar
         $plantilla = file_get_contents(STATIC_DIR . "/html/hasiera.html");
         $render_albiste = Template($plantilla)->render();;
         $render_ekitaldiak = Template($render_albiste)->render_regex('EKITALDIAK', $ekitaldi_zerrenda);
-        $render_taldeak = Template($render_ekitaldiak)->render_regex('TALDEAK', $taldeak);
+        $render_post = Template($render_ekitaldiak)->render_regex('POST', $post_zerrenda);
+        $render_taldeak = Template($render_post)->render_regex('TALDEAK', $taldeak);
+
+        //Render imagen
+        foreach ($posts as $post) {
+            $imagen = WRITABLE_DIR . POST_IRUDI_DIR . "/{$post->post_id}";
+            if (!file_exists($imagen)){
+                $render_taldeak = $this->eliminar_bloque("IRUDIA{$post->post_id}", $render_taldeak);
+            }
+        }
+
+
         print Template('RockHeltzia', CUSTOM_PUBLIC_TEMPLATE)->show($render_taldeak);
     }
 
