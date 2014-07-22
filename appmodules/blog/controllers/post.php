@@ -23,8 +23,7 @@ class postController extends Controller {
 
         $this->model->post_id = $id;
         $this->model->titularra = get_data('titularra');;
-        $this->model->sortua = date('Y-m-d');
-        $this->model->aldatua = date('Y-m-d');
+        (!$id) ? $this->model->sortua = date('Y-m-d') : $this->model->aldatua = date('Y-m-d');
         $this->model->save();
 
         $this->__set_aditional_properties();

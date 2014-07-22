@@ -77,13 +77,13 @@ class TaldeView {
             $obj->ordua = substr($obj->ordua, 0, 5);
         }
 
+        //Añadimos propiedad
         foreach ($posts as $post) {
             $parrafoa = file_get_contents(WRITABLE_DIR . PARRAFO_DIR . "/{$post->post_id}.txt" );
             $edukia = file_get_contents(WRITABLE_DIR . EDUKI_DIR . "/{$post->post_id}.txt" );
             $post->parrafoa = $parrafoa;
             $post->edukia = $edukia;
         }
-
 
         $dict = new DictCollection();
         $dict->set($ekitaldiak);
@@ -93,12 +93,9 @@ class TaldeView {
         $dict->set($posts);
         $post_zerrenda = $dict->collection;
 
-
-
-        //Mostrar
+        //Render ekitaldi, post y talde
         $plantilla = file_get_contents(STATIC_DIR . "/html/hasiera.html");
-        $render_albiste = Template($plantilla)->render();;
-        $render_ekitaldiak = Template($render_albiste)->render_regex('EKITALDIAK', $ekitaldi_zerrenda);
+        $render_ekitaldiak = Template($plantilla)->render_regex('EKITALDIAK', $ekitaldi_zerrenda);
         $render_post = Template($render_ekitaldiak)->render_regex('POST', $post_zerrenda);
         $render_taldeak = Template($render_post)->render_regex('TALDEAK', $taldeak);
 
@@ -110,13 +107,11 @@ class TaldeView {
             }
         }
 
-
         print Template('RockHeltzia', CUSTOM_PUBLIC_TEMPLATE)->show($render_taldeak);
     }
 
 
     public function taldeak($taldeak=array()) {
-
         //Render taldeak
         $plantilla = file_get_contents(STATIC_DIR . '/html/taldeak.html');
         $render_taldeak = Template($plantilla)->render_regex('TALDEAK', $taldeak);

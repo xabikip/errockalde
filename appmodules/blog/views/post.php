@@ -37,9 +37,9 @@ class postView {
     public function post($post=array()) {
         $id = $post->post_id;
 
+        //Añado propiedades parrafoa y edukia
         $parrafoa = file_get_contents(WRITABLE_DIR . PARRAFO_DIR . "/{$id}.txt" );
         $edukia = file_get_contents(WRITABLE_DIR . EDUKI_DIR . "/{$id}.txt" );
-
         $post->parrafoa = $parrafoa;
         $post->edukia = $edukia;
 
@@ -47,6 +47,12 @@ class postView {
         $plantilla = file_get_contents( STATIC_DIR . '/html/post.html');
         $render_post = Template($plantilla)->render($post);
 
+        //Render aldatua
+        if($post->aldatua <= 0){
+            $render_post = $this->eliminar_bloque("ALDATUA", $render_post);
+        }
+
+        //Render image
         $imagen = WRITABLE_DIR . POST_IRUDI_DIR . "/{$post->post_id}";
         if (!file_exists($imagen)){
             $render_post = $this->eliminar_bloque("IRUDIA{$post->post_id}", $render_post);
