@@ -3,7 +3,9 @@
 class postController extends Controller {
 
     public function agregar($errores=array()) {
-        $this->view->agregar($errores);
+        $ekitaldimota_collector = CollectorObject::get('EkitaldiMota');
+        $ekitaldimotak = $ekitaldimota_collector->collection;
+        $this->view->agregar($ekitaldimotak, $errores);
     }
 
     public function editar($id=0, $errores=array()) {
@@ -44,8 +46,10 @@ class postController extends Controller {
     }
 
     public function eliminar($id=0) {
-        $this->model->post_id = $id;
+        $this->model->post_id = (int)$id;
+        $this->__set_aditional_properties();
         $this->model->destroy();
+        $this->eliminar_archivos();
         HTTPHelper::go("/blog/post/listar");
     }
 
@@ -109,6 +113,12 @@ class postController extends Controller {
 
         $contenido = "$edukia_decode";
         file_put_contents($this->edukia, $contenido);
+    }
+
+    private function eliminar_archivos(){
+        file_put_contents($this->irudia, '');
+        file_put_contents($this->parrafoa, '');
+        file_put_contents($this->edukia, '');
     }
 
 }
