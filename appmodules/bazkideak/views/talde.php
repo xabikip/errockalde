@@ -16,6 +16,7 @@ class TaldeView {
         $form->add_text('telefonoa', 'Telefonoa', @$_POST['telefonoa']);
         $form->add_textarea('deskribapena', 'Deskribapena', @$_POST['deskribapena']);
         $form->add_textarea('bandcamp', 'Bandcamp', @$_POST['bandcamp']);
+        $form->add_textarea('_youtube', ' ', @$_POST['youtube'], "style='display: none;'");
         $form->add_text('youtube', 'Youtube', @$_POST['youtube']);
         $form->add_file('argazkia', 'Argazkia', @$_POST['file']);
         $form->add_submit('Taldea gehitu');
@@ -79,8 +80,8 @@ class TaldeView {
 
         //Añadimos propiedad
         foreach ($posts as $post) {
-            $parrafoa = file_get_contents(WRITABLE_DIR . PARRAFO_DIR . "/{$post->post_id}.txt" );
-            $edukia = file_get_contents(WRITABLE_DIR . EDUKI_DIR . "/{$post->post_id}.txt" );
+            $parrafoa = file_get_contents(WRITABLE_DIR . PARRAFO_DIR . "/{$post->post_id}" );
+            $edukia = file_get_contents(WRITABLE_DIR . EDUKI_DIR . "/{$post->post_id}" );
             $post->parrafoa = $parrafoa;
             $post->edukia = $edukia;
         }

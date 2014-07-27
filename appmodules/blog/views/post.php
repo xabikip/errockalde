@@ -2,20 +2,26 @@
 
 class postView {
 
-    public function agregar($errores=array()) {
+    public function agregar($kategoriak, $errores=array()) {
+        Dict::set_dict_for_webform($kategoriak, 'deitura', @$_POST['deitura']);
+
         $form = new WebFormPRO('/blog/post/guardar');
-        $form->add_text('titularra','titularra', @$_POST['titularra']);
+        $form->add_select('kategoria', 'kategoria', $kategoriak);
+        $form->add_textarea('titularra','titularra', @$_POST['titularra']);
         $form->add_textarea('parrafoa', 'parrafoa', @$_POST['parrafoa']);
         $form->add_textarea('edukia', 'edukia', @$_POST['edukia']);
         $form->add_file('irudia', 'irudia', @$_POST['irudia']);
         $form->add_submit('Artikulua gehitu');
         $form->add_errorzone($errores);
-        print Template('Artikulu berria')->show($form->get_form());
+
+        $js_europio = file_get_contents(STATIC_DIR ."js/europio_onload_post.js");
+        $html = $form->get_form() . $js_europio;
+        print Template('Artikulu berria')->show($html);
     }
 
     public function editar($obj=array(),$errores=array()) {
-        $parrafoa = file_get_contents(WRITABLE_DIR . PARRAFO_DIR . "/{$obj->post_id}.txt" );
-        $edukia = file_get_contents(WRITABLE_DIR . EDUKI_DIR . "/{$obj->post_id}.txt" );
+        $parrafoa = file_get_contents(WRITABLE_DIR . PARRAFO_DIR . "/{$obj->post_id}" );
+        $edukia = file_get_contents(WRITABLE_DIR . EDUKI_DIR . "/{$obj->post_id}" );
         $obj->parrafoa = $parrafoa;
         $obj->edukia = $edukia;
         $form = new WebFormPRO('/blog/post/guardar');
@@ -38,8 +44,10 @@ class postView {
         $id = $post->post_id;
 
         //Añado propiedades parrafoa y edukia
-        $parrafoa = file_get_contents(WRITABLE_DIR . PARRAFO_DIR . "/{$id}.txt" );
-        $edukia = file_get_contents(WRITABLE_DIR . EDUKI_DIR . "/{$id}.txt" );
+        $parrafoa = file_get_contents(WRITABLE_DIR . PARRAFO_DIR . "/{$id}" );
+        $edukia = file_get_contents(WRITABLE_DIR . EDUKI_DIR . "/{$id}" );
+        $edukia = EuropioCode::decode_preformat($edukia);
+        $parrafoa = EuropioCode::decode($parrafoa);
         $post->parrafoa = $parrafoa;
         $post->edukia = $edukia;
 
@@ -63,8 +71,8 @@ class postView {
 
     public function posts($posts=array()) {
         foreach ($posts as $post) {
-            $parrafoa = file_get_contents(WRITABLE_DIR . PARRAFO_DIR . "/{$post->post_id}.txt" );
-            $edukia = file_get_contents(WRITABLE_DIR . EDUKI_DIR . "/{$post->post_id}.txt" );
+            $parrafoa = file_get_contents(WRITABLE_DIR . PARRAFO_DIR . "/{$post->post_id}" );
+            $edukia = file_get_contents(WRITABLE_DIR . EDUKI_DIR . "/{$post->post_id}" );
             $post->parrafoa = $parrafoa;
             $post->edukia = $edukia;
         }

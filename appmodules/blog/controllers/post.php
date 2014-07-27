@@ -3,9 +3,9 @@
 class postController extends Controller {
 
     public function agregar($errores=array()) {
-        $ekitaldimota_collector = CollectorObject::get('EkitaldiMota');
-        $ekitaldimotak = $ekitaldimota_collector->collection;
-        $this->view->agregar($ekitaldimotak, $errores);
+        $kategoriak_collector = CollectorObject::get('kategoria');
+        $kategoriak = $kategoriak_collector->collection;
+        $this->view->agregar($kategoriak, $errores);
     }
 
     public function editar($id=0, $errores=array()) {
@@ -17,6 +17,9 @@ class postController extends Controller {
     public function guardar() {
         $id = get_data('id');
 
+        $parrafoa_encode = isset($_POST['parrafoa']) ? EuropioCode::encode($_POST['parrafoa']) : '';
+        $edukia_encode = isset($_POST['edukia']) ? EuropioCode::encode($_POST['edukia']) : '';
+
         $errores = $this->validaciones();
 
         if($errores) {
@@ -24,14 +27,18 @@ class postController extends Controller {
         }
 
         $this->model->post_id = $id;
-        $this->model->titularra = get_data('titularra');;
+        $this->model->titularra = get_data('titularra');
         (!$id) ? $this->model->sortua = date('Y-m-d') : $this->model->aldatua = date('Y-m-d');
+        $kategoria = Pattern::factory('kategoria', get_data('kategoria') );
+        $this->model->kategoria = Pattern::composite('kategoria', $kategoria);
         $this->model->save();
 
         $this->__set_aditional_properties();
 
-        if (get_data('parrafoa') !== "") $this->guardar_parrafoa();
-        if (get_data('edukia') !== "") $this->guardar_edukia();
+        if (get_data('parrafoa') !== "") $this->guardar_en_archivo($this->parrafoa,
+                                                                   $parrafoa_encode);
+        if (get_data('edukia') !== "") $this->guardar_en_archivo($this->edukia,
+                                                             $edukia_encode);
 
         $campoImagen = 'irudia';
         guardar_imagen($this->irudia, $campoImagen);
@@ -73,11 +80,10 @@ class postController extends Controller {
     }
 
     public function __call($funtzioa, $argumentuak=array()) {
-        $txt= "/{$this->model->post_id}.txt";
         $id= "/{$this->model->post_id}";
         $this->irudia = WRITABLE_DIR . POST_IRUDI_DIR . $id;
-        $this->parrafoa =  WRITABLE_DIR . PARRAFO_DIR . $txt;
-        $this->edukia = WRITABLE_DIR . EDUKI_DIR . $txt;
+        $this->parrafoa =  WRITABLE_DIR . PARRAFO_DIR . $id;
+        $this->edukia = WRITABLE_DIR . EDUKI_DIR . $id;
     }
 
     # ==========================================================================
@@ -98,21 +104,8 @@ class postController extends Controller {
         return $errores;
     }
 
-    private function guardar_parrafoa(){
-        $parrafoa_encode = isset($_POST['parrafoa']) ? EuropioCode::encode($_POST['parrafoa']) : '';
-        $parrafoa_decode = EuropioCode::decode($parrafoa_encode);
-
-        //TODO poner en $contenido $parrafoa_decode
-        $contenido = $_POST['parrafoa'];
-        file_put_contents($this->parrafoa, $contenido);
-    }
-
-    private function guardar_edukia(){
-        $edukia_encode = isset($_POST['edukia']) ? EuropioCode::encode($_POST['edukia']) : '';
-        $edukia_decode = EuropioCode::decode($edukia_encode);
-
-        $contenido = "$edukia_decode";
-        file_put_contents($this->edukia, $contenido);
+    private function guardar_en_archivo($archivo, $contenido){
+        file_put_contents($archivo, $contenido);
     }
 
     private function eliminar_archivos(){

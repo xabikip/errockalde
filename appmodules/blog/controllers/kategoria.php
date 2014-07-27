@@ -1,25 +1,36 @@
 <?php
 
-class kategoriaController extends Controller { 
+class kategoriaController extends Controller {
 
-    public function agregar() {
-        $this->view->agregar();
+    public function agregar($errores=array()) {
+        $this->view->agregar($errores);
     }
 
-    public function editar($id=0) {
+    public function editar($id=0, $errores=array()) {
         $this->model->kategoria_id = $id;
         $this->model->get();
-        $this->view->editar($this->model);
+        $this->view->editar($this->model, $errores);
     }
 
     public function guardar() {
-        $id = (isset($_POST['id'])) ? $_POST['id'] : 0;
+        $id = get_data('id');
+
+        $errores = array();
+        $requeridos = array("deitura");
+        $errores = validar_requeridos($errores, $requeridos);
+
+        if($errores) {
+            (!$id) ? $this->agregar($errores) : $this->editar($id, $errores);exit();
+        }
+
         $this->model->kategoria_id = $id;
-        # ...
+        $this->model->deitura = get_data('deitura');
+        // print_r($this->model);exit;
         $this->model->save();
+
         HTTPHelper::go("/blog/kategoria/listar");
     }
-    
+
     public function listar() {
         $collection = CollectorObject::get('kategoria');
         $list = $collection->collection;
