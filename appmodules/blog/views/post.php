@@ -73,6 +73,8 @@ class postView {
         foreach ($posts as $post) {
             $parrafoa = file_get_contents(WRITABLE_DIR . PARRAFO_DIR . "/{$post->post_id}" );
             $edukia = file_get_contents(WRITABLE_DIR . EDUKI_DIR . "/{$post->post_id}" );
+            $edukia = EuropioCode::decode_preformat($edukia);
+            $parrafoa = EuropioCode::decode($parrafoa);
             $post->parrafoa = $parrafoa;
             $post->edukia = $edukia;
         }
