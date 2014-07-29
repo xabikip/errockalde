@@ -23,7 +23,7 @@ class TaldeView {
         $form->add_errorzone($errores);
 
         //Mostrar form para agregar talde
-        $js_europio = file_get_contents(STATIC_DIR ."js/europio_onload.js");
+        $js_europio = file_get_contents(STATIC_DIR ."js/errockalde.js");
         $html = $form->get_form() . $js_europio;
         print Template('Talde berria')->show($html);
     }

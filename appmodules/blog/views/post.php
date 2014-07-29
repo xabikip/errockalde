@@ -9,13 +9,13 @@ class postView {
         $form->add_select('kategoria', 'kategoria', $kategoriak);
         $form->add_textarea('titularra','titularra', @$_POST['titularra']);
         $form->add_textarea('parrafoa', 'parrafoa', @$_POST['parrafoa']);
-        $form->add_textarea('edukia', 'edukia', @$_POST['edukia']);
+        $form->add_textarea('edukia', 'edukia', @$_POST['edukia'], ' class="editme"');
         $form->add_file('irudia', 'irudia', @$_POST['irudia']);
         $form->add_submit('Artikulua gehitu');
         $form->add_errorzone($errores);
 
-        $js_europio = file_get_contents(STATIC_DIR ."js/europio_onload_post.js");
-        $html = $form->get_form() . $js_europio;
+        $js_europio = file_get_contents(STATIC_DIR ."js/errockalde.js");
+        $html = $js_europio . $form->get_form();
         print Template('Artikulu berria')->show($html);
     }
 
