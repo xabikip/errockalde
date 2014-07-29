@@ -61,7 +61,7 @@ class postController extends Controller {
     }
 
     public function post($id=0) {
-        $post = DataHandler('post')->filter("post_id=$id");
+        $post = DataHandler('post')->filter("post_id=$id[1]");
         $this->model->post_id = $post[0]['post_id'];
         $this->model->get();
         $this->view->post($this->model);
