@@ -48,7 +48,7 @@ class TaldeView {
         $form->add_errorzone($errores);
 
         //Mostrar form para editar talde
-        $js_europio = file_get_contents(STATIC_DIR ."js/europio_onload.js");
+        $js_europio = file_get_contents(STATIC_DIR ."js/errockalde.js");
         $html = $form->get_form() . $js_europio;
         print Template('Taldea editatu')->show($html);
     }
@@ -58,17 +58,6 @@ class TaldeView {
         $str = new CustomCollectorViewer($coleccion, 'bazkideak', 'talde',
             False, True, True);
         print Template('Taldeen zerrenda')->show($str->get_table());
-    }
-
-    private function preparar_coleccion_listar(&$coleccion) {
-        foreach ($coleccion as &$obj) {
-            $obj->partaideak = array();
-            foreach ($obj->bazkide_collection as $bazkide) {
-                $obj->partaideak[] = $bazkide->izena;
-            }
-            unset($obj->bazkide_collection);
-            $obj->partaideak = nl2br(implode("\n", $obj->partaideak));
-        }
     }
 
     public function hasiera($taldeak=array(), $ekitaldiak=array(), $posts=array()) {
@@ -163,6 +152,17 @@ class TaldeView {
     # ==========================================================================
     #                       PRIVATE FUNCTIONS: Helpers
     # ==========================================================================
+
+    private function preparar_coleccion_listar(&$coleccion) {
+        foreach ($coleccion as $obj) {
+            $obj->partaideak = array();
+            foreach ($obj->bazkide_collection as $bazkide) {
+                $obj->partaideak[] = $bazkide->izena;
+            }
+            unset($obj->bazkide_collection);
+            $obj->partaideak = nl2br(implode("\n", $obj->partaideak));
+        }
+    }
 
     private function render_exist($file, $html, $id, $identificador){
         if (file_exists($file)) {

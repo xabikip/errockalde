@@ -3,7 +3,6 @@
 class EkitaldiaView {
 
     public function agregar($ekitaldimotak, $errores = array()) {
-
         Dict::set_dict_for_webform($ekitaldimotak, 'deitura', @$_POST['deitura']);
 
         $form = new WebFormPRO('/ekitaldiak/ekitaldia/guardar');
@@ -17,12 +16,13 @@ class EkitaldiaView {
         $form->add_file('kartela', 'kartela', @$_POST['file']);
         $form->add_submit('Ekitaldia gehitu');
         $form->add_errorzone($errores);
-        print Template('Ekitaldi berria')->show($form->get_form().
-            file_get_contents(STATIC_DIR ."js/datepickerCustom.js"));
+
+        $js_datepicker = file_get_contents(STATIC_DIR ."js/datepickerCustom.js");
+        $html = $js_datepicker . $form->get_form();
+        print Template('Ekitaldi berria')->show($html);
     }
 
     public function editar($ekitaldimotak, $obj=array()) {
-
         Dict::set_dict_for_webform($ekitaldimotak, 'deitura');
 
         $form = new WebForm('/ekitaldiak/ekitaldia/guardar');
@@ -43,6 +43,7 @@ class EkitaldiaView {
             $obj->lekua = $obj->lekua->izena;
             $obj->ekitaldimota = $obj->ekitaldimota->deitura;
         }
+
         $tabla = new CustomCollectorViewer($coleccion, 'ekitaldiak',  'ekitaldia',
             False, True, True);
         print Template('Ekitaldien zerrenda')->show($tabla->get_table());

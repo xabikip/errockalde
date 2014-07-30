@@ -25,7 +25,6 @@ class kategoriaController extends Controller {
 
         $this->model->kategoria_id = $id;
         $this->model->deitura = get_data('deitura');
-        // print_r($this->model);exit;
         $this->model->save();
 
         HTTPHelper::go("/blog/kategoria/listar");

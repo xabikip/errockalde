@@ -38,6 +38,7 @@ class postView {
         foreach ($coleccion as $obj) {
             $obj->kategoria = $obj->kategoria->deitura;
         }
+
         $str = CollectorViewer($coleccion, 'blog', 'post',
             false, True, True)->get_table();
         print Template('Listado de post')->show($str);
