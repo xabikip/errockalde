@@ -39,7 +39,7 @@ class EkitaldiaView {
     }
 
     public function listar($coleccion=array()) {
-        foreach ($coleccion as &$obj) {
+        foreach ($coleccion as $obj) {
             $obj->lekua = $obj->lekua->izena;
             $obj->ekitaldimota = $obj->ekitaldimota->deitura;
         }

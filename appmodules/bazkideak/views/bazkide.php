@@ -34,7 +34,7 @@ class BazkideView {
     }
 
     public function listar($coleccion=array()) {
-        foreach ($coleccion as &$obj) {
+        foreach ($coleccion as $obj) {
             $obj->erabiltzailea = $obj->user->name;
             unset($obj->user);
         }
