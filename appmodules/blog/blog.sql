@@ -12,5 +12,7 @@ CREATE TABLE post (
     kategoria INT(11),
     FOREIGN KEY (kategoria)
         REFERENCES kategoria (kategoria_id)
-        ON DELETE SET NULL
+        ON DELETE SET NULL,
+    user INT(11) NOT NULL,
+        FOREIGN KEY(user) REFERENCES user(user_id)
 ) ENGINE=InnoDB;

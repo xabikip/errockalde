@@ -45,7 +45,7 @@ class UserController extends Controller {
             $this->model->save($pwd);
             HTTPHelper::go("/users/user/listar");
         } else {
-            $this->view->show_form($user_exists, $badpwd, $this->model->name, 
+            $this->view->show_form($user_exists, $badpwd, $this->model->name,
                 $this->model->level, $_POST['pwd'], $tit, $id);
         }
     }
@@ -114,7 +114,7 @@ class UserController extends Controller {
         $badpwd = false;
         $pwd_ = $_POST['pwd'];
         if(strlen($pwd_) < 6) $badpwd = True;
-        $pwd = (!$badpwd) ? str_replace(' ', '', 
+        $pwd = (!$badpwd) ? str_replace(' ', '',
             SessionHelper::get_pwd()) : False;
         if($pwd_ == '' && $id > 0) $badpwd = False;
         return array($pwd, $badpwd);

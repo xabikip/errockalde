@@ -37,6 +37,7 @@ class postView {
     public function listar($coleccion=array()) {
         foreach ($coleccion as $obj) {
             $obj->kategoria = $obj->kategoria->deitura;
+            $obj->user = $obj->user->name;
         }
 
         $str = CollectorViewer($coleccion, 'blog', 'post',
@@ -45,9 +46,11 @@ class postView {
     }
 
     public function post($post=array()) {
-        $id = $post->post_id;
+        $post->kategoria = $post->kategoria->deitura;
+        $post->user = $post->user->name;
 
         //Añado propiedades parrafoa y edukia
+        $id = $post->post_id;
         $parrafoa = file_get_contents(WRITABLE_DIR . PARRAFO_DIR . "/{$id}" );
         $edukia = file_get_contents(WRITABLE_DIR . EDUKI_DIR . "/{$id}" );
         $edukia = EuropioCode::decode_preformat($edukia);
@@ -59,9 +62,11 @@ class postView {
         $plantilla = file_get_contents( STATIC_DIR . '/html/post.html');
         $render_post = Template($plantilla)->render($post);
 
-        //Render aldatua
+        //Render data
         if($post->aldatua <= 0){
             $render_post = $this->eliminar_bloque("ALDATUA", $render_post);
+        }else{
+            $render_post = $this->eliminar_bloque("SORTUA", $render_post);
         }
 
         //Render image

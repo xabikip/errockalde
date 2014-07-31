@@ -17,9 +17,6 @@ class postController extends Controller {
     public function guardar() {
         $id = get_data('id');
 
-        $parrafoa_encode = isset($_POST['parrafoa']) ? EuropioCode::encode($_POST['parrafoa']) : '';
-        $edukia_encode = isset($_POST['edukia']) ? EuropioCode::encode($_POST['edukia']) : '';
-
         $errores = $this->validaciones();
 
         if($errores) {
@@ -31,9 +28,20 @@ class postController extends Controller {
         (!$id) ? $this->model->sortua = date('Y-m-d') : $this->model->aldatua = date('Y-m-d');
         $kategoria = Pattern::factory('kategoria', get_data('kategoria') );
         $this->model->kategoria = Pattern::composite('kategoria', $kategoria);
+
+        $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : '';
+        if($user_id){
+            $user = Pattern::factory('User', $user_id );
+            $this->model->user = Pattern::composite('User', $user);
+        }
+
         $this->model->save();
 
         $this->__set_aditional_properties();
+
+
+        $parrafoa_encode = isset($_POST['parrafoa']) ? EuropioCode::encode($_POST['parrafoa']) : '';
+        $edukia_encode = isset($_POST['edukia']) ? EuropioCode::encode($_POST['edukia']) : '';
 
         if (get_data('parrafoa') !== "") $this->guardar_en_archivo($this->parrafoa,
                                                                    $parrafoa_encode);

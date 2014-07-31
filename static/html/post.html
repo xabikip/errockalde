@@ -2,17 +2,18 @@
     <div class="col-lg-8">
         <h1>{titularra}</h1>
         <p class="lead">
-            by <a href="#">Start Bootstrap</a>
+            by <a href="#">{user}</a>
         </p>
         <hr>
-        <p>Sortua: {sortua}
-        <!--ALDATUA-->/ Azken aldaketa:{aldatua}<!--ALDATUA-->
+        <p>
+        <!--SORTUA-->{sortua}<!--SORTUA-->
+        <!--ALDATUA-->{aldatua}<!--ALDATUA-->
         </p>
+        <p>{kategoria}</p>
         <hr>
         <!--IRUDIA{post_id}-->
-        <img src="/artxibo?dokumentua=/blog/post/irudiak/{post_id}">
+        <img src="/artxibo?dokumentua=/blog/post/irudiak/{post_id}" width="300px">
         <!--IRUDIA{post_id}-->
-        <hr>
         <p class="lead">{parrafoa}</p>
         <p>{edukia}</p>
         <hr>
