@@ -69,16 +69,31 @@ class postController extends Controller {
     }
 
     public function post($id=0) {
+        $collection = CollectorObject::get('kategoria');
+        $kategoriak = $collection->collection;
+
         $post = DataHandler('post')->filter("post_id=$id[1]");
         $this->model->post_id = $post[0]['post_id'];
         $this->model->get();
-        $this->view->post($this->model);
+
+        $this->view->post($this->model, $kategoriak);
     }
 
     public function posts() {
+        $collection = CollectorObject::get('kategoria');
+        $kategoriak = $collection->collection;
+
         $collection = CollectorObject::get('Post');
         $list = $collection->collection;
-        $this->view->posts($list);
+        $this->view->posts($list, $kategoriak);
+    }
+
+    public function posts_kategoria($id=0) {
+        $collection = CollectorObject::get('kategoria');
+        $kategoriak = $collection->collection;
+
+        $posts = DataHandler('post')->filter("kategoria=$id");
+        $this->view->posts($posts, $kategoriak);
     }
 
     public function get_posts() {

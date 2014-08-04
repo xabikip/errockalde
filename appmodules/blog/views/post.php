@@ -45,7 +45,8 @@ class postView {
         print Template('Listado de post')->show($str);
     }
 
-    public function post($post=array()) {
+    public function post($post=array(), $kategoriak) {
+
         $post->kategoria = $post->kategoria->deitura;
         $post->user = $post->user->name;
 
@@ -61,6 +62,9 @@ class postView {
         //Render post
         $plantilla = file_get_contents( STATIC_DIR . '/html/post.html');
         $render_post = Template($plantilla)->render($post);
+
+        //Render kategoriak
+        $render_post = Template($render_post)->render_regex('KATEGORIAK', $kategoriak);
 
         //Render data
         if($post->aldatua <= 0){
@@ -78,25 +82,37 @@ class postView {
         print Template('Post', CUSTOM_PUBLIC_TEMPLATE)->show($render_post);
     }
 
-    public function posts($posts=array()) {
-        foreach ($posts as $post) {
-            $parrafoa = file_get_contents(WRITABLE_DIR . PARRAFO_DIR . "/{$post->post_id}" );
-            $edukia = file_get_contents(WRITABLE_DIR . EDUKI_DIR . "/{$post->post_id}" );
+    public function posts($posts=array(), $kategoriak) {
+
+        foreach ($posts as &$post) {
+            (isset($post->post_id)) ? $id = $post->post_id : $id = $post['post_id'];
+            $parrafoa = file_get_contents(WRITABLE_DIR . PARRAFO_DIR . "/{$id}" );
+            $edukia = file_get_contents(WRITABLE_DIR . EDUKI_DIR . "/{$id}" );
             $edukia = EuropioCode::decode_preformat($edukia);
             $parrafoa = EuropioCode::decode($parrafoa);
-            $post->parrafoa = $parrafoa;
-            $post->edukia = $edukia;
+            if (isset($post->post_id)){
+                $post->parrafoa = $parrafoa;
+                $post->edukia = $edukia;
+            }else{
+                $post['parrafoa'] = $parrafoa;
+                $post['edukia'] = $edukia;
+            };
+
         }
 
         //Render post
         $plantilla = file_get_contents( STATIC_DIR . '/html/posts.html');
         $render_post = Template($plantilla)->render_regex('POST', $posts);
 
+        //Render kategoriak
+        $render_post = Template($render_post)->render_regex('KATEGORIAK', $kategoriak);
+
         //Render imagen
         foreach ($posts as $post) {
-            $imagen = WRITABLE_DIR . POST_IRUDI_DIR . "/{$post->post_id}";
+            (isset($post->post_id)) ? $id = $post->post_id : $id = $post['post_id'];
+            $imagen = WRITABLE_DIR . POST_IRUDI_DIR . "/{$id}";
             if (!file_exists($imagen)){
-                $render_post = $this->eliminar_bloque("IRUDIA{$post->post_id}", $render_post);
+                $render_post = $this->eliminar_bloque("IRUDIA{$id}", $render_post);
             }
         }
 
