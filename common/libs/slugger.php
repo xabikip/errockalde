@@ -11,8 +11,8 @@
  *
  */
 
-class Slugger
-{
+class Slugger{
+
     protected $separator;
 
     public function __construct($separator = null){

@@ -9,6 +9,7 @@ CREATE TABLE post (
     titularra VARCHAR(250),
     sortua DATE NOT NULL,
     aldatua DATE NOT NULL,
+    slug VARCHAR(300),
     kategoria INT(11),
     FOREIGN KEY (kategoria)
         REFERENCES kategoria (kategoria_id)

@@ -24,8 +24,11 @@ class postController extends Controller {
         }
 
         $this->model->post_id = $id;
+
         $this->model->titularra = get_data('titularra');
+
         (!$id) ? $this->model->sortua = date('Y-m-d') : $this->model->aldatua = date('Y-m-d');
+
         $kategoria = Pattern::factory('kategoria', get_data('kategoria') );
         $this->model->kategoria = Pattern::composite('kategoria', $kategoria);
 
@@ -35,6 +38,8 @@ class postController extends Controller {
             $this->model->user = Pattern::composite('User', $user);
         }
 
+        $slugger = new Slugger();
+        $this->model->slug =  $slugger->slugify(get_data('titularra'));
         $this->model->save();
 
         $this->__set_aditional_properties();
@@ -72,7 +77,7 @@ class postController extends Controller {
         $collection = CollectorObject::get('kategoria');
         $kategoriak = $collection->collection;
 
-        $post = DataHandler('post')->filter("post_id=$id[1]");
+        $post = DataHandler('post')->filter("slug=$id[1]");
         $this->model->post_id = $post[0]['post_id'];
         $this->model->get();
 
