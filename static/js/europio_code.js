@@ -5,12 +5,12 @@
 *
 * Codifica cadenas de texto convirtiendo caracteres no alfanuméricos en pseudo
 * codigo, sanitizando así, cualquier campo de formulario previo a su
-* envío. Luego, decodifica el pseudocódigo convirtiéndolo en entidades 
+* envío. Luego, decodifica el pseudocódigo convirtiéndolo en entidades
 * hexadecimales de HTML.
 * Utilizado de forma conjunta con ModSecurity y las reglas de OWASP,
 * lograrán formularios invulnerables con aplicaciones 100% funcionales, gracias
 * a su deodificador que interpretará el código de forma tal, que sean evitados
-* los falsos positivos de ModSecurity. 
+* los falsos positivos de ModSecurity.
 *
 * EuropioCode is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -51,10 +51,10 @@ function EuropioCode() {
     // en cadenas de texto con preformato
     this.preformat_prefix = "pFt";
 
-    // tabla de tags permitidos en textos preformateados. 
+    // tabla de tags permitidos en textos preformateados.
     // los hiperenlaces se manejan de forma separada. NO AGREGAR el tag <a>
     this.preformat_table = new Array(
-            "<b>", "<strong>", "<i>", "<em>", "<u>", 
+            "<b>", "<strong>", "<i>", "<em>", "<u>",
             "<strike>", "<sub>", "<sup>",
             "<p>", "<blockquote>", "<hr>",
             "<ul>", "<ol>", "<li>",
@@ -108,7 +108,7 @@ function EuropioCode() {
 
     /**
     * Codificar el valor de un campo de formulario de texto con preformato,
-    * respetando los tags HTML permitidos, especificados en el array 
+    * respetando los tags HTML permitidos, especificados en el array
     * EuropioCode.preformat_table
     *
     * @param  (string) campo -- id del campo de formulario a ser codificado
@@ -124,13 +124,13 @@ function EuropioCode() {
             tag_apertura = new RegExp(this.preformat_table[i], 'g');
             pFt_apertura = this.preformat_prefix + numero;
             cadena = cadena.replace(tag_apertura, pFt_apertura);
-            
+
             tag_cierre_str = this.preformat_table[i].replace("<", "</");
             tag_cierre = new RegExp(tag_cierre_str, 'g');
             pFt_cierre = this.preformat_prefix + 'e' + numero;
             cadena = cadena.replace(tag_cierre, pFt_cierre);
-        } 
-        
+        }
+
         document.getElementById(campo).value = cadena;
         document.getElementById(campo).readOnly = 'ReadOnly';
         this.encode(campo)
@@ -142,7 +142,7 @@ function EuropioCode() {
     * solo admite enlaces con el formato <a href="url"> o
     * <a href="url" target="_self|_top|_blank">
     *
-    * @param  (string) cadena -- cadena de texto con preformato conteniendo 
+    * @param  (string) cadena -- cadena de texto con preformato conteniendo
     *                            los enlaces a ser codificados
     * @return (string) cadena -- la cadena con los enlaces codificados
     */
@@ -156,12 +156,12 @@ function EuropioCode() {
         cadena = cadena.replace(/<\/a>/g, "eT0n1");
 
         coincidencias = cadena.match(/<a\ href=\"[a-zA-Z0-9|\.|\:|\/|-]+\"(\ target=\"_[a-z]{3,5}\")?>/g);
-        hiperenlaces = (coincidencias) ? coincidencias : new Array(); 
+        hiperenlaces = (coincidencias) ? coincidencias : new Array();
 
         for(i=0; i<hiperenlaces.length; i++) {
             enlace = hiperenlaces[i];
             for(etiqueta in diccionario) {
-                regex = new RegExp(etiqueta, 'g');            
+                regex = new RegExp(etiqueta, 'g');
                 enlace = enlace.replace(regex, diccionario[etiqueta]);
             }
             cadena = cadena.replace(hiperenlaces[i], enlace);

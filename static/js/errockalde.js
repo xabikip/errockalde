@@ -1,6 +1,7 @@
 <script src="//tinymce.cachefly.net/4.1/tinymce.min.js"></script>
 <script>
         tinymce.init({
+          // plugins: "code",
           selector:'textarea.editme',
           language_url : '/static/js/eu.js',
           toolbar: "undo redo | styleselect | bold italic ",
@@ -8,6 +9,20 @@
         });
 </script>
 <script>
+
+function limpiar_cadena() {
+    regex = new RegExp("\ style=\"(.){0,}\"", 'g');
+    textarea = document.getElementById('edukia_4').value;
+    resultado = textarea.replace(regex, "");
+    document.getElementById('edukia_4').value = resultado;
+
+
+    textarea = document.getElementById('edukia_4').value;
+    resultado = textarea.replace(/&ntilde;/g, 'ñ');
+    resultado = resultado.replace(/&nbsp;/g, ' ');
+    document.getElementById('edukia_4').value = resultado;
+}
+
 window.onload = function() {
     pagina = get_pagina_actual();
     switch(pagina) {
@@ -32,6 +47,7 @@ function set_encode_post() {
     europiocode = new EuropioCode();
 
     document.getElementsByTagName('form')[0].onsubmit = function(){
+        limpiar_cadena();
         europiocode.encode('parrafoa_3');
         europiocode.encode_preformat('edukia_4');
     };

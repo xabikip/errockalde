@@ -55,7 +55,7 @@ class postView {
         $parrafoa = file_get_contents(WRITABLE_DIR . PARRAFO_DIR . "/{$id}" );
         $edukia = file_get_contents(WRITABLE_DIR . EDUKI_DIR . "/{$id}" );
         $edukia = EuropioCode::decode_preformat($edukia);
-        $parrafoa = EuropioCode::decode($parrafoa);
+        $parrafoa = str_replace("&#160;", " ", EuropioCode::decode($parrafoa));
         $post->parrafoa = $parrafoa;
         $post->edukia = $edukia;
 
@@ -89,7 +89,7 @@ class postView {
             $parrafoa = file_get_contents(WRITABLE_DIR . PARRAFO_DIR . "/{$id}" );
             $edukia = file_get_contents(WRITABLE_DIR . EDUKI_DIR . "/{$id}" );
             $edukia = EuropioCode::decode_preformat($edukia);
-            $parrafoa = EuropioCode::decode($parrafoa);
+            $parrafoa = str_replace("&#160;", " ", EuropioCode::decode($parrafoa));
             if (isset($post->post_id)){
                 $post->parrafoa = $parrafoa;
                 $post->edukia = $edukia;
