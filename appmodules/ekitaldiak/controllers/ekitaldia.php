@@ -11,7 +11,9 @@ class EkitaldiaController extends Controller {
     public function agregar($errores=array()) {
         $ekitaldimota_collector = CollectorObject::get('EkitaldiMota');
         $ekitaldimotak = $ekitaldimota_collector->collection;
-        $this->view->agregar($ekitaldimotak, $errores);
+        $lekua_collector = CollectorObject::get('Lekua');
+        $lekuak = $lekua_collector->collection;
+        $this->view->agregar($ekitaldimotak, $lekuak, $errores);
     }
 
     public function editar($id=0) {
@@ -20,15 +22,6 @@ class EkitaldiaController extends Controller {
         $this->model->ekitaldia_id = $id;
         $this->model->get();
         $this->view->editar($ekitaldimotak, $this->model);
-    }
-
-    private function lekuaGorde(){
-        $lekua = new Lekua();
-        $lekua->izena = get_data('izena');
-        $lekua->herria = get_data('herria');
-        $lekua->helbidea = get_data('helbidea');
-        $lekua->save();
-        return $lekua;
     }
 
     public function guardar() {
@@ -86,6 +79,31 @@ class EkitaldiaController extends Controller {
         $this->apidata = $list;
     }
 
+
+    # ==========================================================================
+    #                       PRIVATE FUNCTIONS: Helpers
+    # ==========================================================================
+
+     private function lekuaGorde(){
+        $izena = get_data('izena');
+        $herria = get_data('herria');
+        $helbidea = get_data('helbidea');
+        $lekua = DataHandler('lekua', DH_FORMAT_OBJECT)->filter("izena=$izena");
+        if(!$lekua){
+            $lekua = new Lekua();
+            $lekua->izena = get_data('izena');
+            $lekua->herria = get_data('herria');
+            $lekua->helbidea = get_data('helbidea');
+            $lekua->save();
+        }elseif($lekua[0]->herria !== $herria or $lekua[0]->helbidea !== $helbidea){
+            $lekua = new Lekua();
+            $lekua->izena = get_data('izena');
+            $lekua->herria = get_data('herria');
+            $lekua->helbidea = get_data('helbidea');
+            $lekua->save();
+        }
+        return $lekua;
+    }
 }
 
 ?>

@@ -2,7 +2,7 @@
 
 class EkitaldiaView {
 
-    public function agregar($ekitaldimotak, $errores = array()) {
+    public function agregar($ekitaldimotak, $lekuak, $errores = array()) {
         Dict::set_dict_for_webform($ekitaldimotak, 'deitura', @$_POST['deitura']);
 
         $form = new WebFormPRO('/ekitaldiak/ekitaldia/guardar');
@@ -10,9 +10,22 @@ class EkitaldiaView {
         $form->add_select('ekitaldimota', 'Ekitaldi Mota', $ekitaldimotak);
         $form->add_text('data', 'data', @$_POST['data']);
         $form->add_text('ordua', 'ordua', @$_POST['ordua']) ;
-        $form->add_text('izena', 'Lekuaren Izena', @$_POST['izena']);
-        $form->add_text('helbidea', 'helbidea', @$_POST['helbidea']);
-        $form->add_text('herria', 'herria', @$_POST['helbidea']);
+
+        $form->add_text('izena', 'Lekuaren Izena', @$_POST['izena'], "list='lekuak'");
+        $html_datalist = file_get_contents( STATIC_DIR . '/html/DataListLekua.html');
+        $render = Template($html_datalist)->render_regex('lekuak', $lekuak);
+        $form->fields[] = $render;
+
+        $form->add_text('helbidea', 'helbidea', @$_POST['helbidea'], "list='helbideak'");
+        $html_datalist = file_get_contents( STATIC_DIR . '/html/DataListHelbidea.html');
+        $render = Template($html_datalist)->render_regex('helbideak', $lekuak);
+        $form->fields[] = $render;
+
+        $form->add_text('herria', 'herria', @$_POST['herria'], "list='herriak'");
+        $html_datalist = file_get_contents( STATIC_DIR . '/html/DataListHerria.html');
+        $render = Template($html_datalist)->render_regex('herriak', $lekuak);
+        $form->fields[] = $render;
+
         $form->add_file('kartela', 'kartela', @$_POST['file']);
         $form->add_submit('Ekitaldia gehitu');
         $form->add_errorzone($errores);
