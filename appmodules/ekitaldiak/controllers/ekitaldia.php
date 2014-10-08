@@ -52,7 +52,7 @@ class EkitaldiaController extends Controller {
         $this->model->ekitaldimota = Pattern::composite('EkitaldiMota', $ekitaldimota);
         $this->model->save();
 
-        $ruta = WRITABLE_DIR . "/ekitaldiak/ekitaldia/kartelak/{$this->model->ekitaldia_id}";
+        $ruta = WRITABLE_DIR . IRUDI_DIR . "/{$this->model->ekitaldia_id}";
         guardar_imagen($ruta, $campoImagen);
 
         HTTPHelper::go("/ekitaldiak/ekitaldia/listar");
@@ -63,6 +63,12 @@ class EkitaldiaController extends Controller {
         $collection = CollectorObject::get('Ekitaldia');
         $list = $collection->collection;
         $this->view->listar($list);
+    }
+
+    public function ekitaldiak() {
+        $collection = CollectorObject::get('Ekitaldia');
+        $list = $collection->collection;
+        $this->view->ekitaldiak($list);
     }
 
     public function eliminar($id=0) {
@@ -80,7 +86,7 @@ class EkitaldiaController extends Controller {
     }
 
     public function get_ultimos_eventos() {
-        $ultimos = DataHandler('ekitaldia')->get_latest(4);
+        $ultimos = DataHandler('ekitaldia', DH_FORMAT_OBJECT)->get_latest(4);
         $this->apidata = $ultimos;
     }
 

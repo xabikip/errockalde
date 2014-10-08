@@ -62,6 +62,37 @@ class EkitaldiaView {
         print Template('Ekitaldien zerrenda')->show($tabla->get_table());
     }
 
+    public function ekitaldiak($ekitaldiak=array()) {
+        foreach ($ekitaldiak as $obj) {
+            $obj->deitura = $obj->ekitaldimota->deitura;
+        }
+
+        //Render ekitaldiak
+        $plantilla = file_get_contents(STATIC_DIR . '/html/ekitaldiak.html');
+        $render_ekitaldiak = Template($plantilla)->render_regex('EKITALDIAK', $ekitaldiak);
+
+        // Render imagen
+        foreach ($ekitaldiak as $ekitaldi) {
+            $imagen = WRITABLE_DIR . IRUDI_DIR . "/{$ekitaldi->ekitaldia_id}";
+            if (!file_exists($imagen)){
+                $render_ekitaldiak = $this->eliminar_bloque("IRUDIA{$ekitaldi->ekitaldia_id}", $render_ekitaldiak);
+            }
+        }
+
+        //Mostrar
+        print Template('Ekitaldiak', CUSTOM_PUBLIC_TEMPLATE)->show($render_ekitaldiak);
+    }
+
+    # ==========================================================================
+    #                       PRIVATE FUNCTIONS: Helpers
+    # ==========================================================================
+
+    private function eliminar_bloque($identificador, $plantilla) {
+        $identificador = $identificador;
+        $bloque_eliminar = Template($plantilla)->get_substr($identificador);
+        return $render_eliminado = str_replace($bloque_eliminar, "", $plantilla);
+    }
+
 
 }
 

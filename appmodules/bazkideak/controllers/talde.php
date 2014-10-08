@@ -79,14 +79,6 @@ class TaldeController extends Controller {
         $ruta = SERVER_URI ."/api/ekitaldiak/ekitaldia/get-ultimos-eventos";
         $json = file_get_contents($ruta);
         $ekitaldiak = json_decode($json);
-        foreach($ekitaldiak as $obj) {
-            $ekitaldimota = DataHandler('ekitaldimota')->filter("ekitaldimota_id=$obj->ekitaldimota");
-            $lekua = DataHandler('lekua')->filter("lekua_id=$obj->lekua");
-            $obj->deitura = $ekitaldimota[0]['deitura'];
-            $obj->leku_izena = $lekua[0]['izena'];
-            $obj->helbidea = $lekua[0]['helbidea'];
-            $obj->herria = $lekua[0]['herria'];
-        }
 
         $ruta = SERVER_URI ."/api/blog/post/get-posts";
         $json = file_get_contents($ruta);

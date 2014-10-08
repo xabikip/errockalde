@@ -80,7 +80,7 @@ class BazkideController extends Controller {
     private function userGorde(){
         $user = new User();
         $user->name = $_POST['erabiltzailea'];
-        $user->level = 1;
+        $user->level = 30;
         $user->save(md5($_POST['pasahitza']));
         return $user;
     }
