@@ -79,6 +79,11 @@ class EkitaldiaController extends Controller {
         $this->apidata = $list;
     }
 
+    public function get_ultimos_eventos() {
+        $ultimos = DataHandler('ekitaldia')->get_latest(4);
+        $this->apidata = $ultimos;
+    }
+
 
     # ==========================================================================
     #                       PRIVATE FUNCTIONS: Helpers
