@@ -11,10 +11,15 @@ class Talde extends StandardObject {
         $this->deskribapena = '';
         $this->customurl = '';
         $this->bazkide_collection = array();
+        $this->diskoa_collection = array();
     }
 
     public function add_bazkide(Bazkide $obj) {
         $this->bazkide_collection[] = $obj;
+    }
+
+    public function add_diskoa(Diskoa $obj) {
+        $this->diskoa_collection[] = $obj;
     }
 
 }
