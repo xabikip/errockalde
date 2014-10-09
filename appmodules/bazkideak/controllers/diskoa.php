@@ -28,11 +28,7 @@ class DiskoaController extends Controller {
         $this->model->data = get_data('data');
         $this->model->iraupena = get_data('iraupena');
         $this->model->abestiak = get_data('abestiak');
-        $taldea = Pattern::factory('Talde', get_data('taldea'));
-        // print_r($taldea);exit;
-        $this->model->taldea = $taldea->talde_id;;
-
-        // print_r($this->model);exit;
+        $this->model->taldea = get_data('taldea');
         $this->model->save();
 
         HTTPHelper::go("/bazkideak/diskoa/listar");
