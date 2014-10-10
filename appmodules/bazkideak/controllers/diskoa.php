@@ -28,7 +28,7 @@ class DiskoaController extends Controller {
         $this->model->data = get_data('data');
         $this->model->iraupena = get_data('iraupena');
         $this->model->abestiak = get_data('abestiak');
-        $this->model->taldea = get_data('taldea');
+        $this->model->talde = get_data('taldea');
         $this->model->save();
 
         HTTPHelper::go("/bazkideak/diskoa/listar");

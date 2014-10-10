@@ -8,7 +8,7 @@ class Diskoa extends ComposerObject {
         $this->data = "";
         $this->iraupena = "";
         $this->abestiak = "";
-        $this->taldea = 0;
+        $this->talde = 0;
     }
 
 }
