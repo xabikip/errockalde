@@ -11,10 +11,11 @@ class DiskoaView {
         $form->add_text('data', 'Data', @$_POST['data']);
         $form->add_text('iraupena', 'Iraupena', @$_POST['iraupena']);
         $form->add_textarea('abestiak', 'Abestiak', @$_POST['abestiak']);
+        $form->add_file('azala', 'Azala', @$_POST['azala']);
         $form->add_submit('Diskoa gehitu');
         $form->add_errorzone($errores);
 
-        print Template('Agregar Diskoa')->show($form->get_form());
+        print Template('Diskoa gehitu')->show($form->get_form());
     }
 
     public function editar($obj=array()) {

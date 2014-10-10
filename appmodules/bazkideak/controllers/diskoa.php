@@ -31,6 +31,10 @@ class DiskoaController extends Controller {
         $this->model->talde = get_data('taldea');
         $this->model->save();
 
+        $campoImagen = 'azala';
+        $ruta = WRITABLE_DIR . AZALA_DIR . "/{$this->model->diskoa_id}";
+        guardar_imagen($ruta, $campoImagen);
+
         HTTPHelper::go("/bazkideak/diskoa/listar");
     }
 
