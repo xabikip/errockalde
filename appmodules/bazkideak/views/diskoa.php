@@ -18,12 +18,19 @@ class DiskoaView {
         print Template('Diskoa gehitu')->show($form->get_form());
     }
 
-    public function editar($obj=array()) {
-        $form = new WebForm('/bazkideak/diskoa/guardar');
+    public function editar($obj=array(), $taldeak, $errores=array()) {
+        Dict::set_dict_for_webform($taldeak, 'izena', $obj->talde);
+
+        $form = new WebFormPro('/bazkideak/diskoa/guardar');
         $form->add_hidden('id', $obj->diskoa_id);
-        # ...
-        $form->add_submit('Agregar');
-        print Template('Editar Diskoa')->show($form->show());
+        $form->add_select('taldea', 'Taldea', $taldeak);
+        $form->add_text('izena', 'Diskoaren izena', $obj->izena);
+        $form->add_text('data', 'Data', $obj->data);
+        $form->add_text('iraupena', 'Iraupena', $obj->iraupena);
+        $form->add_textarea('abestiak', 'Abestiak', $obj->abestiak);
+        $form->add_submit('Aldatu');
+
+        print Template('Editar Diskoa')->show($form->get_form());
     }
 
     public function listar($coleccion=array()) {

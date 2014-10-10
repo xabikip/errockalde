@@ -11,7 +11,11 @@ class DiskoaController extends Controller {
     public function editar($id=0) {
         $this->model->diskoa_id = $id;
         $this->model->get();
-        $this->view->editar($this->model);
+
+        $talde_collector = CollectorObject::get('Talde');
+        $taldeak = $talde_collector->collection;
+
+        $this->view->editar($this->model, $taldeak, $errores);
     }
 
     public function guardar() {
