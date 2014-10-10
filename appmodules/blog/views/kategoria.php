@@ -19,9 +19,9 @@ class kategoriaView {
     }
 
     public function listar($coleccion=array()) {
-        $str = CollectorViewer($coleccion, 'blog', 'kategoria',
-            True, True, True)->get_table();
-        print Template('Listado de kategoria')->show($str);
+        $str = new CustomCollectorViewer($coleccion, 'blog', 'kategoria',
+            False, True, True);
+        print Template('Listado de kategoria')->show($str->get_table());
     }
 }
 

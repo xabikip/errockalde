@@ -27,9 +27,9 @@ class DiskoaView {
     }
 
     public function listar($coleccion=array()) {
-        $str = CollectorViewer($coleccion, 'bazkideak', 'diskoa',
-            True, True, True)->get_table();
-        print Template('Listado de Diskoa')->show($str);
+        $str = new CustomCollectorViewer($coleccion, 'bazkideak', 'diskoa',
+            False, True, True);
+        print Template('Disko zerrenda')->show($str->get_table());
     }
 }
 

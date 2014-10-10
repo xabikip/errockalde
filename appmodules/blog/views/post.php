@@ -40,9 +40,9 @@ class postView {
             $obj->user = $obj->user->name;
         }
 
-        $str = CollectorViewer($coleccion, 'blog', 'post',
-            false, True, True)->get_table();
-        print Template('Listado de post')->show($str);
+        $str = new CustomCollectorViewer($coleccion, 'blog', 'post',
+            false, True, True);
+        print Template('Listado de post')->show($str->get_table());
     }
 
     public function post($post=array(), $kategoriak) {
