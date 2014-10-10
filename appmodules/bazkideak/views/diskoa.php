@@ -34,10 +34,24 @@ class DiskoaView {
     }
 
     public function listar($coleccion=array()) {
+        $this->preparar_coleccion_listar($coleccion);
         $str = new CustomCollectorViewer($coleccion, 'bazkideak', 'diskoa',
             False, True, True);
         print Template('Disko zerrenda')->show($str->get_table());
     }
+
+     # ==========================================================================
+    #                       PRIVATE FUNCTIONS: Helpers
+    # ==========================================================================
+
+    private function preparar_coleccion_listar(&$coleccion) {
+        foreach ($coleccion as $obj) {
+            $id = $obj->talde;
+            $taldea = DataHandler('talde')->filter("talde_id = $id");
+            $obj->talde = $taldea[0]['izena'];
+        }
+    }
+
 }
 
 ?>

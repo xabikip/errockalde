@@ -8,7 +8,7 @@ class DiskoaController extends Controller {
         $this->view->agregar($taldeak, $errores);
     }
 
-    public function editar($id=0) {
+    public function editar($id=0, $errores=array()) {
         $this->model->diskoa_id = $id;
         $this->model->get();
 
