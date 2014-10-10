@@ -156,11 +156,17 @@ class TaldeView {
     private function preparar_coleccion_listar(&$coleccion) {
         foreach ($coleccion as $obj) {
             $obj->partaideak = array();
+            $obj->diskoak = array();
             foreach ($obj->bazkide_collection as $bazkide) {
                 $obj->partaideak[] = $bazkide->izena;
             }
+            foreach ($obj->diskoa_collection as $diskoa) {
+                $obj->diskoak[] = $diskoa->izena;
+            }
             unset($obj->bazkide_collection);
+            unset($obj->diskoa_collection);
             $obj->partaideak = nl2br(implode("\n", $obj->partaideak));
+            $obj->diskoak = nl2br(implode("\n", $obj->diskoak));
         }
     }
 
