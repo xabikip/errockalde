@@ -9,7 +9,7 @@ class postView {
         $form->add_select('kategoria', 'kategoria', $kategoriak);
         $form->add_textarea('titularra','titularra', @$_POST['titularra']);
         $form->add_textarea('parrafoa', 'parrafoa', @$_POST['parrafoa']);
-        $form->add_textarea('edukia', 'edukia', @$_POST['edukia'], ' class="editme"');
+        $form->add_textarea('edukia', 'edukia', @$_POST['edukia'], 'class="editme"');
         $form->add_file('irudia', 'irudia', @$_POST['irudia']);
         $form->add_submit('Artikulua gehitu');
         $form->add_errorzone($errores);
@@ -19,19 +19,27 @@ class postView {
         print Template('Artikulu berria')->show($html);
     }
 
-    public function editar($obj=array(),$errores=array()) {
+    public function editar($obj=array(),$errores=array(), $kategoriak) {
+        // print_r($obj->kategoria);exit;
+        Dict::set_dict_for_webform($kategoriak, 'deitura', $obj->kategoria->kategoria_id);
+
         $parrafoa = file_get_contents(WRITABLE_DIR . PARRAFO_DIR . "/{$obj->post_id}" );
         $edukia = file_get_contents(WRITABLE_DIR . EDUKI_DIR . "/{$obj->post_id}" );
-        $obj->parrafoa = $parrafoa;
-        $obj->edukia = $edukia;
+        $obj->parrafoa = EuropioCode::decode($parrafoa);;
+        $obj->edukia = EuropioCode::decode($edukia);;
+
         $form = new WebFormPRO('/blog/post/guardar');
         $form->add_hidden('id', $obj->post_id);
-        $form->add_text('titularra','titularra', $obj->titularra);
+        $form->add_select('kategoria', 'kategoria', $kategoriak);
+        $form->add_textarea('titularra','titularra', $obj->titularra);
         $form->add_textarea('parrafoa', 'parrafoa', $obj->parrafoa);
-        $form->add_textarea('edukia', 'edukia', $obj->edukia);
+        $form->add_textarea('edukia', 'edukia', $obj->edukia, 'class="editme"');
         $form->add_submit('Aritkulua editatu');
         $form->add_errorzone($errores);
-        print Template('Editar post')->show($form->get_form());
+
+        $js_europio = file_get_contents(STATIC_DIR ."js/errockalde.js");
+        $html = $js_europio . $form->get_form();
+        print Template('Aldatu artikulua')->show($html);
     }
 
     public function listar($coleccion=array()) {

@@ -11,7 +11,9 @@ class postController extends Controller {
     public function editar($id=0, $errores=array()) {
         $this->model->post_id = $id;
         $this->model->get();
-        $this->view->editar($this->model);
+        $kategoriak_collector = CollectorObject::get('kategoria');
+        $kategoriak = $kategoriak_collector->collection;
+        $this->view->editar($this->model, $errores, $kategoriak);
     }
 
     public function guardar() {
