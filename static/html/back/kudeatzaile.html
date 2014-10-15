@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="es">
+
+    <head>
+
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>{TITLE}</title>
+
+        <link href="/static/css/errockalde.css" rel="stylesheet">
+
+        <!-- Core CSS - Include with every page -->
+        <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/static/font-awesome/css/font-awesome.css" rel="stylesheet">
+
+        <!-- SB Admin CSS - Include with every page -->
+        <link href="/static/css/sb-admin.css" rel="stylesheet">
+
+        <!-- Page-Level Plugin CSS - Tables -->
+        <link href="/static/css/dataTables.bootstrap.css" rel="stylesheet">
+
+        <link href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+
+        <script src="/static/js/jquery.js"></script>
+        <script src="/static/js/bootstrap.min.js"></script>
+        <script src="/static/js/jquery.metisMenu.js"></script>
+        <script src="/static/js/europio_code.js"></script>
+        <!-- Custom DateTime picker-->
+        <script src="/static/js/jquery-ui-1.10.4.custom.min.js"></script>
+        <!-- SB Admin Scripts - Include with every page -->
+        <script src="/static/js/sb-admin.js"></script>
+
+    </head>
+
+    <body>
+        <div id="wrapper">
+            <nav class="navbar navbar-default navbar-fixed-top" role="navigation"
+                style="margin-bottom: 0">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle"
+                        data-toggle="collapse" data-target=".sidebar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/bazkideak/bazkide/listar">
+                        ROCKheltzia pribatua
+                    </a>
+                </div>
+                <ul class="nav navbar-top-links navbar-right">
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-user fa-fw"></i>
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="/users/user/logout">
+                                    <i class="fa fa-sign-out fa-fw"></i> Irten
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="navbar-default navbar-static-side" role="navigation">
+                    <div class="sidebar-collapse">
+                        <ul class="nav" id="side-menu">
+                            <li>
+                                <a href="/bazkideak/bazkide/listar">
+                                    <i class="fa fa-user fa-fw"></i> Bazkideak
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/blog/post/listar">
+                                    <i class="fa fa-user fa-fw"></i> Artikuluak
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/blog/kategoria/listar">
+                                    <i class="fa fa-user fa-fw"></i> Kategoriak
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/bazkideak/talde/listar">
+                                    <i class="fa fa-users fa-fw"></i> Taldeak
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/bazkideak/diskoa/listar">
+                                    <i class="fa fa-users fa-fw"></i> Diskoak
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/ekitaldiak/ekitaldia/listar">
+                                    <i class="fa fa-calendar fa-fw"></i> Ekitaldiak
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/ekitaldiak/ekitaldimota/listar">
+                                    <i class="fa fa-sitemap fa-fw"></i> Ekitaldi motak
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div id="page-wrapper">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">{TITLE}</h1>
+                            {CONTENIDO}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer>
+        EuropioEngine GNU GPL v3.0 -
+        <a href="http://www.europio.org">www.europio.org</a>
+        </footer>
+    </body>
+</html>

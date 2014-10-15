@@ -51,7 +51,7 @@ class DiskoaView {
     }
 
     public function preguntar($obj=array()) {
-        $plantilla = file_get_contents( STATIC_DIR . '/html/diskoa_gehitu_berriz.html');
+        $plantilla = file_get_contents( STATIC_DIR . '/html/back/bazkideak/diskoa_gehitu_berriz.html');
         $render = Template($plantilla)->render($obj);
         print Template('Taldeen zerrenda')->show($render);
     }

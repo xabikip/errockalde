@@ -12,17 +12,17 @@ class EkitaldiaView {
         $form->add_text('ordua', 'ordua', @$_POST['ordua']) ;
 
         $form->add_text('izena', 'Lekuaren Izena', @$_POST['izena'], "list='lekuak'");
-        $html_datalist = file_get_contents( STATIC_DIR . '/html/DataListLekua.html');
+        $html_datalist = file_get_contents( STATIC_DIR . '/html/back/ekitaldiak/DataListLekua.html');
         $render = Template($html_datalist)->render_regex('lekuak', $lekuak);
         $form->fields[] = $render;
 
         $form->add_text('helbidea', 'helbidea', @$_POST['helbidea'], "list='helbideak'");
-        $html_datalist = file_get_contents( STATIC_DIR . '/html/DataListHelbidea.html');
+        $html_datalist = file_get_contents( STATIC_DIR . '/html/back/ekitaldiak/DataListHelbidea.html');
         $render = Template($html_datalist)->render_regex('helbideak', $lekuak);
         $form->fields[] = $render;
 
         $form->add_text('herria', 'herria', @$_POST['herria'], "list='herriak'");
-        $html_datalist = file_get_contents( STATIC_DIR . '/html/DataListHerria.html');
+        $html_datalist = file_get_contents( STATIC_DIR . '/html/back/ekitaldiak/DataListHerria.html');
         $render = Template($html_datalist)->render_regex('herriak', $lekuak);
         $form->fields[] = $render;
 
@@ -46,17 +46,17 @@ class EkitaldiaView {
         $form->add_text('ordua', 'ordua', $obj->ordua);
 
         $form->add_text('izena', 'Lekuaren Izena', $obj->lekua->izena, "list='lekuak'");
-        $html_datalist = file_get_contents( STATIC_DIR . '/html/DataListLekua.html');
+        $html_datalist = file_get_contents( STATIC_DIR . '/html/back/ekitaldiak/DataListLekua.html');
         $render = Template($html_datalist)->render_regex('lekuak', $lekuak);
         $form->fields[] = $render;
 
         $form->add_text('helbidea', 'helbidea', $obj->lekua->helbidea, "list='helbideak'");
-        $html_datalist = file_get_contents( STATIC_DIR . '/html/DataListHelbidea.html');
+        $html_datalist = file_get_contents( STATIC_DIR . '/html/back/ekitaldiak/DataListHelbidea.html');
         $render = Template($html_datalist)->render_regex('helbideak', $lekuak);
         $form->fields[] = $render;
 
         $form->add_text('herria', 'herria', $obj->lekua->herria, "list='herriak'");
-        $html_datalist = file_get_contents( STATIC_DIR . '/html/DataListHerria.html');
+        $html_datalist = file_get_contents( STATIC_DIR . '/html/back/ekitaldiak/DataListHerria.html');
         $render = Template($html_datalist)->render_regex('herriak', $lekuak);
         $form->fields[] = $render;
 
@@ -83,7 +83,7 @@ class EkitaldiaView {
         }
 
         //Render ekitaldiak
-        $plantilla = file_get_contents(STATIC_DIR . '/html/ekitaldiak.html');
+        $plantilla = file_get_contents(STATIC_DIR . '/html/front/ekitaldiak/ekitaldiak.html');
         $render_ekitaldiak = Template($plantilla)->render_regex('EKITALDIAK', $ekitaldiak);
 
         // Render imagen

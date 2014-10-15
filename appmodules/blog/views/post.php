@@ -20,7 +20,6 @@ class postView {
     }
 
     public function editar($obj=array(),$errores=array(), $kategoriak) {
-        // print_r($obj->kategoria);exit;
         Dict::set_dict_for_webform($kategoriak, 'deitura', $obj->kategoria->kategoria_id);
 
         $parrafoa = file_get_contents(WRITABLE_DIR . PARRAFO_DIR . "/{$obj->post_id}" );
@@ -68,7 +67,7 @@ class postView {
         $post->edukia = $edukia;
 
         //Render post
-        $plantilla = file_get_contents( STATIC_DIR . '/html/post.html');
+        $plantilla = file_get_contents( STATIC_DIR . '/html/front/blog/post.html');
         $render_post = Template($plantilla)->render($post);
 
         //Render kategoriak
@@ -109,7 +108,7 @@ class postView {
         }
 
         //Render post
-        $plantilla = file_get_contents( STATIC_DIR . '/html/posts.html');
+        $plantilla = file_get_contents( STATIC_DIR . '/html/front/blog/posts.html');
         $render_post = Template($plantilla)->render_regex('POST', $posts);
 
         //Render kategoriak

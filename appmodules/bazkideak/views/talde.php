@@ -84,7 +84,7 @@ class TaldeView {
         $post_zerrenda = $dict->collection;
 
         //Render ekitaldi, post y talde
-        $plantilla = file_get_contents(STATIC_DIR . "/html/hasiera.html");
+        $plantilla = file_get_contents(STATIC_DIR . "/html/front/hasiera.html");
         $render_ekitaldiak = Template($plantilla)->render_regex('EKITALDIAK', $ekitaldi_zerrenda);
         $render_post = Template($render_ekitaldiak)->render_regex('POST', $post_zerrenda);
         $render_taldeak = Template($render_post)->render_regex('TALDEAK', $taldeak);
@@ -103,7 +103,7 @@ class TaldeView {
 
     public function taldeak($taldeak=array()) {
         //Render taldeak
-        $plantilla = file_get_contents(STATIC_DIR . '/html/taldeak.html');
+        $plantilla = file_get_contents(STATIC_DIR . '/html/front/bazkideak/taldeak.html');
         $render_taldeak = Template($plantilla)->render_regex('TALDEAK', $taldeak);
 
         //Render imagen
@@ -128,7 +128,7 @@ class TaldeView {
         }
 
         //Render grupo
-        $plantilla = file_get_contents( STATIC_DIR . '/html/taldea.html');
+        $plantilla = file_get_contents( STATIC_DIR . '/html/front/bazkideak/taldea.html');
         $render_taldea = Template($plantilla)->render($taldea);
 
         //Render imagen
@@ -173,7 +173,7 @@ class TaldeView {
     }
 
     public function añadir_disco($taldea=array()) {
-        $plantilla = file_get_contents( STATIC_DIR . '/html/diskoa_gehitu_mezua.html');
+        $plantilla = file_get_contents( STATIC_DIR . '/html/back/bazkideak/diskoa_gehitu_mezua.html');
         $render = Template($plantilla)->render($taldea);
         print Template('Taldeen zerrenda')->show($render);
     }
