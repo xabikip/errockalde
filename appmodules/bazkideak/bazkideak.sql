@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS talde (
     emaila VARCHAR(30) NOT NULL,
     telefonoa VARCHAR(20),
     customurl VARCHAR(40),
-    deskribapena VARCHAR(250),
+    deskribapena VARCHAR(250)
 ) ENGINE=InnoDB;
 
 CREATE TABLE diskoa (
