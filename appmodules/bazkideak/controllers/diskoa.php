@@ -42,7 +42,8 @@ class DiskoaController extends Controller {
         $campoImagen = 'azala';
         guardar_imagen($this->imagen, $campoImagen);
 
-        HTTPHelper::go("/bazkideak/diskoa/listar");
+        $this->view->preguntar();
+        // HTTPHelper::go("/bazkideak/diskoa/listar");
     }
 
     public function listar() {

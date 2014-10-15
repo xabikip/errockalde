@@ -50,6 +50,11 @@ class DiskoaView {
         print Template('Disko zerrenda')->show($str->get_table());
     }
 
+    public function preguntar() {
+        $plantilla = file_get_contents( STATIC_DIR . '/html/diskoa_gehitu_berriz.html');
+        print Template('Taldeen zerrenda')->show($plantilla);
+    }
+
      # ==========================================================================
     #                       PRIVATE FUNCTIONS: Helpers
     # ==========================================================================
