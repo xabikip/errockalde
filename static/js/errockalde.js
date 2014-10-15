@@ -10,6 +10,7 @@
 </script>
 <script>
 
+//funcion para limpiar propiedad style en tinymce
 function limpiar_cadena() {
     regex = new RegExp("\ style=\"(.){0,}\"", 'g');
     textarea = document.getElementById('edukia_4').value;
@@ -28,6 +29,7 @@ window.onload = function() {
     switch(pagina) {
         case 'post': set_encode_post(); break;
         case 'talde': set_encode_talde(); break;
+        case 'diskoa': set_encode_diskoa(); break;
     }
 };
 
@@ -39,6 +41,9 @@ function get_pagina_actual() {
     }
     if(uri.indexOf('talde') > 0) {
          pagina = 'talde';
+    }
+    if(uri.indexOf('diskoa') > 0) {
+         pagina = 'diskoa';
     }
     return pagina;
 }
@@ -53,24 +58,30 @@ function set_encode_post() {
     };
 }
 
-
 function set_encode_talde() {
     europiocode = new EuropioCode();
 
-    bandcamp_txt = document.getElementById('bandcamp_8').value;
-    document.getElementById('bandcamp_8').innerHTML = europiocode.decode(bandcamp_txt);
+    _youtube_txt = document.getElementById('_youtube_8').value;
+    document.getElementById('_youtube_8').innerHTML = europiocode.decode(_youtube_txt);
 
-    _youtube_txt = document.getElementById('_youtube_9').value;
-    document.getElementById('_youtube_9').innerHTML = europiocode.decode(_youtube_txt);
+    youtube_txt = document.getElementById('_youtube_8').value;
+    document.getElementById('youtube_9').value = europiocode.decode(youtube_txt);
 
-    youtube_txt = document.getElementById('_youtube_9').value;
-    document.getElementById('youtube_10').value = europiocode.decode(youtube_txt);
-
-    document.getElementsByClassName('tr')[7].style.display = 'none';
+    document.getElementsByClassName('tr')[6].style.display = 'none';
 
     document.getElementsByTagName('form')[0].onsubmit = function(){
-        europiocode.encode('bandcamp_8');
-        europiocode.encode('youtube_9');
+        europiocode.encode('youtube_8');
+    };
+}
+
+function set_encode_diskoa() {
+    europiocode = new EuropioCode();
+
+    bandcamp_txt = document.getElementById('bandcamp_6').value;
+    document.getElementById('bandcamp_6').innerHTML = europiocode.decode(bandcamp_txt);
+
+    document.getElementsByTagName('form')[0].onsubmit = function(){
+        europiocode.encode('bandcamp_6');
     };
 }
 

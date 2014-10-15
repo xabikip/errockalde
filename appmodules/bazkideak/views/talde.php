@@ -15,8 +15,7 @@ class TaldeView {
         $form->add_text('emaila', 'Emaila', @$_POST['emaila']);
         $form->add_text('telefonoa', 'Telefonoa', @$_POST['telefonoa']);
         $form->add_textarea('deskribapena', 'Deskribapena', @$_POST['deskribapena']);
-        $form->add_textarea('bandcamp', 'Bandcamp', @$_POST['bandcamp']);
-        $form->add_textarea('_youtube', ' ', @$_POST['youtube'], "style='display: none;'");
+        $form->add_textarea('_youtube', ' ', @$_POST['_youtube'], "style='display: none;'");
         $form->add_text('youtube', 'Youtube', @$_POST['youtube']);
         $form->add_file('argazkia', 'Argazkia', @$_POST['file']);
         $form->add_submit('Taldea gehitu');
@@ -41,7 +40,6 @@ class TaldeView {
         $form->add_text('emaila', 'emaila', $obj->emaila);
         $form->add_text('telefonoa', 'telefonoa', $obj->telefonoa);
         $form->add_textarea('deskribapena', 'deskribapena', $obj->deskribapena);
-        $form->add_textarea('bandcamp', 'Bandcamp', @$_POST['bandcamp']);
         $form->add_text('youtube', 'Youtube', @$_POST['youtube']);
         $form->add_file('argazkia', 'argazkia');
         $form->add_submit('Gorde');
@@ -139,13 +137,38 @@ class TaldeView {
             $render_taldea = $this->eliminar_bloque("IRUDIA{$id}", $render_taldea);
         }
 
-        //Mostrar
-        $bandcamp = WRITABLE_DIR . BANDCAMP_DIR . "/{$id}.ini";
+        //Render discos
+        if (empty($taldea->diskoa_collection)){
+            $render_diskoa = $this->eliminar_bloque("LANAK", $render_taldea);
+        } else{
+            foreach ($taldea->diskoa_collection as $obj) {
+                $diskoa_id = $obj->diskoa_id;
+                $bandcamp = WRITABLE_DIR . BANDCAMP_DIR . "/{$diskoa_id}.ini";
+                if (file_exists($bandcamp)) {
+                    $ini_parse = parse_ini_file($bandcamp, False);
+                    $obj->album_id = $ini_parse['album_id'];
+                    $obj->talde_slug = $ini_parse['talde_slug'];
+                    $obj->album_slug = $ini_parse['album_slug'];
+                    $obj->album = $ini_parse['album'];
+                    $obj->grupo = $ini_parse['grupo'];
+                    $obj->disko_izena = $obj->izena;
+                } else{
+                    $obj->disko_izena = $obj->izena;
+                }
+            }
+        }
+
+        $render_diskoa = Template($render_taldea)->render_regex('DISKOA', $taldea->diskoa_collection);
+
+        //Render youtube
         $youtube  = WRITABLE_DIR . YOUTUBE_DIR . "/{$id}.ini";
-        $render_bandcamp = $this->render_exist($bandcamp, $render_taldea, $id, "BANDCAMP");
-        $render_youtube  = $this->render_exist($youtube, $render_bandcamp, $id, "YOUTUBE");
+        $render_youtube  = $this->render_exist($youtube, $render_diskoa, $id, "YOUTUBE");
+
+        //Render bazkide
         $render_bazkidea = Template($render_youtube)->render_regex('BAZKIDEAK',
             $taldea->bazkide_collection);
+
+        //Mostrar
         print Template('Taldeak', CUSTOM_PUBLIC_TEMPLATE)->show($render_bazkidea);
     }
 

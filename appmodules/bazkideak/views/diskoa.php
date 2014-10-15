@@ -11,11 +11,16 @@ class DiskoaView {
         $form->add_text('data', 'Data', @$_POST['data']);
         $form->add_text('iraupena', 'Iraupena', @$_POST['iraupena']);
         $form->add_textarea('abestiak', 'Abestiak', @$_POST['abestiak']);
+        $form->add_textarea('bandcamp', 'Bandcamp', @$_POST['bandcamp']);
         $form->add_file('azala', 'Azala', @$_POST['azala']);
         $form->add_submit('Diskoa gehitu');
         $form->add_errorzone($errores);
 
-        print Template('Diskoa gehitu')->show($form->get_form());
+        //Mostrar form para agregar talde
+        $js_europio = file_get_contents(STATIC_DIR ."js/errockalde.js");
+        $html = $form->get_form() . $js_europio;
+        print Template('Diskoa gehitu')->show($html);
+
     }
 
     public function editar($obj=array(), $taldeak, $errores=array()) {
@@ -28,9 +33,14 @@ class DiskoaView {
         $form->add_text('data', 'Data', $obj->data);
         $form->add_text('iraupena', 'Iraupena', $obj->iraupena);
         $form->add_textarea('abestiak', 'Abestiak', $obj->abestiak);
+        $form->add_textarea('bandcamp', 'Bandcamp', @$_POST['bandcamp']);
         $form->add_submit('Aldatu');
+        $form->add_errorzone($errores);
 
-        print Template('Editar Diskoa')->show($form->get_form());
+        //Mostrar form para agregar talde
+        $js_europio = file_get_contents(STATIC_DIR ."js/errockalde.js");
+        $html = $form->get_form() . $js_europio;
+        print Template('Diskoa editatu')->show($html);
     }
 
     public function listar($coleccion=array()) {

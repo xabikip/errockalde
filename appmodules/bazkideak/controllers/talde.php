@@ -40,7 +40,6 @@ class TaldeController extends Controller {
 
         $this->__set_aditional_properties();
 
-        if (get_data('bandcamp') !== "") $this->guardar_bandcamp();
         if (get_data('youtube') !== "") $this->guardar_youtube();
 
         $bazkideak = get_data('bazkideak');
@@ -133,38 +132,6 @@ class TaldeController extends Controller {
         $lc->save();
     }
 
-    private function parse_album_id($albumpartes){
-        if (count($albumpartes) > 0) $albumidpartes = explode("&#47;", $albumpartes[1]);
-        if (count($albumidpartes) > 0) $album_id = $albumidpartes[0];
-        return $album_id;
-    }
-
-    private function guardar_bandcamp(){
-        $bandcamp_encode = isset($_POST['bandcamp']) ? EuropioCode::encode($_POST['bandcamp']) : '';
-        $bandcamp_decode = EuropioCode::decode($bandcamp_encode);
-
-        $albumpartes = explode("album&#61;", $bandcamp_decode);
-
-        $album_id = $this->parse_album_id($albumpartes);
-        $talde_slug = TaldeHelper::parse($albumpartes, SLASH_DBL, AMP);
-        $album_slug = TaldeHelper::parse($albumpartes, FINAL_TAG, SLASH, 0);
-        $album = TaldeHelper::parse($albumpartes, BY, FINAL_TAG, 0);
-        $grupo = TaldeHelper::parse($albumpartes, BY, FINAL_ENDTAG);
-
-        $allowed_chars = array("-" => "&#45;", "_" => "&#95;", " " => "&#160;");
-        $talde_slug = str_replace(array_values($allowed_chars),
-            array_keys($allowed_chars), $talde_slug);
-        $album_slug = str_replace(array_values($allowed_chars),
-            array_keys($allowed_chars), $album_slug);
-
-        $contenido = "[bandcamp]
-album_id = \"$album_id\"
-talde_slug= \"$talde_slug\"
-album_slug= \"$album_slug\"
-album= \"$album\"
-grupo= \"$grupo\"";
-        file_put_contents($this->bandcamp, $contenido);
-    }
 
     private function parse_video_id($youtube_decode){
         if(strpos($youtube_decode, "&#38;") > 0){
