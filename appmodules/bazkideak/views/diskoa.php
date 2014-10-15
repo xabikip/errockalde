@@ -3,7 +3,7 @@
 class DiskoaView {
 
     public function agregar($taldeak, $errores=array()) {
-        Dict::set_dict_for_webform($taldeak, 'izena', @$_POST['izena']);
+        Dict::set_dict_for_webform($taldeak, 'izena', @$_POST['taldea_id']);
 
         $form = new WebFormPRO('/bazkideak/diskoa/guardar');
         $form->add_select('taldea', 'Taldea', $taldeak);
@@ -50,9 +50,10 @@ class DiskoaView {
         print Template('Disko zerrenda')->show($str->get_table());
     }
 
-    public function preguntar() {
+    public function preguntar($obj=array()) {
         $plantilla = file_get_contents( STATIC_DIR . '/html/diskoa_gehitu_berriz.html');
-        print Template('Taldeen zerrenda')->show($plantilla);
+        $render = Template($plantilla)->render($obj);
+        print Template('Taldeen zerrenda')->show($render);
     }
 
      # ==========================================================================
