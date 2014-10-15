@@ -172,6 +172,12 @@ class TaldeView {
         print Template('Taldeak', CUSTOM_PUBLIC_TEMPLATE)->show($render_bazkidea);
     }
 
+    public function añadir_disco($taldea=array()) {
+        $plantilla = file_get_contents( STATIC_DIR . '/html/diskoa_gehitu_mezua.html');
+        $render = Template($plantilla)->render($taldea);
+        print Template('Taldeen zerrenda')->show($render);
+    }
+
     # ==========================================================================
     #                       PRIVATE FUNCTIONS: Helpers
     # ==========================================================================

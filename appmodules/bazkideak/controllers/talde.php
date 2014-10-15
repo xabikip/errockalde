@@ -48,7 +48,7 @@ class TaldeController extends Controller {
         $campoImagen = 'argazkia';
         guardar_imagen($this->imagen, $campoImagen);
 
-        HTTPHelper::go("/bazkideak/talde/listar");
+        $this->view->añadir_disco($this->model);
 
     }
 
