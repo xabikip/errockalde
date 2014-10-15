@@ -11,11 +11,12 @@ class kategoriaView {
     }
 
     public function editar($obj=array(), $errores=array()) {
-        $form = new WebForm('/blog/kategoria/guardar');
+        $form = new WebFormPRO('/blog/kategoria/guardar');
         $form->add_hidden('id', $obj->kategoria_id);
-        # ...
-        $form->add_submit('Agregar');
-        print Template('Editar kategoria')->show($form->show());
+        $form->add_text('deitura','deitura', $obj->deitura);
+        $form->add_submit('Aldatu');
+        $form->add_errorzone($errores);
+        print Template('Editar kategoria')->show($form->get_form());
     }
 
     public function listar($coleccion=array()) {
