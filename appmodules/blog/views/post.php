@@ -14,7 +14,7 @@ class postView {
         $form->add_submit('Artikulua gehitu');
         $form->add_errorzone($errores);
 
-        $js_europio = file_get_contents(STATIC_DIR ."js/errockalde.js");
+        $js_europio = file_get_contents(CUSTOM_STATIC_DIR ."js/errockalde.js");
         $html = $js_europio . $form->get_form();
         print Template('Artikulu berria')->show($html);
     }
@@ -36,7 +36,7 @@ class postView {
         $form->add_submit('Aritkulua editatu');
         $form->add_errorzone($errores);
 
-        $js_europio = file_get_contents(STATIC_DIR ."js/errockalde.js");
+        $js_europio = file_get_contents(CUSTOM_STATIC_DIR ."js/errockalde.js");
         $html = $js_europio . $form->get_form();
         print Template('Aldatu artikulua')->show($html);
     }
@@ -67,7 +67,7 @@ class postView {
         $post->edukia = $edukia;
 
         //Render post
-        $plantilla = file_get_contents( STATIC_DIR . '/html/front/blog/post.html');
+        $plantilla = file_get_contents( CUSTOM_STATIC_DIR . '/html/front/blog/post.html');
         $render_post = Template($plantilla)->render($post);
 
         //Render kategoriak
@@ -108,7 +108,7 @@ class postView {
         }
 
         //Render post
-        $plantilla = file_get_contents( STATIC_DIR . '/html/front/blog/posts.html');
+        $plantilla = file_get_contents( CUSTOM_STATIC_DIR . '/html/front/blog/posts.html');
         $render_post = Template($plantilla)->render_regex('POST', $posts);
 
         //Render kategoriak

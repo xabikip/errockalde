@@ -27,7 +27,7 @@ class EkitaldiMotaView {
 
     public function eventos_a_borrar($ekitaldiak=array()) {
 
-        $plantilla = file_get_contents( STATIC_DIR . 'html/back/ekitaldiak/ezabatu_mezua.html');
+        $plantilla = file_get_contents( CUSTOM_STATIC_DIR . 'html/back/ekitaldiak/ezabatu_mezua.html');
 
         $render_ekitaldiak = Template($plantilla)->render_regex('EKITALDIAK', $ekitaldiak);
         print Template()->show($render_ekitaldiak);

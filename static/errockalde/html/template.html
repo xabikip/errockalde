@@ -1,0 +1,38 @@
+<!doctype html>
+<!--
+* EuropioEngine HTML Template
+*
+* @package    EuropioEngine
+* @subpackage static
+* @license    http://www.gnu.org/licenses/gpl.txt  GNU GPL 3.0
+* @author     Eugenia Bahit <ebahit@member.fsf.org>
+* @link       http://www.europio.org
+*
+-->
+<html lang="es">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title>{TITLE}</title>
+        <link rel="stylesheet" type="text/css" href="/static/css/style.css"/>
+        <script language="javascript" type="text/javascript" src="/static/js/europio_code.js"></script>
+    </head>
+
+    <body>
+        <header>
+            <h1>{TITLE}</h1>
+            <nav>
+                <input type="button" value="Default View"
+                  onclick="location.href='/'"/>
+                  
+                <input type="button" value="Desconexión" class="login"
+                  onclick="location.href='/users/user/logout'"/>
+            </nav>
+            <p>&nbsp;</p>
+        </header>
+        {CONTENIDO}
+        <footer>
+        EuropioEngine GNU GPL v3.0 - <a 
+            href="http://www.europio.org">www.europio.org</a>
+        </footer>
+    </body>
+</html>

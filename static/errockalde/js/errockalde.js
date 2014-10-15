@@ -3,7 +3,7 @@
         tinymce.init({
           // plugins: "code",
           selector:'textarea.editme',
-          language_url : '/static/js/eu.js',
+          language_url : '/static/errockalde/js/eu.js',
           toolbar: "undo redo | styleselect | bold italic ",
           menubar: "insert edit"
         });

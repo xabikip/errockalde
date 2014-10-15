@@ -1,0 +1,32 @@
+<h3>Usuarios</h3>
+<script language="javascript" type="text/javascript" 
+    src="/static/js/forms.js"></script>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Nombre de usuario</th>
+        <th><a href="#" 
+        onclick="alert('Solo los administradores pueden acceder al módulo de usuarios'); 
+        return false;"><b>Admin</b></a></th>
+        <th>Nivel</th>
+        <th>Opciones</th>
+    </tr>
+    <!--LISTADO-->
+    <tr>
+        <td>{user_id}</td>
+        <td>{name}</td>
+        <td class="left"><img src="/static/img/{admin}.png"/></td>
+        <td>{level}</td>
+        <td><a href="/users/user/editar/{user_id}"><img 
+            src="/static/img/editar.png" title="Editar al usuario {name}"></a>
+            <a href="#" onclick="confirmar('{name}', {user_id}); return false;"><img 
+            src="/static/img/eliminar.png" title="Eliminar al usuario {name}"></a>
+        </td>
+    </tr>
+    <!--LISTADO-->
+    <tr>
+        <td colspan=4 style="border: none"><br/><a 
+        href="/users/user/agregar"><img src="/static/img/add.png"/>
+        Agregar nuevo usuario</a>
+    </tr>
+</table>

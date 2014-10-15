@@ -10,7 +10,7 @@
 */
 
 
-class UserView { 
+class UserView {
 
     public function show_form($user_exists=False, $badpwd=False, $user='',
                               $level=1, $pwd='', $tit='Agregar', $id=0) {
@@ -21,14 +21,14 @@ class UserView {
         $this->__set_optleveldict($level, $dict);
 
         $str = file_get_contents(
-            STATIC_DIR . "html/users/user_form.html");
+            CUSTOM_STATIC_DIR . "html/users/user_form.html");
         $html = Template($str)->render($dict);
         print Template('Agregar Usuario')->show($html);
     }
 
     public function listar($coleccion=array()) {
         $str = file_get_contents(
-            STATIC_DIR . "html/users/user_listar.html");
+            CUSTOM_STATIC_DIR . "html/users/user_listar.html");
         foreach($coleccion as &$obj) {
             $obj->admin = ($obj->level == 1) ? "true" : "false";
         }
@@ -37,7 +37,7 @@ class UserView {
     }
 
     public function show_login() {
-        $default = STATIC_DIR . "html/login.html";
+        $default = CUSTOM_STATIC_DIR . "html/login.html";
         $file = (CUSTOM_LOGIN_TEMPLATE) ? CUSTOM_LOGIN_TEMPLATE : $default;
         $tmpl = file_get_contents($file);
         $dict = array("WEB_DIR" => WEB_DIR, "DEFAULT_VIEW"=>DEFAULT_VIEW);
