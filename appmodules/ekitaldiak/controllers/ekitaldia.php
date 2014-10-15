@@ -11,17 +11,24 @@ class EkitaldiaController extends Controller {
     public function agregar($errores=array()) {
         $ekitaldimota_collector = CollectorObject::get('EkitaldiMota');
         $ekitaldimotak = $ekitaldimota_collector->collection;
+
         $lekua_collector = CollectorObject::get('Lekua');
         $lekuak = $lekua_collector->collection;
+
         $this->view->agregar($ekitaldimotak, $lekuak, $errores);
     }
 
-    public function editar($id=0) {
+    public function editar($id=0, $errores=array()) {
         $ekitaldimota_collector = CollectorObject::get('EkitaldiMota');
         $ekitaldimotak = $ekitaldimota_collector->collection;
+
+        $lekua_collector = CollectorObject::get('Lekua');
+        $lekuak = $lekua_collector->collection;
+
         $this->model->ekitaldia_id = $id;
         $this->model->get();
-        $this->view->editar($ekitaldimotak, $this->model);
+
+        $this->view->editar($this->model, $ekitaldimotak, $lekuak, $errores);
     }
 
     public function guardar() {

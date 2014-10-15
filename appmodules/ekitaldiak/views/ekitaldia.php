@@ -35,20 +35,35 @@ class EkitaldiaView {
         print Template('Ekitaldi berria')->show($html);
     }
 
-    public function editar($ekitaldimotak, $obj=array()) {
-        Dict::set_dict_for_webform($ekitaldimotak, 'deitura');
+    public function editar($obj=array(), $ekitaldimotak, $lekuak, $errores = array()) {
+        Dict::set_dict_for_webform($ekitaldimotak, 'deitura', $obj->ekitaldimota->ekitaldimota_id);
 
-        $form = new WebForm('/ekitaldiak/ekitaldia/guardar');
+        $form = new WebFormPRO('/ekitaldiak/ekitaldia/guardar');
         $form->add_hidden('id', $obj->ekitaldia_id);
         $form->add_text('ekitaldi_izena', 'Ekitaldiaren Izena',$obj->izena);
-        $form->add_select('ekitaldimota', $ekitaldimotak, 'Ekitaldi Mota');
+        $form->add_select('ekitaldimota','Ekitaldi Mota', $ekitaldimotak);
         $form->add_text('data', 'data', $obj->data);
         $form->add_text('ordua', 'ordua', $obj->ordua);
-        $form->add_text('izena', 'Lekuaren Izena', $obj->izena);
-        $form->add_text('helbidea', 'helbidea', @$obj->helbidea);
-        $form->add_text('herria', 'herria', @$obj->herria);
-        $form->add_submit('Ekitaldia gehitu');
-        print Template('Ekitaldia aldatu')->show($form->show());
+
+        $form->add_text('izena', 'Lekuaren Izena', $obj->lekua->izena, "list='lekuak'");
+        $html_datalist = file_get_contents( STATIC_DIR . '/html/DataListLekua.html');
+        $render = Template($html_datalist)->render_regex('lekuak', $lekuak);
+        $form->fields[] = $render;
+
+        $form->add_text('helbidea', 'helbidea', $obj->lekua->helbidea, "list='helbideak'");
+        $html_datalist = file_get_contents( STATIC_DIR . '/html/DataListHelbidea.html');
+        $render = Template($html_datalist)->render_regex('helbideak', $lekuak);
+        $form->fields[] = $render;
+
+        $form->add_text('herria', 'herria', $obj->lekua->herria, "list='herriak'");
+        $html_datalist = file_get_contents( STATIC_DIR . '/html/DataListHerria.html');
+        $render = Template($html_datalist)->render_regex('herriak', $lekuak);
+        $form->fields[] = $render;
+
+        $form->add_submit('Ekitaldia aldatu');
+        $form->add_errorzone($errores);
+
+        print Template('Ekitaldia aldatu')->show($form->get_form());
     }
 
     public function listar($coleccion=array()) {
