@@ -60,6 +60,11 @@ class EkitaldiaView {
         $render = Template($html_datalist)->render_regex('herriak', $lekuak);
         $form->fields[] = $render;
 
+        $form->add_file('kartela', 'kartela');
+        $html_irudia = file_get_contents( CUSTOM_STATIC_DIR . '/html/back/ekitaldiak/edit_ekitaldi_irudia.html');
+        $render = Template($html_irudia)->render($obj);
+        $form->fields[] = $render;
+
         $form->add_submit('Ekitaldia aldatu');
         $form->add_errorzone($errores);
 

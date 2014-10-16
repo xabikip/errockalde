@@ -34,6 +34,12 @@ class DiskoaView {
         $form->add_text('iraupena', 'Iraupena', $obj->iraupena);
         $form->add_textarea('abestiak', 'Abestiak', $obj->abestiak);
         $form->add_textarea('bandcamp', 'Bandcamp', @$_POST['bandcamp']);
+
+        $form->add_file('azala', 'azala');
+        $html_irudia = file_get_contents( CUSTOM_STATIC_DIR . '/html/back/bazkideak/edit_azala_irudia.html');
+        $render = Template($html_irudia)->render($obj);
+        $form->fields[] = $render;
+
         $form->add_submit('Aldatu');
         $form->add_errorzone($errores);
 
