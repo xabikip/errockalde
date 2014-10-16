@@ -1,8 +1,8 @@
 
-    blog
-    <descripción breve>
+    blog modulua
+    Modulo honen bidez bloga kudeatu daiteke. Artikuluak sortu kategoria ezberdinetan.
     Versión: 1.0
-    Copyright (C) <año>, <Autor> <email>
+    Copyright (C) 2014, Xabi Pico xabikip@gmail.com
     Licencia: GNU GPL v3.0
 
    ===========================================================================
@@ -20,5 +20,7 @@
 
 
                                     *****
-    
-    <indicaciones>
+
+    SQL
+        Tiene que estar creada la tabla user. Luego creamos la tabla kategoria y
+        despues la de post.
