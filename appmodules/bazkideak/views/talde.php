@@ -41,7 +41,12 @@ class TaldeView {
         $form->add_text('telefonoa', 'telefonoa', $obj->telefonoa);
         $form->add_textarea('deskribapena', 'deskribapena', $obj->deskribapena);
         $form->add_text('youtube', 'Youtube', @$_POST['youtube']);
+
         $form->add_file('argazkia', 'argazkia');
+        $html_irudia = file_get_contents( CUSTOM_STATIC_DIR . '/html/back/bazkideak/edit_talde_irudia.html');
+        $render = Template($html_irudia)->render($obj);
+        $form->fields[] = $render;
+
         $form->add_submit('Gorde');
         $form->add_errorzone($errores);
 
