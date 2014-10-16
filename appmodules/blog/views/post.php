@@ -33,6 +33,12 @@ class postView {
         $form->add_textarea('titularra','titularra', $obj->titularra);
         $form->add_textarea('parrafoa', 'parrafoa', $obj->parrafoa);
         $form->add_textarea('edukia', 'edukia', $obj->edukia, 'class="editme"');
+
+        $form->add_file('irudia', 'irudia');
+        $html_irudia = file_get_contents( CUSTOM_STATIC_DIR . '/html/back/blog/edit_post_irudia.html');
+        $render = Template($html_irudia)->render($obj);
+        $form->fields[] = $render;
+
         $form->add_submit('Aritkulua editatu');
         $form->add_errorzone($errores);
 
