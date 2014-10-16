@@ -25,7 +25,7 @@ CREATE TABLE diskoa (
     izena VARCHAR(60) NOT NULL,
     data VARCHAR(25),
     iraupena VARCHAR(20),
-    abestiak VARCHAR(100),
+    abestiak VARCHAR(250),
     talde INT(11) NOT NULL,
         INDEX (talde),
         FOREIGN KEY (talde) REFERENCES talde (talde_id) ON DELETE CASCADE
