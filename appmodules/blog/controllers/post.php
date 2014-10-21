@@ -99,7 +99,7 @@ class postController extends Controller {
         $collection = CollectorObject::get('kategoria');
         $kategoriak = $collection->collection;
 
-        $posts = DataHandler('post')->filter("kategoria=$id");
+        $posts = DataHandler('post', DH_FORMAT_OBJECT)->filter("kategoria=$id");
         $this->view->posts($posts, $kategoriak);
     }
 

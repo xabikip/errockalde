@@ -96,6 +96,7 @@ class postView {
     }
 
     public function posts($posts=array(), $kategoriak) {
+        // print_r($posts);exit;
 
         foreach ($posts as &$post) {
             (isset($post->post_id)) ? $id = $post->post_id : $id = $post['post_id'];
@@ -106,9 +107,11 @@ class postView {
             if (isset($post->post_id)){
                 $post->parrafoa = $parrafoa;
                 $post->edukia = $edukia;
+                $post->user = $post->user->name;
             }else{
                 $post['parrafoa'] = $parrafoa;
                 $post['edukia'] = $edukia;
+                $post['user'] = $post->user->name;
             };
 
         }
@@ -120,12 +123,19 @@ class postView {
         //Render kategoriak
         $render_post = Template($render_post)->render_regex('KATEGORIAK', $kategoriak);
 
-        //Render imagen
+        //Render imagen y fecha
         foreach ($posts as $post) {
             (isset($post->post_id)) ? $id = $post->post_id : $id = $post['post_id'];
+
             $imagen = WRITABLE_DIR . POST_IRUDI_DIR . "/{$id}";
             if (!file_exists($imagen)){
                 $render_post = $this->eliminar_bloque("IRUDIA{$id}", $render_post);
+            }
+
+            if($post->aldatua <= 0){
+                $render_post = $this->eliminar_bloque("ALDATUA{$id}", $render_post);
+            }else{
+                $render_post = $this->eliminar_bloque("SORTUA{$id}", $render_post);
             }
         }
 
