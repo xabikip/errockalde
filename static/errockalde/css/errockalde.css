@@ -12,6 +12,14 @@
   margin-top: 10px;
 }
 
+h2.margintopKendu{
+  margin-top: 0px;
+}
+
+p.italic{
+  font-style: italic;
+}
+
 
 /*----------------------------------TAULAK-----------------------------------*/
 .link_addnew{
@@ -23,6 +31,12 @@
 /*----------------------------------HASIERA----------------------------------*/
 .taldeIrudiTxiki{
   float: left;
+}
+
+.taldeIrudiTxiki img{
+  max-width: 180px;
+  max-height: 200px;
+  margin: 25px 20px 5px 5px;
 }
 
 .taldeTestuTxiki{
@@ -41,4 +55,17 @@ input[name='youtube'] {
 
 input[name='ekitaldi_izena'] {
   width: 450px;
+}
+
+
+/*----------------------------------TALDEA-----------------------------------*/
+
+.taldeIrudiHandi{
+  float: left;
+}
+
+.taldeIrudiHandi img{
+  max-width: 500px;
+  max-height: 300px;
+  margin: 10px 20px 4px 5px;
 }
