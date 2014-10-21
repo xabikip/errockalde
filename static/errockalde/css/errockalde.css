@@ -1,5 +1,26 @@
 
 /*----------------------------------OROKORRAK--------------------------------*/
+.rosa{
+ background-color: #f74574;
+}
+
+a.navbar-brand.naranja{
+font-size: 32px;
+margin: 5px 70px 0px 10px;
+color: #a30850;
+}
+
+ul.nav.navbar-nav li{
+  margin:5px 5px 2px 5px;
+}
+
+ul.nav.navbar-nav.baltza li a{
+  color: #000;
+  font-weight: bold;
+  font-size: 20px;
+  font-family: Verdana,Ubuntu, Arial;
+}
+
 .goimargin{
   margin-top: 70px;
 }
