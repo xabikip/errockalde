@@ -79,7 +79,7 @@ class TaldeController extends Controller {
         $json = file_get_contents($ruta);
         $ekitaldiak = json_decode($json);
 
-        $ruta = SERVER_URI ."/api/blog/post/get-posts";
+        $ruta = SERVER_URI ."/api/blog/post/get-ultimos-posts";
         $json = file_get_contents($ruta);
         $posts = json_decode($json);
 

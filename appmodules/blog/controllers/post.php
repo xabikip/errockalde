@@ -103,10 +103,9 @@ class postController extends Controller {
         $this->view->posts($posts, $kategoriak);
     }
 
-    public function get_posts() {
-        $collection = CollectorObject::get('Post');
-        $list = $collection->collection;
-        $this->apidata = $list;
+    public function get_ultimos_posts() {
+        $ultimos = DataHandler('post', DH_FORMAT_OBJECT)->get_latest(4);
+        $this->apidata = $ultimos;
     }
 
     public function __call($funtzioa, $argumentuak=array()) {
