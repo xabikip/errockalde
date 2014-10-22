@@ -146,6 +146,7 @@ class TaldeView {
         if (empty($taldea->diskoa_collection)){
             $render_diskoa = $this->eliminar_bloque("LANAK", $render_taldea);
         } else{
+            $disko_ezabatu = array();
             foreach ($taldea->diskoa_collection as $obj) {
                 $diskoa_id = $obj->diskoa_id;
                 $bandcamp = WRITABLE_DIR . BANDCAMP_DIR . "/{$diskoa_id}.ini";
@@ -157,13 +158,19 @@ class TaldeView {
                     $obj->album = $ini_parse['album'];
                     $obj->grupo = $ini_parse['grupo'];
                     $obj->disko_izena = $obj->izena;
+                    $disko_ezabatu[] = $diskoa_id;
                 } else{
                     $obj->disko_izena = $obj->izena;
                 }
             }
+            $render_diskoa = Template($render_taldea)->render_regex('LANA', $taldea->diskoa_collection);
+
+            foreach ($disko_ezabatu as $diskoa_id) {
+                $render_diskoa = $this->eliminar_bloque("DISKOA{$diskoa_id}", $render_diskoa);
+            }
         }
 
-        $render_diskoa = Template($render_taldea)->render_regex('DISKOA', $taldea->diskoa_collection);
+
 
         //Render youtube
         $youtube  = WRITABLE_DIR . YOUTUBE_DIR . "/{$id}.ini";

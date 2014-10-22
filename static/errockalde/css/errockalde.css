@@ -1,7 +1,7 @@
 
 /*----------------------------------OROKORRAK--------------------------------*/
-.rosa{
- background-color: #f74574;
+.burua{
+ background-color: #f47639;
 }
 
 a.navbar-brand.naranja{
@@ -19,6 +19,25 @@ ul.nav.navbar-nav.baltza li a{
   font-weight: bold;
   font-size: 20px;
   font-family: Verdana,Ubuntu, Arial;
+}
+
+.burukud{
+  margin: 20px 15px 0px 0px;
+}
+
+.burukud a{
+  color: black;
+}
+
+.errockalde{
+  background-color:#9d8032;
+  border-color: #9d8032;
+}
+
+h2.errockalde{
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
 }
 
 .goimargin{
@@ -89,4 +108,8 @@ input[name='ekitaldi_izena'] {
   max-width: 500px;
   max-height: 300px;
   margin: 10px 20px 4px 5px;
+}
+
+span.disko_izena{
+  font-size: 24px;
 }
