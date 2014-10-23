@@ -64,8 +64,8 @@ class TaldeController extends Controller {
         $this->view->taldeak($list);
     }
 
-    public function taldea($id=0) {
-        $taldea = DataHandler('talde')->filter("customurl=$id[1]");
+    public function taldea($customurl=''){
+        $taldea = DataHandler('talde')->filter("customurl=$customurl[1]");
         $this->model->talde_id = $taldea[0]['talde_id'];
         $this->model->get();
         $this->view->taldea($this->model);
