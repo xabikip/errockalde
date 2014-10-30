@@ -83,12 +83,16 @@ class WebFormPRO {
      * @param  string  $dbfile      si desea utilizar su propio archivo de 
                                     base de datos, ruta (desde APP_DIR) del 
                                     archivo de base de datos
+     * @param  int     $col         entero entre 1 y 12 que representa el tamaño
+                                    de la grilla ocupada por el campo.
+                                    valor por defecto: 12 (ancho máximo)
      * @return void
     */
-    public function add_captcha($name='', $label='', $extras='', $dbfile='') {
+    public function add_captcha($name='', $label='', $extras='', $dbfile='',
+      $col=12) {
         $name = ($name) ? $name : 'captcha';
         $value = Captcha($dbfile)->value;
-        $this->add_field('CAPTCHA', $name, $label, $value, $extras);
+        $this->add_field('CAPTCHA', $name, $label, $value, $extras, $col);
     }
 
     /**
@@ -118,10 +122,13 @@ class WebFormPRO {
                                     si no se indica, se utiliza $name
      * @param  array   $value       valor por defecto del campo
      * @param  string  $extras      cualquier string a incluir dentro del tag
+     * @param  int     $col         entero entre 1 y 12 que representa el tamaño
+                                    de la grilla ocupada por el campo.
+                                    valor por defecto: 12 (ancho máximo)
      * @return void
     */
-    public function add_email($name, $label='', $value='', $extras='') {
-        $this->add_field('EMAIL', $name, $label, $value, $extras);
+    public function add_email($name, $label='', $value='', $extras='', $col=12) {
+        $this->add_field('EMAIL', $name, $label, $value, $extras, $col);
     }
 
     /**
@@ -136,7 +143,7 @@ class WebFormPRO {
     */
     public function add_errorzone($errores=array()) {
         $json_errores = json_encode($errores);
-        $this->add_field('ERROR-ZONE', $this->id, null, $json_errores, null);
+        $this->add_field('ERROR-ZONE', $this->id, null, $json_errores, null, 0);
     }
 
     /**
@@ -146,10 +153,13 @@ class WebFormPRO {
      * @param  string  $label       etiqueta a mostrar junto al campo
                                     si no se indica, se utiliza $name
      * @param  string  $extras      cualquier string a incluir dentro del tag
+     * @param  int     $col         entero entre 1 y 12 que representa el tamaño
+                                    de la grilla ocupada por el campo.
+                                    valor por defecto: 12 (ancho máximo)
      * @return void
     */
-    public function add_file($name, $label='', $extras='') {
-        $this->add_field('FILE', $name, $label, null, $extras);
+    public function add_file($name, $label='', $extras='', $col=12) {
+        $this->add_field('FILE', $name, $label, null, $extras, $col);
     }
 
     /**
@@ -160,7 +170,7 @@ class WebFormPRO {
      * @return void
     */
     public function add_hidden($name, $value) {
-        $this->add_field('HIDDEN', $name, null, $value, null);
+        $this->add_field('HIDDEN', $name, null, $value, null, 0);
     }
 
     /**
@@ -182,10 +192,13 @@ class WebFormPRO {
      * @param  string  $anchor      (requerido) texto a mostrar
      * @param  string  $href        (requerido) URI del enlace
      * @param  string  $extras      cualquier string a incluir dentro del tag
+     * @param  int     $col         entero entre 1 y 12 que representa el tamaño
+                                    de la grilla ocupada por el campo.
+                                    valor por defecto: 12 (ancho máximo)
      * @return void
     */
-    public function add_link($anchor, $href, $extras='') {
-        $this->add_field('LINK', null, $anchor, $href, $extras);
+    public function add_link($anchor, $href, $extras='', $col=12) {
+        $this->add_field('LINK', null, $anchor, $href, $extras, $col);
     }
 
     /**
@@ -215,10 +228,14 @@ class WebFormPRO {
                                     si no se indica, se utiliza $name
      * @param  array   $value       valor por defecto del campo
      * @param  string  $extras      cualquier string a incluir dentro del tag
+     * @param  int     $col         entero entre 1 y 12 que representa el tamaño
+                                    de la grilla ocupada por el campo.
+                                    valor por defecto: 12 (ancho máximo)
      * @return void
     */
-    public function add_password($name, $label='', $value='', $extras='') {
-        $this->add_field('PASSWORD', $name, $label, $value, $extras);
+    public function add_password($name, $label='', $value='', $extras='',
+      $col=12) {
+        $this->add_field('PASSWORD', $name, $label, $value, $extras, $col);
     }
 
     /**
@@ -255,10 +272,15 @@ class WebFormPRO {
                                         - extras: cualquier dato adicional a
                                                   incluir dentro del tag option
      * @param  string  $extras      cualquier string a incluir dentro del tag
+     * @param  int     $col         entero entre 1 y 12 que representa el tamaño
+                                    de la grilla ocupada por el campo.
+                                    valor por defecto: 12 (ancho máximo)
      * @return void
     */
-    public function add_select($name, $label='', $options=array(), $extras='') {
-        $this->add_iterated_fields('OPTION', $options, $name, $label, $extras);
+    public function add_select($name, $label='', $options=array(), $extras='',
+      $col=12) {
+        $this->add_iterated_fields('OPTION', $options, $name, $label, $extras,
+            $col);
     }
 
     /**
@@ -266,10 +288,13 @@ class WebFormPRO {
      *
      * @param  string  $value       texto del botón
      * @param  string  $extras      cualquier string a incluir dentro del tag
+     * @param  int     $col         entero entre 1 y 12 que representa el tamaño
+                                    de la grilla ocupada por el campo.
+                                    valor por defecto: 12 (ancho máximo)
      * @return void
     */
-    public function add_submit($value='Enviar', $extras='') {
-        $this->add_field('SUBMIT', null, null, $value, $extras);
+    public function add_submit($value='Enviar', $extras='', $col=12) {
+        $this->add_field('SUBMIT', null, null, $value, $extras, $col);
     }
 
     /**
@@ -280,10 +305,13 @@ class WebFormPRO {
                                     si no se indica, se utiliza $name
      * @param  array   $value       valor por defecto del campo
      * @param  string  $extras      cualquier string a incluir dentro del tag
+     * @param  int     $col         entero entre 1 y 12 que representa el tamaño
+                                    de la grilla ocupada por el campo.
+                                    valor por defecto: 12 (ancho máximo)
      * @return void
     */
-    public function add_text($name, $label='', $value='', $extras='') {
-        $this->add_field('TEXT', $name, $label, $value, $extras);
+    public function add_text($name, $label='', $value='', $extras='', $col=12) {
+        $this->add_field('TEXT', $name, $label, $value, $extras, $col);
     }
 
     /**
@@ -294,10 +322,14 @@ class WebFormPRO {
                                     si no se indica, se utiliza $name
      * @param  array   $value       valor por defecto del campo
      * @param  string  $extras      cualquier string a incluir dentro del tag
+     * @param  int     $col         entero entre 1 y 12 que representa el tamaño
+                                    de la grilla ocupada por el campo.
+                                    valor por defecto: 12 (ancho máximo)
      * @return void
     */
-    public function add_textarea($name, $label='', $value='', $extras='') {
-        $this->add_field('TEXTAREA', $name, $label, $value, $extras);
+    public function add_textarea($name, $label='', $value='', $extras='',
+      $col=12) {
+        $this->add_field('TEXTAREA', $name, $label, $value, $extras, $col);
     }
 
     /**
@@ -321,10 +353,13 @@ class WebFormPRO {
                                     si no se indica, se utiliza $name
      * @param  array   $value       valor por defecto del campo
      * @param  string  $extras      cualquier string a incluir dentro del tag
+     * @param  int     $col         entero entre 1 y 12 que representa el tamaño
+                                    de la grilla ocupada por el campo.
+                                    valor por defecto: 12 (ancho máximo)
      * @return void
     */
-    public function add_url($name, $label='', $value='', $extras='') {
-        $this->add_field('URL', $name, $label, $value, $extras);
+    public function add_url($name, $label='', $value='', $extras='', $col=12) {
+        $this->add_field('URL', $name, $label, $value, $extras, $col);
     }
 
     /**
@@ -351,6 +386,26 @@ class WebFormPRO {
     }
 
     /**
+     * Agregar un fieldset (sin cerrarlo)
+     *
+     * @param  string  $legend        (opcional) Título del fieldset
+     * @return void
+    */
+    public function open_fieldset($legend='') {
+        $this->fields[] = $this->get_fieldset('OPEN', $legend);
+    }
+
+    /**
+     * Agregar la etiqueta de cierre de un fieldset
+     *
+     * @param  void
+     * @return void
+    */
+    public function close_fieldset() {
+        $this->fields[] = $this->get_fieldset('CLOSE');
+    }
+
+    /**
      * Agregar un campo al array $fields
      *
      * @param  string  $key         (requerido) el nombre del identificado
@@ -362,11 +417,35 @@ class WebFormPRO {
      * @param  string  $extras      (requerido) información adicional o null
      * @return void
     */
-    protected function add_field($key, $name, $label, $value, $extras) {
+    protected function add_field($key, $name, $label, $value, $extras, $col=12) {
         $base = $this->get_code($key);
         $dict = $this->set_dict($name, $label, $value, $extras);
-        $this->fields[] = Template($base)->render($dict);
+        $render_field = Template($base)->render($dict);
+        list($open, $close) = $this->get_envelope_tags('LAYER', $col);
+        $final_render = $open . $render_field . $close;
+        $this->fields[] = ($col) ? $final_render : $render_field;
     }
+
+    /**
+     * Retorna tags que requieren una apertura y cierre
+     *
+     * @param  string  $key         (requerido) el nombre del identificado
+                                    necesario para obtener el código HTML desde 
+                                    la plantilla
+     * @param  string  $value       (requerido) un valor requerido a sustituir
+                                    en los tags de apertura (varía de acuerdo
+                                    al tag)
+     * @return array                un array conteniendo la etiqueta de apertura
+                                    y la de cierre, en ese orden
+    */
+    protected function get_envelope_tags($key, $value) {
+        $code = $this->get_code($key);
+        $tags = explode('{content}', $code);
+        $open_tag = str_replace('{value}', $value, $tags[0]);
+        $close_tag = $tags[1];
+        return array($open_tag, $close_tag);
+    }
+
 
     /**
      * Agregar un grupo de campos al array $fields
@@ -379,14 +458,19 @@ class WebFormPRO {
      * @param  string  $name        (requerido) el nombre del campo o null
      * @param  string  $label       (requerido) la etiqueta o null
      * @param  string  $extras      información adicional
+     * @param  int     $col         entero entre 1 y 12 que representa el tamaño
+                                    de la grilla ocupada por el campo.
+                                    valor por defecto: 12 (ancho máximo)
      * @return void
     */
     protected function add_iterated_fields($key, $collection, $name, $label,
-      $extras='') {
+      $extras='', $col=12) {
         $container = $this->get_code("{$key}CONTAINER");
         $render = Template($container)->render_regex($key, $collection);
         $dict = $this->set_dict($name, $label, null, $extras);
-        $this->fields[] = Template($render)->render($dict);
+        $render_fields_group = Template($render)->render($dict);
+        list($open, $close) = $this->get_envelope_tags('LAYER', $col);
+        $this->fields[] = $open . $render_fields_group . $close;
     }
 
     /**
@@ -420,9 +504,22 @@ class WebFormPRO {
             'value' => $value,
             'extras' => $extras,
             'id' => "{$name}_$id",
-            'placeholder' => $label_text
+            'placeholder' => ''
         );
         return $dict;
+    }
+
+    /**
+     * Obtiene las etiquetas para crear un fieldset de apertura y cierre
+     *
+     * @param  string  $which   (requerido) OPEN|CLOSE
+     * @param  string  $legend  (opcional) reuqerido si $which es OPEN
+     * @return string  La etiqueta de apertura si $which es OPEN o la de cierre
+                       si $which es CLOSE
+    */
+    protected function get_fieldset($which, $legend='') {
+        list($open, $close) = $this->get_envelope_tags('FIELDSET', $legend);
+        return ($which == 'OPEN') ? $open : $close;
     }
 
     /**

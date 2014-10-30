@@ -23,7 +23,7 @@
 * @license    http://www.gnu.org/licenses/gpl.txt  GNU GPL 3.0
 * @author     Eugenia Bahit <ebahit@member.fsf.org>
 * @link       http://www.europio.org
-* @version    3.4.24
+* @version    3.4.65
 */
 
 require_once 'settings.php';

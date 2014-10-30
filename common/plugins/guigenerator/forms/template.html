@@ -98,7 +98,7 @@
     <!--FORM-->
 
         <!--NAVBARCONTAINER-->
-        <div class="tr">
+        <div class="tr col-md-12">
             <label class="td">&nbsp;</label>
             <!--NAVBAR-->
             <a href="{href}" class="linkformnav">{anchor}</a><!--NAVBAR-->
@@ -110,33 +110,33 @@
         <!--HIDDEN-->
 
         <!--TEXT-->
-        <div class="tr">
-            <label for="{id}" class="td">{label}:</label>
-            <input type="text" name="{name}" id="{id}" value="{value}"
+        <div class="tr form-group" id="EuWFP_{name}">
+            <label for="{id}" class="td control-label">{label}:</label>
+            <input type="text" name="{name}" id="{id}" value="{value}" class="form-control"
                 placeholder="{placeholder}"{extras}> <span id="{name}_error"></span>
         </div>
         <!--TEXT-->
 
         <!--PASSWORD-->
-        <div class="tr">
-            <label for="{id}" class="td">{label}:</label>
-            <input type="password" name="{name}" id="{id}" value="{value}"
+        <div class="tr form-group" id="EuWFP_{name}">
+            <label for="{id}" class="td control-label">{label}:</label>
+            <input type="password" name="{name}" id="{id}" value="{value}" class="form-control"
                 placeholder="{placeholder}"{extras}> <span id="{name}_error"></span>
         </div>
         <!--PASSWORD-->
 
         <!--EMAIL-->
-        <div class="tr">
-            <label for="{id}" class="td">{label}:</label>
-            <input type="email" name="{name}" id="{id}" value="{value}"
+        <div class="tr form-group" id="EuWFP_{name}">
+            <label for="{id}" class="td control-label">{label}:</label>
+            <input type="email" name="{name}" id="{id}" value="{value}" class="form-control"
                 placeholder="user@example.org"{extras}> <span id="{name}_error"></span>
         </div>
         <!--EMAIL-->
         
         <!--URL-->
-        <div class="tr">
-            <label for="{id}" class="td">{label}:</label>
-            <input type="url" name="{name}" id="{id}" value="{value}"
+        <div class="tr form-group" id="EuWFP_{name}">
+            <label for="{id}" class="td control-label">{label}:</label>
+            <input type="url" name="{name}" id="{id}" value="{value}" class="form-control"
                 placeholder="http://www.example.org"{extras}> <span id="{name}_error"></span>
         </div>
         <!--URL-->
@@ -149,9 +149,9 @@
         <!--LINK-->
         
         <!--OPTIONCONTAINER-->
-        <div class="tr">
-            <label for="{id}" class="td">{label}:</label>
-            <select name="{name}" id="{id}">
+        <div class="tr form-group" id="EuWFP_{name}">
+            <label for="{id}" class="td control-label">{label}:</label>
+            <select name="{name}" id="{id}" class="form-control">
                 <!--OPTION--><option value="{value}"{extras}>{text}</option>
                 <!--OPTION-->
             </select> <span id="{name}_error"></span>
@@ -159,16 +159,16 @@
         <!--OPTIONCONTAINER-->
         
         <!--FILE-->
-        <div class="tr">
-            <label for="{id}" class="td">{label}:</label>
-            <input type="file" name="{name}" id="{id}"{extras}>
+        <div class="tr form-group" id="EuWFP_{name}">
+            <label for="{id}" class="td control-label">{label}:</label>
+            <input type="file" name="{name}" id="{id}"{extras} class="form-control">
             <span id="{name}_error"></span>
         </div>
         <!--FILE-->
         
         <!--RADIOCONTAINER-->
-        <div class="tr">
-            <span class="td">{label}:</span>
+        <div class="tr" id="EuWFP_{name}">
+            <span class="td control-label">{label}:</span>
             <div class="td">
                 <!--RADIO--><label class="labelcontainer">
                     <input type="radio" name="{name}" value="{value}"{extras}> {text}</label>
@@ -179,8 +179,8 @@
         <!--RADIOCONTAINER-->
 
         <!--CHECKBOXCONTAINER-->
-        <div class="tr">
-            <span class="td">{label}:</span>
+        <div class="tr" id="EuWFP_{name}">
+            <span class="td control-label">{label}:</span>
             <div class="td">
                 <!--CHECKBOX--><label class="labelcontainer">
                     <input type="checkbox" name="{name}[]" value="{value}"{extras}> {text}</label><br>
@@ -191,25 +191,37 @@
         <!--CHECKBOXCONTAINER-->
         
         <!--TEXTAREA-->
-        <div class="tr">
-            <label for="{id}" class="td top">{label}:</label>
-            <textarea name="{name}" id="{id}" placeholder="{placeholder}"{extras}>{value}</textarea>
+        <div class="tr form-group" id="EuWFP_{name}">
+            <label for="{id}" class="td top control-label">{label}:</label>
+            <textarea name="{name}" id="{id}" placeholder="{placeholder}"{extras}
+            class="form-control">{value}</textarea>
             <br><span id="{name}_error"></span>
         </div>
         <!--TEXTAREA-->
         
+        <!--FIELDSET-->
+        <fieldset><legend><h4>{value}</h4></legend>
+            {content}
+        </fieldset>
+        <!--FIELDSET-->
+        
+        <!--LAYER-->
+        <div class="col-md-{value}">
+            {content}
+        </div>
+        <!--LAYER-->
+        
         <!--CAPTCHA-->
-        <div class="tr">
-            <label for="{id}" class="td">{label}:</label>
+        <div class="tr" id="EuWFP_{name}">
+            <label for="{id}" class="td control-label">{label}:</label>
             <span class="captcha"{extras}>{value}</span>
             <input type="text" name="{name}" id="{id}" size="6"> <span id="{name}_error"></span>
         </div>
         <!--CAPTCHA-->
         
         <!--SUBMIT-->
-        <div class="tr">
-            <label class="td top">&nbsp;</label>
-            <input type="submit" value="{value}"{extras}>
+        <div class="tr form-group">
+            <button type="submit" class="btn btn-warning" value="{value}"{extras}>{value}</button>
         </div>
         <!--SUBMIT-->
     </form>
@@ -217,36 +229,8 @@
     <!--ERROR-ZONE-->
     <script>
     var EuWFP_campos_error = {value};
-    EuWFP_add_style();
-
     for(var EuWFP_key in EuWFP_campos_error) {
-        EuWFP_span_error = document.getElementById(EuWFP_key + "_error");
-        EuWFP_span_error.innerHTML = EuWFP_campos_error[EuWFP_key];
-        EuWFP_span_error.className = "msg_error";
-
-        EuWFP_field = document.getElementsByName(EuWFP_key);
-        
-        if(EuWFP_field.length == 1) {
-            EuWFP_field[0].setAttribute("class", "field_error");
-            EuWFP_field[0].onkeyup = function() {
-                EuWFP_spanid = this.name + "_error";
-                EuWFP_error_layer = document.getElementById(EuWFP_spanid);
-                if(this.value != '') {
-                    this.className = 'field_ok';
-                    EuWFP_error_layer.className = "msg_error_pass";
-                } else {
-                    this.className = 'field_error';
-                    EuWFP_error_layer.className = "msg_error";
-                }
-            };
-        }
-    }
-
-    function EuWFP_add_style() {
-        var stylesheet = document.createElement("style");
-        var content = document.createTextNode("@import url('/static/css/webform_plugin.css');");
-        stylesheet.appendChild(content);
-        document.head.appendChild(stylesheet);
+        document.getElementById('EuWFP_' + EuWFP_key).className = "tr form-group has-error";
     }
     </script>
     <!--ERROR-ZONE-->

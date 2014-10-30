@@ -23,6 +23,8 @@ class MySQLiLayer {
         $db = (!$dbname) ? DB_NAME : $dbname;
         if(defined('DB_TESTING')) $db = DB_TESTING;
         self::$conn = new mysqli(DB_HOST, DB_USER, DB_PASS, $db);
+        $chars = (defined('DB_CHARSET')) ? DB_CHARSET : 'utf8';
+        self::$conn->set_charset($chars);
     }
 
     protected static function preparar() {

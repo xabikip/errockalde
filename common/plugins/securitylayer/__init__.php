@@ -14,8 +14,7 @@ class SecurityLayer {
             if($this->strict && !$array) $this->remove_and_convert($key);
             if(strpos($key, 'mail') !== False) $this->purge_email($key);
             $mocknum = str_replace(',', '', $value);
-            if(is_numeric($mocknum) && (strlen($mocknum)) < 11
-                ) $this->sanitize_number($key);
+            if(is_numeric($mocknum)) $this->sanitize_number($key);
             if(!$array) $this->encode_string($key);
         }
     }
@@ -57,6 +56,7 @@ class SecurityLayer {
         $pos_dot = strpos($_POST[$key], '.');
         $has_colon = ($pos_colon !== False);
         $has_dot = ($pos_dot !== False);
+        $is_longinteger = ($_POST[$key] > PHP_INT_MAX);
         $filterid = FILTER_VALIDATE_FLOAT;
 
         if($has_colon && $has_dot) {
@@ -69,6 +69,8 @@ class SecurityLayer {
         } elseif($has_colon xor $has_dot) {
             $this->helpernum(',', '.', $key);
             settype($_POST[$key], 'float');
+        } elseif($is_longinteger) {
+            $filterid = FILTER_VALIDATE_FLOAT;
         } else {
             settype($_POST[$key], 'integer');
             $filterid = FILTER_VALIDATE_INT;

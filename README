@@ -172,7 +172,7 @@
 
 
     Encontrará documentación en http://www.europio.org/docs y guías más 
-    recientes en http://library.originalhacker.org
+    recientes en http://library.originalhacker.org/search/europio
 
     Si desea recibir una tutoría personalizada para desarrollar aplicaciones
     con Europio Engine, visite http://cursos.eugeniabahit.com
@@ -240,7 +240,7 @@
                 </code>
 
         8) Pruebe los recursos agregar, guardar y listar en su navegador,
-           ingresando en http://su-host-virtual/demo/prueba/agregar
+           ingresando en http://su-host-virtual/demo/modelodeprueba/agregar
 
         9) Restrinja ahora el acceso a los recursos agregar y guardar.
            Archivo: appmodules/demo/controllers/modelodeprueba.php
@@ -251,6 +251,6 @@
                     @SessionHandler()->check_state(1);
                 </code>
 
-        10) Acceda ahora a http://su-host-virtual/demo/prueba/agregar
+        10) Acceda ahora a http://su-host-virtual/demo/modelodeprueba/agregar
             e inserte el usuario y clave que configuró durante la instalación
 

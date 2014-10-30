@@ -29,6 +29,7 @@ DB_HOST = ${SERVER_NAME} ; host o IP del servidor de base de datos
 DB_USER = root       ; usuario MySQL
 DB_PASS = secret     ; contraseña
 DB_NAME = europio    ; nombre de la base de datos de la app
+DB_CHARSET = utf8    ; juego de caracteres aplicable a la base de datos
 
 
 [PATHS]
