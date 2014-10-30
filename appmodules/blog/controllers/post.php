@@ -3,17 +3,15 @@
 class postController extends Controller {
 
     public function agregar($errores=array()) {
-        $kategoriak_collector = CollectorObject::get('kategoria');
-        $kategoriak = $kategoriak_collector->collection;
-        $this->view->agregar($kategoriak, $errores);
+        $kat= CollectorObject::get('kategoria'); $kat = $kat->collection;
+        $this->view->agregar($kat, $errores);
     }
 
     public function editar($id=0, $errores=array()) {
         $this->model->post_id = $id;
         $this->model->get();
-        $kategoriak_collector = CollectorObject::get('kategoria');
-        $kategoriak = $kategoriak_collector->collection;
-        $this->view->editar($this->model, $errores, $kategoriak);
+        $kat= CollectorObject::get('kategoria'); $kat = $kat->collection;
+        $this->view->editar($this->model, $errores, $kat);
     }
 
     public function guardar() {
