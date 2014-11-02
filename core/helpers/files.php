@@ -84,8 +84,22 @@ class StaticFileServer {
         if(file_exists($file_path)) FileManager::show($file_path);
     }
 
+    private static function is_thesame_from_symlink() {
+        list($mybe, $is_symlink) = array(False, False);
+        $document_root = $_SERVER['DOCUMENT_ROOT'];
+        $script = $_SERVER['SCRIPT_FILENAME'];
+        if(strpos(__file__, $document_root) !== 0) $mybe = True;
+        if($mybe) {
+            $pos = (strlen($script) - 9);
+            if(stripos($script, 'files.php') === $pos) $is_symlink = True;
+        }
+        return $is_symlink;
+    }
+
     public static function run() {
-        if($_SERVER['SCRIPT_FILENAME'] == __FILE__) {
+        $is_thesame = ($_SERVER['SCRIPT_FILENAME'] == __FILE__);
+        $is_thesame_from_symlink = self::is_thesame_from_symlink();
+        if($is_thesame || $is_thesame_from_symlink) {
             if(!isset(self::$instance)) {
                 self::$instance = new StaticFileServer();
             }
