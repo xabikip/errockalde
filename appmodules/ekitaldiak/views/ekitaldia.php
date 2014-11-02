@@ -85,6 +85,7 @@ class EkitaldiaView {
     public function ekitaldiak($ekitaldiak=array()) {
         foreach ($ekitaldiak as $obj) {
             $obj->deitura = $obj->ekitaldimota->deitura;
+            $obj->ordua = substr($obj->ordua, 0, 5);
         }
 
         //Render ekitaldiak
