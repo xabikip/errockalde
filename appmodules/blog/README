@@ -19,7 +19,7 @@
    ===========================================================================
 
 
-                                    *****
+    Habilitar en php.ini allow_url_fopen=1
 
     SQL
         Tiene que estar creada la tabla user. Luego creamos la tabla kategoria y

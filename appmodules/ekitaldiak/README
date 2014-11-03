@@ -19,7 +19,7 @@
    ===========================================================================
 
 
-                                    *****
+    Habilitar en php.ini allow_url_fopen=1
 
     SQL
         Primero creamos la tabla ekitaldimota. Despues lekua y por ultimo ekitaldia.

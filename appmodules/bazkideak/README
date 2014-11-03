@@ -22,6 +22,8 @@
     Artxibo eta irudi hutsak erabat ezabatzeko
     Exekutatzeko baimenak eman artxibo honi /common/tools/file/cron.php
 
+    Habilitar en php.ini allow_url_fopen=1
+
     SQL
         Tiene que estar creada la tabla user. Luego creamos la tabla bazkide. Despues
         la de talde y por ultimo la de diskoa.
