@@ -17,7 +17,7 @@ class DiskoaView {
         $form->add_errorzone($errores);
 
         //Mostrar form para agregar talde
-        $js_europio = file_get_contents(CUSTOM_STATIC_DIR ."js/errockalde.js");
+        $js_europio = file_get_contents(CUSTOM_STATIC_DIR ."/js/errockalde.js");
         $html = $form->get_form() . $js_europio;
         print Template('Diskoa gehitu')->show($html);
 

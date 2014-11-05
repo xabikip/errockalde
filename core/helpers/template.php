@@ -9,9 +9,9 @@
 * @link         http://www.europio.org
 * @contributor  Jimmy Daniel Barranco
 */
- 
+
 class Template {
- 
+
     public function __construct($str='', $custom_file='') {
         $this->str = $str;
         $default_tmpl = STATIC_DIR . "html/template.html";
@@ -19,7 +19,7 @@ class Template {
             (CUSTOM_TEMPLATE) ? CUSTOM_TEMPLATE : $default_tmpl);
         $this->filename = $file;
     }
- 
+
     public function render($dict=array()) {
         settype($dict, 'array');
         $this->set_dict($dict);
@@ -52,7 +52,7 @@ class Template {
         $no_keys = str_replace("<!--$key-->", "", $matches[0]);
         return ($remove_keys) ? $no_keys : $matches[0];
     }
- 
+
     function get_substr($key, $remove_keys=True) {
         $needle = "<!--$key-->";
         $first = strpos($this->str, $needle);
@@ -62,7 +62,7 @@ class Template {
         $no_keys = str_replace($needle, "", $str);
         return ($remove_keys) ? $no_keys : $str;
     }
-   
+
     function render_regex($key='REGEX', $stack=array(), $use_pcre=USE_PCRE) {
         $originalstr = $this->str;
         $func = ($use_pcre) ? "get_regex" : "get_substr";
@@ -76,7 +76,7 @@ class Template {
     function render_substr($key='REGEX', $stack=array()) {
         return $this->render_regex($key, $stack, False);
     }
- 
+
     protected function set_dict($dict=array()) {
         $this->sanitize($dict);
         $keys = array_keys($dict);
@@ -86,7 +86,7 @@ class Template {
         }
         $this->dict = array_combine($keys, $values);
     }
-   
+
     private function sanitize(&$dict) {
         foreach($dict as $key=>&$value) {
             if(is_array($value) or is_object($value)) {
@@ -98,26 +98,26 @@ class Template {
             }
         }
     }
-   
+
     public function show($contenido='') {
         $tmpl = file_get_contents($this->filename);
         $dict = array("TITLE"=>$this->str, "CONTENIDO"=>$contenido);
         return Template($tmpl)->render($dict);
     }
 }
- 
- 
+
+
 # Función agregada para compatibilidad con PHP 5.3
 function Template($str='', $file='') {
     return new Template($str, $file);
 }
- 
- 
+
+
 # Alias para estilo por procedimientos
 function template_render($str='', $dict=array()) {
     return Template($str)->render($dict);
 }
- 
+
 function template_render_regex($str='', $key='REGEX', $dict=array()) {
     return Template($str)->render_regex($key, $dict);
 }

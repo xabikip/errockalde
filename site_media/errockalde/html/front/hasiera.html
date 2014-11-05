@@ -1,54 +1,93 @@
-<!--AGENDA-->
-<div class="col-sm-3">
-    <h2 class="errockalde">Agenda</h2>
-    <!--EKITALDIAK-->
-    <div class="panel panel-default errockalde">
-        <div class="panel-heading errockalde">
-          <strong>{stdclass.deitura}</strong>
-          <span class="eskuinalin">{stdclass.ordua}</span>
-        </div>
-        <div class="panel-body">
-          {stdclass.data}
-          <h4>{stdclass.ekitaldi_izena}</h4>
-          <p>{stdclass.herria}</p>
-        </div>
-    </div>
-    <hr>
-    <!--EKITALDIAK-->
-</div>
-<!--AGENDA-->
-<!--ALBISTEAK-->
-  <div class="col-sm-7">
-    <!--POST-->
-    <div class="row">
-      <div class="col-xs-12">
-        <!--IRUDIA{stdclass.post_id}-->
-          <div class="taldeIrudiTxiki">
-            <img src="/uploadfiles/blog/post/irudiak/{stdclass.post_id}"></img>
-          </div>
-        <!--IRUDIA{stdclass.post_id}-->
-        <h2>{stdclass.titularra}</h2>
-        <p>{stdclass.parrafoa}</p>
-        <p class="lead">
-          <a href="/post/{stdclass.slug}">
-            <button class="btn btn-default">Segi irakurten</button>
-          </a>
-        </p>
-      </div>
-    </div>
-    <hr>
-    <!--POST-->
-  </div>
-  <!--/ALBISTEAK-->
-<div class="col-sm-2">
-  <div class="panel panel-default">
-      <div class="panel-heading errockalde">Errockalde osatzen duten taldeak</div>
-      <ul class="list-group">
-        <!--TALDEAK-->
-             <li class="list-group-item">
-               <a href="/taldeak/{customurl}">{izena}</a>
-             </li>
-        <!--TALDEAK-->
+<!-- Homepage Slider -->
+<div class="homepage-slider">
+  <div id="sequence">
+    <ul class="sequence-canvas">
+      <!--SLIDEPOST-->
+      <li class="bg4">
+        <h2 class="title">{stdclass.titularra}</h2>
+        <h3 class="subtitle">{stdclass.parrafoa}</h3>
+        <img class="slide-img" src="/site_media/errockalde/img/homepage-slider/slide1.png" alt="Slide 1" />
+      </li>
+      <!--SLIDEPOST-->
+    </ul>
+    <div class="sequence-pagination-wrapper">
+      <ul class="sequence-pagination">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
       </ul>
     </div>
+  </div>
+</div>
+<!-- End Homepage Slider -->
+<div class="section">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 col-sm-6">
+        <h2 class="errockalde">Agenda</h2>
+        <!--EKITALDIAK-->
+        <div class="portfolio-item">
+          <!--KARTELA{stdclass.ekitaldia_id}-->
+          <div class="portfolio-image">
+            <a href="/agenda/{stdclass.ekitaldia_id}">
+              <img src="/uploadfiles/ekitaldiak/ekitaldia/kartelak/{stdclass.ekitaldia_id}"
+              alt="{stdclass.deitura}">
+            </a>
+          </div>
+          <!--KARTELA{stdclass.ekitaldia_id}-->
+          <div class="portfolio-info">
+            <ul>
+              <li class="portfolio-project-name">{stdclass.ekitaldi_izena}</li>
+              <li>{stdclass.data} | {stdclass.ordua}</li>
+              <li>{stdclass.deitura}</li>
+              <li>{stdclass.izena} | {stdclass.herria}</li>
+              <li class="read-more"><a href="/agenda/{stdclass.ekitaldia_id}" class="btn">Xehetasunak</a></li>
+            </ul>
+          </div>
+        </div>
+        <hr>
+        <!--EKITALDIAK-->
+      </div>
+
+      <div class="col-md-9 col-sm-6">
+        <h2>ALBISTIAK</h2>
+        <!--POST-->
+        <div class="col-md-6 col-sm-6">
+        <div class="blog-post">
+          <div class="post-info">
+            <div class="post-date">
+              <div class="date">
+                <!--SORTUA{stdclass.post_id}-->{stdclass.sortua}<!--SORTUA{stdclass.post_id}-->
+                <!--ALDATUA{stdclass.post_id}-->{stdclass.aldatua}<!--ALDATUA{stdclass.post_id}-->
+              </div>
+            </div>
+            <div class="post-comments-count">
+             <i class="fa fa-user"></i>{stdclass.name}
+            </div>
+          </div>
+          <!--IRUDIA{stdclass.post_id}-->
+          <a href="/post/{stdclass.slug}">
+            <img src="/uploadfiles/blog/post/irudiak/{stdclass.post_id}" class="post-image" alt="Post Title">
+          </a>
+          <!--IRUDIA{stdclass.post_id}-->
+          <!--MUSIKAGUNE{stdclass.post_id}-->
+          <a href="/post/{stdclass.slug}" >
+            <img src="/uploadfiles/blog/post/irudiak/default" class="post-image" alt="{stdclass.post_id}">
+          </a>
+          <!--MUSIKAGUNE{stdclass.post_id}-->
+          <div class="post-title">
+            <h3><a href="/post/{stdclass.slug}">{stdclass.titularra}</a></h3>
+          </div>
+          <div class="post-summary">
+            <p>{stdclass.parrafoa}</p>
+          </div>
+          <div class="post-more">
+            <a href="/post/{stdclass.slug}" class="btn btn-small">Segi irakurten</a>
+          </div>
+        </div>
+      </div>
+        <!--POST-->
+      </div>
+    </div>
+  </div>
 </div>

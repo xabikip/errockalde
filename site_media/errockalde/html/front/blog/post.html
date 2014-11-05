@@ -1,39 +1,67 @@
-<div class="row">
-    <div class="col-lg-1">
+<div class="section section-breadcrumbs">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h1 class="atalka">Atalka: </h1>
+        <ul class="kategoriak">
+            <!--KATEGORIAK-->
+            <li>
+                <a href="/blog/post/posts_kategoria/{kategoria_id}">
+                    {deitura}
+                </a>
+            </li>
+            <!--KATEGORIAK-->
+        </ul>
+      </div>
     </div>
-    <div class="col-lg-9">
-        <h1>{titularra}</h1>
-        <p class="italic">
-            <!--SORTUA-->{sortua}<!--SORTUA-->
-            <!--ALDATUA-->{aldatua}<!--ALDATUA-->
-            / {user}
-        </p>
-        <hr>
-        <!--IRUDIA{post_id}-->
-        <div class="taldeIrudiHandi">
-            <img src="/uploadfiles/blog/post/irudiak/{post_id}" >
-        </div>
-        <!--IRUDIA{post_id}-->
-        <p class="lead">{parrafoa}</p>
-        <p>{edukia}</p>
-        <hr>
-    </div>
-    <div class="col-md-2">
-        <div class="well">
-            <h2 class="margintopKendu">Atalka</h2>
-            <div class="row">
-                <div class="col-lg-6">
-                    <ul class="list-unstyled">
-                        <!--KATEGORIAK-->
-                        <li>
-                            <a href="/blog/post/posts_kategoria/{kategoria_id}">
-                                {deitura}
-                            </a>
-                        </li>
-                        <!--KATEGORIAK-->
-                    </ul>
+  </div>
+</div>
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <!-- Blog Post -->
+            <div class="col-sm-8">
+                <div class="blog-post blog-single-post">
+                    <div class="single-post-title">
+                        <h3>{titularra}</h3>
+                    </div>
+                    <div class="single-post-info">
+                        <i class="fa fa-clock-o"></i>
+                        <!--SORTUA-->{sortua} <!--SORTUA-->
+                        <!--ALDATUA-->{aldatua} <!--ALDATUA-->
+                        <i class="fa fa-user"></i>{user}
+                    </div>
+                    <!--IRUDIA{post_id}-->
+                    <div class="single-post-image">
+                        <img src="/uploadfiles/blog/post/irudiak/{post_id}" >
+                    </div>
+                    <!--IRUDIA{post_id}-->
+                    <div class="single-post-content">
+                        <h3>{parrafoa}</h3>
+                        <p>{edukia}</p>
+                    </div>
                 </div>
             </div>
+            <!-- End Blog Post -->
+            <!-- Sidebar -->
+            <div class="col-sm-4 blog-sidebar">
+                <h4>Recent Posts</h4>
+                <ul class="recent-posts">
+                    <li><a href="#">Lorem ipsum dolor sit amet</a></li>
+                    <li><a href="#">Sed sit amet metus sit</a></li>
+                    <li><a href="#">Nunc et diam volutpat tellus ultrices</a></li>
+                    <li><a href="#">Quisque sollicitudin cursus felis</a></li>
+                </ul>
+                <h4>Archive</h4>
+                <ul>
+                    <li><a href="#">January 2013</a></li>
+                    <li><a href="#">February 2013</a></li>
+                    <li><a href="#">March 2013</a></li>
+                    <li><a href="#">April 2013</a></li>
+                    <li><a href="#">May 2013</a></li>
+                </ul>
+            </div>
+            <!-- End Sidebar -->
         </div>
     </div>
 </div>

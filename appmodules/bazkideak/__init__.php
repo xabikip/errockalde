@@ -12,4 +12,5 @@ import('appmodules.bazkideak.views.diskoa');
 import('appmodules.bazkideak.helpers.diskoa');
 
 import('appmodules.bazkideak.settings');
+import('appmodules.ekitaldiak.settings')
 ?>

@@ -49,9 +49,12 @@ class EkitaldiaController extends Controller {
         if($errores and get_data('id') !== 0) {$this->editar($id, $errores);exit;}
 
         $lekua = $this->lekuaGorde();
+        // print_r($lekua['0']);exit;
 
         $this->model->ekitaldia_id = get_data('id');
+
         $this->model->lekua = Pattern::composite('Lekua', $lekua);
+        $this->model->deskribapena = get_data('deskribapena');
         $this->model->data = get_data('data');
         $this->model->izena = get_data('ekitaldi_izena');
         $this->model->ordua = get_data('ordua');
@@ -59,7 +62,8 @@ class EkitaldiaController extends Controller {
         $this->model->ekitaldimota = Pattern::composite('EkitaldiMota', $ekitaldimota);
         $this->model->save();
 
-        $ruta = WRITABLE_DIR . IRUDI_DIR . "/{$this->model->ekitaldia_id}";
+        $ruta = WRITABLE_DIR . EKITALDI_IRUDI_DIR . "/{$this->model->ekitaldia_id}";
+        // print("Ruta:");print_r($ruta);exit;
         guardar_imagen($ruta, $campoImagen);
 
         HTTPHelper::go("/ekitaldiak/ekitaldia/listar");
@@ -76,6 +80,13 @@ class EkitaldiaController extends Controller {
         $collection = CollectorObject::get('Ekitaldia');
         $list = $collection->collection;
         $this->view->ekitaldiak($list);
+    }
+
+    public function ekitaldia($id=0) {
+        $event = DataHandler('ekitaldia')->filter("ekitaldia_id=$id[1]");
+        $this->model->ekitaldia_id = $event[0]['ekitaldia_id'];
+        $this->model->get();
+        $this->view->ekitaldia($this->model);
     }
 
     public function eliminar($id=0) {
@@ -113,14 +124,16 @@ class EkitaldiaController extends Controller {
             $lekua->herria = get_data('herria');
             $lekua->helbidea = get_data('helbidea');
             $lekua->save();
+            return $lekua;
         }elseif($lekua[0]->herria !== $herria or $lekua[0]->helbidea !== $helbidea){
             $lekua = new Lekua();
             $lekua->izena = get_data('izena');
             $lekua->herria = get_data('herria');
             $lekua->helbidea = get_data('helbidea');
             $lekua->save();
+            return $lekua;
         }
-        return $lekua;
+        return $lekua['0'];
     }
 }
 

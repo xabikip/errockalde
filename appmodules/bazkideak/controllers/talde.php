@@ -86,6 +86,10 @@ class TaldeController extends Controller {
         $this->view->hasiera($taldeak, $ekitaldiak, $posts);
     }
 
+    public function kontaktua() {
+        $this->view->kontaktua();
+    }
+
     public function eliminar($id=0) {
         $this->model->talde_id = (int)$id;
         $this->__set_aditional_properties();

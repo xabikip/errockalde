@@ -3,16 +3,21 @@
         tinymce.init({
           // plugins: "code",
           selector:'textarea.editme',
-          language_url : '/static/errockalde/js/eu.js',
+          language_url : '/site_media/errockalde/js/eu.js',
           toolbar: "undo redo | styleselect | bold italic ",
           menubar: "insert edit"
         });
 </script>
 <script>
 
-//funcion para limpiar propiedad style en tinymce
+//funcion para limpiar propiedad style y class en tinymce
 function limpiar_cadena() {
     regex = new RegExp("\ style=\"(.){0,}\"", 'g');
+    textarea = document.getElementById('edukia_4').value;
+    resultado = textarea.replace(regex, "");
+    document.getElementById('edukia_4').value = resultado;
+
+    regex = new RegExp("\ class=\"(.){0,}\"", 'g');
     textarea = document.getElementById('edukia_4').value;
     resultado = textarea.replace(regex, "");
     document.getElementById('edukia_4').value = resultado;

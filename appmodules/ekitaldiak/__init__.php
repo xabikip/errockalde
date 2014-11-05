@@ -1,4 +1,5 @@
 <?php
+import('appmodules.ekitaldiak.settings');
 
 import('appmodules.ekitaldiak.models.ekitaldimota');
 import('appmodules.ekitaldiak.models.lekua');

@@ -22,7 +22,7 @@ class TaldeView {
         $form->add_errorzone($errores);
 
         //Mostrar form para agregar talde
-        $js_europio = file_get_contents(CUSTOM_STATIC_DIR ."js/errockalde.js");
+        $js_europio = file_get_contents(CUSTOM_STATIC_DIR ."/js/errockalde.js");
         $html = $form->get_form() . $js_europio;
         print Template('Talde berria')->show($html);
     }
@@ -51,7 +51,7 @@ class TaldeView {
         $form->add_errorzone($errores);
 
         //Mostrar form para editar talde
-        $js_europio = file_get_contents(CUSTOM_STATIC_DIR ."js/errockalde.js");
+        $js_europio = file_get_contents(CUSTOM_STATIC_DIR ."/js/errockalde.js");
         $html = $form->get_form() . $js_europio;
         print Template('Taldea editatu')->show($html);
     }
@@ -61,6 +61,12 @@ class TaldeView {
         $str = new CustomCollectorViewer($coleccion, 'bazkideak', 'talde',
             False, True, True);
         print Template('Taldeen zerrenda')->show($str->get_table());
+    }
+
+    public function kontaktua() {
+
+        $plantilla = file_get_contents(CUSTOM_STATIC_DIR . "/html/front/kontaktua.html");
+        print Template('kontaktua', CUSTOM_PUBLIC_TEMPLATE)->show($plantilla);
     }
 
     public function hasiera($taldeak=array(), $ekitaldiak=array(), $posts=array()) {
@@ -76,7 +82,7 @@ class TaldeView {
             $edukia = file_get_contents(WRITABLE_DIR . EDUKI_DIR . "/{$post->post_id}" );
             $edukia = EuropioCode::decode_preformat($edukia);
             $parrafoa = str_replace("&#160;", " ", EuropioCode::decode($parrafoa));
-            $post->parrafoa = $parrafoa;
+            $post->parrafoa = substr($edukia, 0, 450);
             $post->edukia = $edukia;
         }
 
@@ -88,21 +94,38 @@ class TaldeView {
         $dict->set($posts);
         $post_zerrenda = $dict->collection;
 
-        //Render ekitaldi, post y talde
+        //Render ekitaldi, post,slide y talde
         $plantilla = file_get_contents(CUSTOM_STATIC_DIR . "/html/front/hasiera.html");
         $render_ekitaldiak = Template($plantilla)->render_regex('EKITALDIAK', $ekitaldi_zerrenda);
-        $render_post = Template($render_ekitaldiak)->render_regex('POST', $post_zerrenda);
-        $render_taldeak = Template($render_post)->render_regex('TALDEAK', $taldeak);
+        $render_slide = Template($render_ekitaldiak)->render_regex('SLIDEPOST', $post_zerrenda);
+        $render_post = Template($render_slide)->render_regex('POST', $post_zerrenda);
 
-        //Render imagen
+
+        //Render imagen y creado/modificado
         foreach ($posts as $post) {
             $imagen = WRITABLE_DIR . POST_IRUDI_DIR . "/{$post->post_id}";
             if (!file_exists($imagen)){
-                $render_taldeak = $this->eliminar_bloque("IRUDIA{$post->post_id}", $render_taldeak);
+                $render_post = $this->eliminar_bloque("IRUDIA{$post->post_id}", $render_post);
+            }else{
+                $render_post = $this->eliminar_bloque("MUSIKAGUNE{$post->post_id}", $render_post);
+            }
+
+            if($post->aldatua <= 0){
+                $render_post = $this->eliminar_bloque("ALDATUA{$post->post_id}", $render_post);
+            }else{
+                $render_post = $this->eliminar_bloque("SORTUA{$post->post_id}", $render_post);
             }
         }
 
-        print Template('RockHeltzia', CUSTOM_PUBLIC_TEMPLATE)->show($render_taldeak);
+        //Render kartela
+        foreach ($ekitaldiak as $ekitaldi) {
+            $imagen = WRITABLE_DIR . EKITALDI_IRUDI_DIR . "/{$ekitaldi->ekitaldia_id}";
+            if (!file_exists($imagen)){
+                $render_post = $this->eliminar_bloque("KARTELA{$ekitaldi->ekitaldia_id}", $render_post);
+            }
+        }
+
+        print Template('RockHeltzia', CUSTOM_PUBLIC_TEMPLATE)->show($render_post);
     }
 
 
@@ -147,6 +170,7 @@ class TaldeView {
             $render_diskoa = $this->eliminar_bloque("LANAK", $render_taldea);
         } else{
             $disko_ezabatu = array();
+            $bandcamp_ezabatu = array();
             foreach ($taldea->diskoa_collection as $obj) {
                 $diskoa_id = $obj->diskoa_id;
                 $bandcamp = WRITABLE_DIR . BANDCAMP_DIR . "/{$diskoa_id}.ini";
@@ -161,6 +185,7 @@ class TaldeView {
                     $disko_ezabatu[] = $diskoa_id;
                 } else{
                     $obj->disko_izena = $obj->izena;
+                    $bandcamp_ezabatu[] = $diskoa_id;
                 }
             }
             $render_diskoa = Template($render_taldea)->render_regex('LANA', $taldea->diskoa_collection);
@@ -168,9 +193,11 @@ class TaldeView {
             foreach ($disko_ezabatu as $diskoa_id) {
                 $render_diskoa = $this->eliminar_bloque("DISKOA{$diskoa_id}", $render_diskoa);
             }
+
+            foreach ($bandcamp_ezabatu as $diskoa_id) {
+                $render_diskoa = $this->eliminar_bloque("BANDCAMP{$diskoa_id}", $render_diskoa);
+            }
         }
-
-
 
         //Render youtube
         $youtube  = WRITABLE_DIR . YOUTUBE_DIR . "/{$id}.ini";
@@ -196,18 +223,11 @@ class TaldeView {
 
     private function preparar_coleccion_listar(&$coleccion) {
         foreach ($coleccion as $obj) {
-            $obj->partaideak = array();
-            $obj->diskoak = array();
-            foreach ($obj->bazkide_collection as $bazkide) {
-                $obj->partaideak[] = $bazkide->izena;
-            }
-            foreach ($obj->diskoa_collection as $diskoa) {
-                $obj->diskoak[] = $diskoa->izena;
-            }
             unset($obj->bazkide_collection);
             unset($obj->diskoa_collection);
-            $obj->partaideak = nl2br(implode("\n", $obj->partaideak));
-            $obj->diskoak = nl2br(implode("\n", $obj->diskoak));
+            unset($obj->web);
+            unset($obj->deskribapena);
+            unset($obj->customurl);
         }
     }
 

@@ -14,7 +14,7 @@ class postView {
         $form->add_submit('Artikulua gehitu');
         $form->add_errorzone($errores);
 
-        $js_europio = file_get_contents(CUSTOM_STATIC_DIR ."js/errockalde.js");
+        $js_europio = file_get_contents(CUSTOM_STATIC_DIR ."/js/errockalde.js");
         $html = $js_europio . $form->get_form();
         print Template('Artikulu berria')->show($html);
     }
@@ -96,7 +96,6 @@ class postView {
     }
 
     public function posts($posts=array(), $kategoriak) {
-        // print_r($posts);exit;
 
         foreach ($posts as &$post) {
             (isset($post->post_id)) ? $id = $post->post_id : $id = $post['post_id'];
@@ -105,11 +104,11 @@ class postView {
             $edukia = EuropioCode::decode_preformat($edukia);
             $parrafoa = str_replace("&#160;", " ", EuropioCode::decode($parrafoa));
             if (isset($post->post_id)){
-                $post->parrafoa = $parrafoa;
+                $post->parrafoa = substr($edukia, 0, 450);
                 $post->edukia = $edukia;
                 $post->user = $post->user->name;
             }else{
-                $post['parrafoa'] = $parrafoa;
+                $post['parrafoa'] = substr($edukia, 0, 450);
                 $post['edukia'] = $edukia;
                 $post['user'] = $post->user->name;
             };
@@ -124,12 +123,14 @@ class postView {
         $render_post = Template($render_post)->render_regex('KATEGORIAK', $kategoriak);
 
         //Render imagen y fecha
-        foreach ($posts as $post) {
+        foreach ($posts as &$post) {
             (isset($post->post_id)) ? $id = $post->post_id : $id = $post['post_id'];
 
             $imagen = WRITABLE_DIR . POST_IRUDI_DIR . "/{$id}";
             if (!file_exists($imagen)){
                 $render_post = $this->eliminar_bloque("IRUDIA{$id}", $render_post);
+            }else{
+                $render_post = $this->eliminar_bloque("MUSIKAGUNE{$id}", $render_post);
             }
 
             if($post->aldatua <= 0){

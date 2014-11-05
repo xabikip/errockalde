@@ -1,0 +1,158 @@
+.msg_error {
+    background: url('/static/img/false.png') left center no-repeat;
+    color: #c00;
+    font-weight: normal;
+    padding-left: 1.5em;
+    font-size: 0.9em;
+}
+
+.msg_error_pass {
+    background: url('/static/img/true.png') left center no-repeat;
+    color: #690;
+    padding-left: 1.5em;
+    font-size: 0.9em;
+}
+
+.field_error {
+    border: 1px solid #c00 !important;
+    background: #f7e6e6 !important;
+}
+
+.field_ok {
+    border: 1px solid #690 !important;
+}
+
+/* ========================================================================== */
+
+form {
+    display: table;
+    width: 80%;
+    margin: 0 auto;
+    background: #f3f3f3;
+    border-radius: 0 0 10px 10px;
+    padding: 10px;
+    border-bottom: 18px solid #699;
+    font-family: 'FreeSans';
+    font-size: 14px;
+}
+
+select, input:not([type='file']), textarea {
+    background: #fff;
+    border: 1px solid #999;
+    padding: 2px 4px;
+    border-radius: 4px;
+    color: #666;
+    font-family: 'FreeSans';
+    font-size: 14px;
+}
+
+input[type=file] {
+    font-family: 'FreeSans';
+    font-size: 14px;
+}
+
+input[type=submit] {
+    margin-top: 0.5em;
+    background: #699;
+    font-weight: bold;
+    color: #fff;
+    border: 2px solid #fff;
+    box-shadow: 0 0 1px #699;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+input[type=submit]:hover {
+    background: #222;
+    box-shadow: 0 0 1px #222;
+}
+
+select:focus, input:not([type='file']):focus, textarea:focus {
+    background: #F0F5F5;
+    border: 1px solid #699;
+}
+
+div.instructions {
+    width: 80%;
+    margin: 0 auto;
+    background: #f3f3f3;
+    padding: 10px;
+    font-family: 'FreeSans';
+    font-size: 14px;
+}
+
+div.instructions p {
+    margin: 1em auto 0 auto;
+    padding: 1em;
+    border-top: 1px dashed #c0c0c0;
+    border-bottom: 1px dashed #c0c0c0;
+}
+
+div.instructions p:before {
+    content: "Instrucciones:";
+    font-weight: bold;
+    display: block;
+}
+
+div.tr {
+    display: table-row;
+}
+
+label.td, span.td {
+    display: table-cell;
+    width: 27%;
+    text-align: right;
+    padding: 0.5em;
+    font-weight: bold;
+    color: #699;
+}
+
+div.td {
+    display: table-cell;
+}
+
+.top { vertical-align: top; }
+textarea {
+    width: 74%;
+    min-height: 8em;
+    height: 8em;
+    max-height: 12em;
+}
+
+.plain {
+    border: none;
+    cursor: pointer;
+}
+
+a.linkform {
+    color: #24476B;
+    text-decoration: none;
+}
+
+a.linkform:hover {
+    text-decoration: underline;
+}
+
+a.linkformnav {
+    color: #24476B;
+    font-weight: bold;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 0.8em;
+}
+
+a.linkformnav:hover {
+    text-decoration: underline;
+}
+
+h3.form {
+    width: 80%;
+    margin: 0 auto;
+    background: #699;
+    border-radius: 10px 10px 0 0;
+    padding: 10px;
+    color: #fff;
+
+    font-size: 20px;
+}
+

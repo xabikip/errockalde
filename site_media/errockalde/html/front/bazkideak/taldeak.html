@@ -1,25 +1,41 @@
-<!--TALDEAK-->
-<div class="col-sm-3">
-  	<div class="panel panel-default">
-       	<div class="panel-heading">
-          <a href="/taldeak/{customurl}">
-            <strong>{izena}</strong>
-          </a>
-        </div>
-       	<div class="panel-body">
-          <!--IRUDIA{talde_id}-->
-          <div class="taldeIrudiTxiki">
-            <img src="/uploadfiles/bazkideak/taldea/irudiak/{talde_id}"
-              width="100px"></img>
-          </div>
-          <!--IRUDIA{talde_id}-->
-          <div class="taldeTestuTxiki">
-            {web}
-            <p>{emaila}</p>
-            <p>{telefonoa}</p>
-          </div>
-        </div>
+<div class="section section-breadcrumbs">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h1>Taldiak</h1>
+      </div>
     </div>
-    <hr>
+  </div>
 </div>
-<!--TALDEAK-->
+<div class="section">
+  <div class="container">
+    <div class="row">
+      <!--TALDEAK-->
+      <div class="col-md-3 col-sm-6">
+        <div class="team-member">
+          <!--IRUDIA{talde_id}-->
+          <div class="team-member-image">
+            <img src="/uploadfiles/bazkideak/taldea/irudiak/{talde_id}" alt="{izena}">
+          </div>
+          <!--IRUDIA{talde_id}-->
+          <div class="team-member-info">
+            <ul>
+              <!-- Team Member Info & Social Links -->
+              <li class="team-member-name">
+               <a href="/taldeak/{customurl}">{izena}</a>
+                <!-- Team Member Social Links -->
+                <span class="team-member-social">
+                  <a href="#"><i class="icon-facebook"></i></a>
+                  <a href="#"><i class="icon-github"></i></a>
+                  <a href="#"><i class="icon-tumblr"></i></a>
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!--TALDEAK-->
+    </div>
+  </div>
+</div>
+

@@ -1,57 +1,74 @@
-<div class="container">
+<div class="section section-breadcrumbs">
+  <div class="container">
     <div class="row">
-        <div class="col-lg-11">
-            <h1 class="page-header">{izena}</h1>
-        </div>
+      <div class="col-md-12">
+        <h1 class="talde_izena">{izena}</h1>
+      </div>
     </div>
-    <div class="row">
-         <!--IRUDIA{talde_id}-->
-        <div class="col-md-6">
-            <img class="img-responsive" src="/uploadfiles/bazkideak/taldea/irudiak/{talde_id}">
-        </div>
-        <!--IRUDIA{talde_id}-->
-        <div class="col-md-6">
-            <p>{deskribapena}</p>
-            <h3>Taldekidiak</h3>
-            <ul>
-                <!--BAZKIDEAK-->
-                <li>{bazkide_izena}</li>
-                <!--BAZKIDEAK-->
-            </ul>
-            <p>{telefonoa}</p>
-            <p>{emaila}</p>
-        </div>
-    </div>
-    <!--LANAK-->
-    <div class="row">
-
-        <div class="col-lg-10">
-            <h3 class="page-header">Argittaratutako lanak</h3>
-        </div>
-        <!--LANA-->
-        <div class="col-sm-4">
-            <p><span class="disko_izena">{disko_izena}</span> / {data}</p>
-            <!--DISKOA{diskoa_id}-->
-            <div class="col-md-6">
-                <img class="img-responsive" src="/uploadfiles/bazkideak/taldea/azalak/{diskoa_id}">
+  </div>
+</div>
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <!--IRUDIA{talde_id}-->
+            <div class="col-sm-6">
+                <div class="product-image-large">
+                    <img class="img-responsive" src="/uploadfiles/bazkideak/taldea/irudiak/{talde_id}">
+                </div>
             </div>
-            {abestiak}
-            <!--DISKOA{diskoa_id}-->
-            <iframe style="border: 0; width: 350px; height: 650px;" src="http://bandcamp.com/EmbeddedPlayer/album={album_id}/size=large/bgcol=ffffff/linkcol=0687f5/transparent=true/" seamless><a href="http://{talde_slug}.bandcamp.com/album/{album_slug}">{album} by {grupo}</a></iframe>
+            <!--IRUDIA{talde_id}-->
+            <div class="col-md-6">
+                <p>{deskribapena}</p>
+                <h3>Taldekidiak</h3>
+                <ul>
+                    <!--BAZKIDEAK-->
+                    <li>{bazkide_izena}</li>
+                    <!--BAZKIDEAK-->
+                </ul>
+                <p>{telefonoa}</p>
+                <p>{emaila}</p>
+            </div>
         </div>
-        <!--LANA-->
-
+        <div class="col-sm-12">
+            <div class="tabbable">
+                <!-- Tabs -->
+                <ul class="nav nav-tabs product-details-nav">
+                    <li class="active"><a href="#tab1" data-toggle="tab">Argittaratutako lanak</a></li>
+                    <li><a href="#tab2" data-toggle="tab">Bideuak</a></li>
+                </ul>
+                <div class="tab-content product-detail-info">
+                    <div class="tab-pane active" id="tab1">
+                        <!--LANAK-->
+                        <div class="row">
+                            <!--LANA-->
+                            <div class="col-sm-4">
+                                <p><span class="disko_izena">{disko_izena}</span> / {data}</p>
+                                <!--DISKOA{diskoa_id}-->
+                                <div class="col-md-6">
+                                    <img class="img-responsive" src="/uploadfiles/bazkideak/taldea/azalak/{diskoa_id}">
+                                </div>
+                                {abestiak}
+                                <!--DISKOA{diskoa_id}-->
+                                <!--BANDCAMP{diskoa_id}-->
+                                <iframe style="border: 0; width: 350px; height: 650px;" src="http://bandcamp.com/EmbeddedPlayer/album={album_id}/size=large/bgcol=ffffff/linkcol=0687f5/transparent=true"><a href="http://{talde_slug}.bandcamp.com/album/{album_slug}">{album} by {grupo}</a></iframe>
+                                <!--BANDCAMP{diskoa_id}-->
+                            </div>
+                            <!--LANA-->
+                        </div>
+                        <!--LANAK-->
+                    </div>
+                    <div class="tab-pane" id="tab2">
+                        <!--YOUTUBE-->
+                        <div class="row">
+                            <div class="video-wrapper">
+                            <iframe width="1000" height="620" src="//www.youtube.com/embed/{v}"
+                            frameborder="0" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                        <!--YOUTUBE-->
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <!--LANAK-->
-    <!--YOUTUBE-->
-    <div class="row">
-        <div class="col-lg-10">
-            <h3 class="page-header">Bideuak</h3>
-        </div>
-        <div class="col-lg-10">
-        <iframe width="900" height="620" src="//www.youtube.com/embed/{v}" frameborder="0"
-        allowfullscreen></iframe>
-        </div>
-    </div>
-    <!--YOUTUBE-->
 </div>

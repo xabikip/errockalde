@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS bazkide (
     izena VARCHAR(45) NOT NULL,
     abizena VARCHAR(45),
     goitizena VARCHAR(45),
-    emaila VARCHAR(30),
+    emaila VARCHAR(30) NOT NULL,
     telefonoa VARCHAR(9),
     user INT(11) NOT NULL,
         FOREIGN KEY(user) REFERENCES user(user_id)

@@ -8,6 +8,7 @@ class EkitaldiaView {
         $form = new WebFormPRO('/ekitaldiak/ekitaldia/guardar');
         $form->add_text('ekitaldi_izena', 'Ekitaldiaren Izena',@$_POST['ekitaldi_izena']);
         $form->add_select('ekitaldimota', 'Ekitaldi Mota', $ekitaldimotak);
+        $form->add_textarea('deskribapena', 'deskribapena', @$_POST['deskribapena']);
         $form->add_text('data', 'data', @$_POST['data']);
         $form->add_text('ordua', 'ordua', @$_POST['ordua']) ;
 
@@ -30,7 +31,7 @@ class EkitaldiaView {
         $form->add_submit('Ekitaldia gehitu');
         $form->add_errorzone($errores);
 
-        $js_datepicker = file_get_contents(CUSTOM_STATIC_DIR ."js/datepickerCustom.js");
+        $js_datepicker = file_get_contents(CUSTOM_STATIC_DIR ."/js/datepickerCustom.js");
         $html = $js_datepicker . $form->get_form();
         print Template('Ekitaldi berria')->show($html);
     }
@@ -42,6 +43,7 @@ class EkitaldiaView {
         $form->add_hidden('id', $obj->ekitaldia_id);
         $form->add_text('ekitaldi_izena', 'Ekitaldiaren Izena',$obj->izena);
         $form->add_select('ekitaldimota','Ekitaldi Mota', $ekitaldimotak);
+        $form->add_textarea('deskribapena', 'deskribapena', $obj->deskribapena);
         $form->add_text('data', 'data', $obj->data);
         $form->add_text('ordua', 'ordua', $obj->ordua);
 
@@ -83,9 +85,16 @@ class EkitaldiaView {
     }
 
     public function ekitaldiak($ekitaldiak=array()) {
+        // print_r($ekitaldiak);exit;
         foreach ($ekitaldiak as $obj) {
             $obj->deitura = $obj->ekitaldimota->deitura;
             $obj->ordua = substr($obj->ordua, 0, 5);
+            $obj->herria = $obj->lekua->herria;
+            $obj->lekua = $obj->lekua->izena;
+
+            $data_partes = explode("-", $obj->data);
+            $obj->hilabetea = $this->hilabete_izena($data_partes['1']);
+            $obj->eguna = $data_partes['2'];
         }
 
         //Render ekitaldiak
@@ -93,15 +102,39 @@ class EkitaldiaView {
         $render_ekitaldiak = Template($plantilla)->render_regex('EKITALDIAK', $ekitaldiak);
 
         // Render imagen
-        foreach ($ekitaldiak as $ekitaldi) {
-            $imagen = WRITABLE_DIR . IRUDI_DIR . "/{$ekitaldi->ekitaldia_id}";
-            if (!file_exists($imagen)){
-                $render_ekitaldiak = $this->eliminar_bloque("IRUDIA{$ekitaldi->ekitaldia_id}", $render_ekitaldiak);
-            }
-        }
+        // foreach ($ekitaldiak as $ekitaldi) {
+        //     $imagen = WRITABLE_DIR . IRUDI_DIR . "/{$ekitaldi->ekitaldia_id}";
+        //     if (!file_exists($imagen)){
+        //         $render_ekitaldiak = $this->eliminar_bloque("IRUDIA{$ekitaldi->ekitaldia_id}", $render_ekitaldiak);
+        //     }
+        // }
 
         //Mostrar
         print Template('Ekitaldiak', CUSTOM_PUBLIC_TEMPLATE)->show($render_ekitaldiak);
+    }
+
+    public function ekitaldia($ekitaldia=array()) {
+        // print_r($ekitaldia);exit;
+
+        //Modificopropiedades
+        $ekitaldia->ordua = substr($ekitaldia->ordua, 0, 5);
+        $ekitaldia->deitura = $ekitaldia->ekitaldimota->deitura;
+        $ekitaldia->herria = $ekitaldia->lekua->herria;
+        $ekitaldia->lekua = $ekitaldia->lekua->izena;
+
+        //Render ekitaldiak
+        $plantilla = file_get_contents(CUSTOM_STATIC_DIR . '/html/front/ekitaldiak/ekitaldia.html');
+        $render_ekitaldia = Template($plantilla)->render($ekitaldia);
+
+        //Render imagen
+        $imagen = WRITABLE_DIR . EKITALDI_IRUDI_DIR . "/{$ekitaldia->ekitaldia_id}";
+        if (!file_exists($imagen)){
+            $render_ekitaldia = $this->eliminar_bloque("IRUDIA{$ekitaldia->ekitaldia_id}", $render_ekitaldia);
+        }
+
+
+        //Mostrar
+        print Template('Ekitaldia', CUSTOM_PUBLIC_TEMPLATE)->show($render_ekitaldia);
     }
 
     # ==========================================================================
@@ -112,6 +145,49 @@ class EkitaldiaView {
         $identificador = $identificador;
         $bloque_eliminar = Template($plantilla)->get_substr($identificador);
         return $render_eliminado = str_replace($bloque_eliminar, "", $plantilla);
+    }
+
+    private function hilabete_izena($num) {
+        switch ($num) {
+            case '01':
+                return "URT";
+                break;
+            case '02':
+                return "OTS";
+                break;
+            case '03':
+                return "MAR";
+                break;
+            case '04':
+                return "API";
+                break;
+            case '05':
+                return "MAI";
+                break;
+            case '06':
+                return "EKA";
+                break;
+            case '07':
+                return "UZT";
+                break;
+            case '08':
+                return "ABU";
+                break;
+            case '09':
+                return "IRA";
+                break;
+            case '10':
+                return "URR";
+                break;
+            case '11':
+                return "AZA";
+                break;
+            case '12':
+                return "ABE";
+                break;
+
+        }
+
     }
 
 

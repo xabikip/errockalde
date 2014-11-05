@@ -1,25 +1,37 @@
-<!--EKITALDIAK-->
-<div class="col-sm-3">
-  	<div class="panel panel-default">
-       	<div class="panel-heading">
-          <a href="/ekitaldiak/ekitaldia/{ekitaldia_id}">
-            <strong>{izena}</strong>
-          </a>
-        </div>
-       	<div class="panel-body">
-          <!--IRUDIA{ekitaldia_id}-->
-          <div class="taldeIrudiTxiki">
-            <img src="/uploadfiles/bazkideak/taldea/irudiak/{ekitaldia_id}"
-              width="100px"></img>
-          </div>
-          <!--IRUDIA{ekitaldia_id}-->
-          <div class="taldeTestuTxiki">
-            {data}
-            <p>{ordua}</p>
-            <p>{deitura}</p>
-          </div>
-        </div>
+<div class="section section-breadcrumbs">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h1>Ekitaldiak</h1>
+      </div>
     </div>
-    <hr>
+  </div>
 </div>
-<!--EKITALDIAK-->
+<div class="section">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <table class="events-list">
+          <!--EKITALDIAK-->
+          <tr>
+            <td>
+              <div class="event-date">
+                <div class="event-day">{eguna}</div>
+                <div class="event-month">{hilabetea}</div>
+              </div>
+            </td>
+            <td>
+              {izena}
+            </td>
+            <td class="event-venue hidden-xs"><i class="icon-map-marker"></i> {deitura}</td>
+            <td class="event-price hidden-xs">{lekua} / {herria}</td>
+            <td class="event-price hidden-xs">{ordua}</td>
+            <td><a href="/agenda/{ekitaldia_id}" class="btn btn-grey btn-sm event-more">Xehetasunak</a></td>
+          </tr>
+          <!--EKITALDIAK-->
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+

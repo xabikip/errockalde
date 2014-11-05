@@ -6,6 +6,7 @@ class Ekitaldia extends StandardObject {
         $this->ekitaldia_id = 0;
         $this->ekitaldimota = $mota; // composición
         $this->izena = '';
+        $this->deskribapena = '';
         $this->data = '';
         $this->ordua = '';
         $this->lekua = $lekua;

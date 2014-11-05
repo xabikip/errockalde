@@ -1,115 +1,34 @@
+/*-----------------------------------------------------------------------------
+------------------------------------FRONT--------------------------------------
+-----------------------------------------------------------------------------*/
 
-/*----------------------------------OROKORRAK--------------------------------*/
-.burua{
- background-color: #f47639;
+/*----------------------------------BLOG-----------------------------------*/
+ul.kategoriak{
+  list-style: none;
+  float:left;
+  margin-top: 2px;
 }
 
-a.navbar-brand.naranja{
-font-size: 32px;
-margin: 5px 70px 0px 10px;
-color: #a30850;
+ul.kategoriak li {
+  float:left;
+  margin:0 30px;
 }
 
-ul.nav.navbar-nav li{
-  margin:5px 5px 2px 5px;
+ul.kategoriak li a{
+  font-size: 1.4em;
 }
 
-ul.nav.navbar-nav.baltza li a{
-  color: #000;
-  font-weight: bold;
-  font-size: 20px;
-  font-family: Verdana,Ubuntu, Arial;
+h1.atalka{
+  float:left;
 }
 
-.burukud{
-  margin: 20px 15px 0px 0px;
-}
-
-.burukud a{
-  color: black;
-}
-
-.errockalde{
-  background-color:#9d8032;
-  border-color: #9d8032;
-}
-
-h2.errockalde{
-  padding: 10px;
-  text-align: center;
-  font-weight: bold;
-}
-
-.goimargin{
-  margin-top: 70px;
-}
-
-.eskuinalin{
-  float: right;
-}
-
-.goimargin-btn{
-  margin-top: 10px;
-}
-
-h2.margintopKendu{
-  margin-top: 0px;
-}
-
-p.italic{
-  font-style: italic;
-}
+/*-----------------------------------------------------------------------------
+------------------------------------FRONT--------------------------------------
+-----------------------------------------------------------------------------*/
 
 
 /*----------------------------------TAULAK-----------------------------------*/
 .link_addnew{
   float: right;
   margin: 5px 15px 10px 0;
-}
-
-
-/*----------------------------------HASIERA----------------------------------*/
-.taldeIrudiTxiki{
-  float: left;
-}
-
-.taldeIrudiTxiki img{
-  max-width: 180px;
-  max-height: 200px;
-  margin: 25px 20px 5px 5px;
-}
-
-.taldeTestuTxiki{
-  float: left;
-}
-
-
-/*----------------------------------FORM-----------------------------------*/
-input[name='izena'], input[name='emaila'], input[name='web'], input[name='helbidea'] {
-  width: 250px;
-}
-
-input[name='youtube'] {
-  width: 400px;
-}
-
-input[name='ekitaldi_izena'] {
-  width: 450px;
-}
-
-
-/*----------------------------------TALDEA-----------------------------------*/
-
-.taldeIrudiHandi{
-  float: left;
-}
-
-.taldeIrudiHandi img{
-  max-width: 500px;
-  max-height: 300px;
-  margin: 10px 20px 4px 5px;
-}
-
-span.disko_izena{
-  font-size: 24px;
 }

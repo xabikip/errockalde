@@ -6,7 +6,7 @@ class DataHelper {
 
     public static function get_scheme($table) {
         $sql = "SELECT  COLUMN_NAME,
-                        IF(COLUMN_TYPE LIKE '%int%', 'i', 
+                        IF(COLUMN_TYPE LIKE '%int%', 'i',
                             IF(COLUMN_TYPE LIKE '%decimal%', 'd', 's')
                         )
                 FROM    COLUMNS
@@ -15,7 +15,7 @@ class DataHelper {
         ";
         $data = array('ss', DB_NAME, "$table");
         $fields = array('column'=>'', 'type'=>'');
-        return MySQLiLayer::ejecutar($sql, $data, $fields, 
+        return MySQLiLayer::ejecutar($sql, $data, $fields,
             'INFORMATION_SCHEMA');
     }
 

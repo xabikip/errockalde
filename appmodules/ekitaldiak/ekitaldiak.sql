@@ -19,6 +19,7 @@ CREATE TABLE ekitaldia (
     izena VARCHAR(45) NOT NULL,
     data DATE NOT NULL,
     ordua TIME NOT NULL,
+    deskribapena VARCHAR(250),
     lekua INT(11) NOT NULL,
     FOREIGN KEY (lekua)
         REFERENCES lekua (lekua_id)
