@@ -42,7 +42,7 @@ class postView {
         $form->add_submit('Aritkulua editatu');
         $form->add_errorzone($errores);
 
-        $js_europio = file_get_contents(CUSTOM_STATIC_DIR ."js/errockalde.js");
+        $js_europio = file_get_contents(CUSTOM_STATIC_DIR ."/js/errockalde.js");
         $html = $js_europio . $form->get_form();
         print Template('Aldatu artikulua')->show($html);
     }
