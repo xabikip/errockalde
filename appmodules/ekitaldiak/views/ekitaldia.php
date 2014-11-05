@@ -77,6 +77,7 @@ class EkitaldiaView {
         foreach ($coleccion as $obj) {
             $obj->lekua = $obj->lekua->izena;
             $obj->ekitaldimota = $obj->ekitaldimota->deitura;
+            unset($obj->deskribapena);
         }
 
         $tabla = new CustomCollectorViewer($coleccion, 'ekitaldiak',  'ekitaldia',
@@ -85,7 +86,6 @@ class EkitaldiaView {
     }
 
     public function ekitaldiak($ekitaldiak=array()) {
-        // print_r($ekitaldiak);exit;
         foreach ($ekitaldiak as $obj) {
             $obj->deitura = $obj->ekitaldimota->deitura;
             $obj->ordua = substr($obj->ordua, 0, 5);
@@ -100,14 +100,6 @@ class EkitaldiaView {
         //Render ekitaldiak
         $plantilla = file_get_contents(CUSTOM_STATIC_DIR . '/html/front/ekitaldiak/ekitaldiak.html');
         $render_ekitaldiak = Template($plantilla)->render_regex('EKITALDIAK', $ekitaldiak);
-
-        // Render imagen
-        // foreach ($ekitaldiak as $ekitaldi) {
-        //     $imagen = WRITABLE_DIR . IRUDI_DIR . "/{$ekitaldi->ekitaldia_id}";
-        //     if (!file_exists($imagen)){
-        //         $render_ekitaldiak = $this->eliminar_bloque("IRUDIA{$ekitaldi->ekitaldia_id}", $render_ekitaldiak);
-        //     }
-        // }
 
         //Mostrar
         print Template('Ekitaldiak', CUSTOM_PUBLIC_TEMPLATE)->show($render_ekitaldiak);
