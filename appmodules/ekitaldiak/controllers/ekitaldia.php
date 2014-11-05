@@ -9,6 +9,8 @@ class EkitaldiaController extends Controller {
 
 
     public function agregar($errores=array()) {
+        $level = 1; # Nivel de acceso mínimo requerido para el recurso
+        @SessionHandler()->check_state($level);
         $ekitaldimota_collector = CollectorObject::get('EkitaldiMota');
         $ekitaldimotak = $ekitaldimota_collector->collection;
 
@@ -19,6 +21,8 @@ class EkitaldiaController extends Controller {
     }
 
     public function editar($id=0, $errores=array()) {
+        $level = 1; # Nivel de acceso mínimo requerido para el recurso
+        @SessionHandler()->check_state($level);
         $ekitaldimota_collector = CollectorObject::get('EkitaldiMota');
         $ekitaldimotak = $ekitaldimota_collector->collection;
 
@@ -32,6 +36,8 @@ class EkitaldiaController extends Controller {
     }
 
     public function guardar() {
+        $level = 1; # Nivel de acceso mínimo requerido para el recurso
+        @SessionHandler()->check_state($level);
 
         $errores = array();
 
@@ -90,6 +96,8 @@ class EkitaldiaController extends Controller {
     }
 
     public function eliminar($id=0) {
+        $level = 1; # Nivel de acceso mínimo requerido para el recurso
+        @SessionHandler()->check_state($level);
         $this->model->ekitaldia_id = $id;
         $imagen = WRITABLE_DIR . "/ekitaldiak/ekitaldia/kartelak/{$this->model->ekitaldia_id}";
         unlink($imagen);

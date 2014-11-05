@@ -3,12 +3,16 @@
 class DiskoaController extends Controller {
 
     public function agregar($errores=array()) {
+        $level = 1; # Nivel de acceso mínimo requerido para el recurso
+        @SessionHandler()->check_state($level);
         $talde_collector = CollectorObject::get('Talde');
         $taldeak = $talde_collector->collection;
         $this->view->agregar($taldeak, $errores);
     }
 
     public function editar($id=0, $errores=array()) {
+        $level = 1; # Nivel de acceso mínimo requerido para el recurso
+        @SessionHandler()->check_state($level);
         $this->model->diskoa_id = $id;
         $this->model->get();
 
@@ -19,6 +23,8 @@ class DiskoaController extends Controller {
     }
 
     public function guardar() {
+        $level = 1; # Nivel de acceso mínimo requerido para el recurso
+        @SessionHandler()->check_state($level);
         $id = get_data('id');
 
         $errores = $this->validaciones();
@@ -47,12 +53,16 @@ class DiskoaController extends Controller {
     }
 
     public function listar() {
+        $level = 1; # Nivel de acceso mínimo requerido para el recurso
+        @SessionHandler()->check_state($level);
         $collection = CollectorObject::get('Diskoa');
         $list = $collection->collection;
         $this->view->listar($list);
     }
 
     public function eliminar($id=0) {
+        $level = 1; # Nivel de acceso mínimo requerido para el recurso
+        @SessionHandler()->check_state($level);
         $this->model->diskoa_id = $id;
         $this->model->destroy();
         HTTPHelper::go("/bazkideak/diskoa/listar");

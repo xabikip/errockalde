@@ -3,11 +3,15 @@
 class postController extends Controller {
 
     public function agregar($errores=array()) {
+        $level = 1; # Nivel de acceso mínimo requerido para el recurso
+        @SessionHandler()->check_state($level);
         $kat= CollectorObject::get('kategoria'); $kat = $kat->collection;
         $this->view->agregar($kat, $errores);
     }
 
     public function editar($id=0, $errores=array()) {
+        $level = 1; # Nivel de acceso mínimo requerido para el recurso
+        @SessionHandler()->check_state($level);
         $this->model->post_id = $id;
         $this->model->get();
         $kat= CollectorObject::get('kategoria'); $kat = $kat->collection;
@@ -15,6 +19,8 @@ class postController extends Controller {
     }
 
     public function guardar() {
+        $level = 1; # Nivel de acceso mínimo requerido para el recurso
+        @SessionHandler()->check_state($level);
         $id = get_data('id');
 
         $errores = $this->validaciones();
@@ -66,6 +72,8 @@ class postController extends Controller {
     }
 
     public function eliminar($id=0) {
+        $level = 1; # Nivel de acceso mínimo requerido para el recurso
+        @SessionHandler()->check_state($level);
         $this->model->post_id = (int)$id;
         $this->__set_aditional_properties();
         $this->model->destroy();

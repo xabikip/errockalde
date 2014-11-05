@@ -6,12 +6,16 @@ import('appmodules.bazkideak.views.talde');
 class TaldeController extends Controller {
 
     public function agregar($errores=array()) {
+        $level = 1; # Nivel de acceso mínimo requerido para el recurso
+        @SessionHandler()->check_state($level);
         $bazkide_collector = CollectorObject::get('Bazkide');
         $bazkideak = $bazkide_collector->collection;
         $this->view->agregar($bazkideak, $errores);
     }
 
     public function editar($id=0, $errores=array()) {
+        $level = 1; # Nivel de acceso mínimo requerido para el recurso
+        @SessionHandler()->check_state($level);
         $bazkide_collector = CollectorObject::get('Bazkide');
         $bazkideak = $bazkide_collector->collection;
         $this->model->talde_id = $id;
@@ -20,6 +24,8 @@ class TaldeController extends Controller {
     }
 
     public function guardar() {
+        $level = 1; # Nivel de acceso mínimo requerido para el recurso
+        @SessionHandler()->check_state($level);
         $id = get_data('id');
         $slug = ($id == 0) ? TaldeHelper::get_slug() : get_data('customurl');
 
@@ -53,6 +59,8 @@ class TaldeController extends Controller {
     }
 
     public function listar() {
+        $level = 1; # Nivel de acceso mínimo requerido para el recurso
+        @SessionHandler()->check_state($level);
         $collection = CollectorObject::get('Talde');
         $list = $collection->collection;
         $this->view->listar($list);
@@ -91,6 +99,8 @@ class TaldeController extends Controller {
     }
 
     public function eliminar($id=0) {
+        $level = 1; # Nivel de acceso mínimo requerido para el recurso
+        @SessionHandler()->check_state($level);
         $this->model->talde_id = (int)$id;
         $this->__set_aditional_properties();
         $this->model->destroy();
