@@ -82,7 +82,7 @@ class TaldeView {
             $edukia = file_get_contents(WRITABLE_DIR . EDUKI_DIR . "/{$post->post_id}" );
             $edukia = EuropioCode::decode_preformat($edukia);
             $parrafoa = str_replace("&#160;", " ", EuropioCode::decode($parrafoa));
-            $post->parrafoa = substr($edukia, 0, 450);
+            $post->parrafoa = $parrafoa;
             $post->edukia = $edukia;
         }
 

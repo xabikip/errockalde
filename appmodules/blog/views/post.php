@@ -28,7 +28,6 @@ class postView {
         $obj->edukia = EuropioCode::decode($edukia);;
 
         $form = new WebFormPRO('/blog/post/guardar');
-        $form->add_hidden('id', $obj->post_id);
         $form->add_select('kategoria', 'kategoria', $kategoriak);
         $form->add_textarea('titularra','titularra', $obj->titularra);
         $form->add_textarea('parrafoa', 'parrafoa', $obj->parrafoa);
@@ -39,6 +38,7 @@ class postView {
         $render = Template($html_irudia)->render($obj);
         $form->fields[] = $render;
 
+        $form->add_hidden('id', $obj->post_id);
         $form->add_submit('Aritkulua editatu');
         $form->add_errorzone($errores);
 

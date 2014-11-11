@@ -58,7 +58,7 @@ function set_encode_post() {
 
     document.getElementsByTagName('form')[0].onsubmit = function(){
         limpiar_cadena();
-        europiocode.encode('parrafoa_3');
+        parrafoa = europiocode.encode('parrafoa_3');
         europiocode.encode_preformat('edukia_4');
     };
 }
