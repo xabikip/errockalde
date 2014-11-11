@@ -18,7 +18,7 @@ class postController extends Controller {
         $this->view->editar($this->model, $errores, $kat);
     }
 
-    public function guardar() {print_r($_POST['parrafoa']);print_r($_POST['edukia']);exit;
+    public function guardar() {
         $level = 1; # Nivel de acceso mínimo requerido para el recurso
         @SessionHandler()->check_state($level);
         $id = get_data('id');
