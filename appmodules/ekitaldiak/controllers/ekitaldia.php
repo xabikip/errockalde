@@ -63,9 +63,15 @@ class EkitaldiaController extends Controller {
         $this->model->deskribapena = get_data('deskribapena');
         $this->model->data = get_data('data');
         $this->model->izena = get_data('ekitaldi_izena');
+
+        $slugger = new Slugger();
+        $this->model->slug =  $slugger->slugify(get_data('ekitaldi_izena'));
+
         $this->model->ordua = get_data('ordua');
+
         $ekitaldimota = Pattern::factory('EkitaldiMota', get_data('ekitaldimota') );
         $this->model->ekitaldimota = Pattern::composite('EkitaldiMota', $ekitaldimota);
+
         $this->model->save();
 
         $ruta = WRITABLE_DIR . EKITALDI_IRUDI_DIR . "/{$this->model->ekitaldia_id}";
@@ -89,7 +95,7 @@ class EkitaldiaController extends Controller {
     }
 
     public function ekitaldia($id=0) {
-        $event = DataHandler('ekitaldia')->filter("ekitaldia_id=$id[1]");
+        $event = DataHandler('ekitaldia')->filter("slug=$id[1]");
         $this->model->ekitaldia_id = $event[0]['ekitaldia_id'];
         $this->model->get();
         $this->view->ekitaldia($this->model);

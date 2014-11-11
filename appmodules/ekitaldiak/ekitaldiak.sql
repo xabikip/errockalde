@@ -6,7 +6,7 @@ CREATE TABLE ekitaldimota (
 CREATE TABLE lekua (
     lekua_id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
     izena VARCHAR(45) NOT NULL,
-    helbidea VARCHAR(125),
+    helbidea VARCHAR(170),
     herria VARCHAR(35)
 ) ENGINE=InnoDB;
 
@@ -16,10 +16,11 @@ CREATE TABLE ekitaldia (
     FOREIGN KEY (ekitaldimota)
         REFERENCES ekitaldimota (ekitaldimota_id)
         ON DELETE SET NULL,
-    izena VARCHAR(45) NOT NULL,
+    izena VARCHAR(150) NOT NULL,
+    slug VARCHAR(170) NOT NULL,
     data DATE NOT NULL,
     ordua TIME NOT NULL,
-    deskribapena VARCHAR(250),
+    deskribapena VARCHAR(500),
     lekua INT(11) NOT NULL,
     FOREIGN KEY (lekua)
         REFERENCES lekua (lekua_id)
