@@ -2,16 +2,17 @@
 
 class postController extends Controller {
 
+    # Nivel de acceso mínimo requerido para el recurso
+    private static $level = 30;
+
     public function agregar($errores=array()) {
-        $level = 1; # Nivel de acceso mínimo requerido para el recurso
-        @SessionHandler()->check_state($level);
+        @SessionHandler()->check_state(self::$level);
         $kat= CollectorObject::get('kategoria'); $kat = $kat->collection;
         $this->view->agregar($kat, $errores);
     }
 
     public function editar($id=0, $errores=array()) {
-        $level = 1; # Nivel de acceso mínimo requerido para el recurso
-        @SessionHandler()->check_state($level);
+        @SessionHandler()->check_state(self::$level);
         $this->model->post_id = $id;
         $this->model->get();
         $kat= CollectorObject::get('kategoria'); $kat = $kat->collection;
@@ -19,8 +20,7 @@ class postController extends Controller {
     }
 
     public function guardar() {
-        $level = 1; # Nivel de acceso mínimo requerido para el recurso
-        @SessionHandler()->check_state($level);
+        @SessionHandler()->check_state(self::$level);
         $id = get_data('id');
 
         $errores = $this->validaciones();
@@ -66,14 +66,19 @@ class postController extends Controller {
     }
 
     public function listar() {
-        $collection = CollectorObject::get('post');
-        $list = $collection->collection;
+        @SessionHandler()->check_state(self::$level);
+        $userid = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
+        if($userid > 1) {
+            $list = DataHandler('post', DH_FORMAT_OBJECT)->filter("user=$userid");
+        } else {
+            $collection = CollectorObject::get('post');
+            $list = $collection->collection;
+        }
         $this->view->listar($list);
     }
 
     public function eliminar($id=0) {
-        $level = 1; # Nivel de acceso mínimo requerido para el recurso
-        @SessionHandler()->check_state($level);
+        @SessionHandler()->check_state(self::$level);
         $this->model->post_id = (int)$id;
         $this->__set_aditional_properties();
         $this->model->destroy();
