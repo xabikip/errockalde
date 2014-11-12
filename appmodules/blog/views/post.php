@@ -105,11 +105,11 @@ class postView {
             $edukia = EuropioCode::decode_preformat($edukia);
             $parrafoa = str_replace("&#160;", " ", EuropioCode::decode($parrafoa));
             if (isset($post->post_id)){
-                $post->parrafoa = substr($edukia, 0, 450);
+                $post->parrafoa = substr($edukia, 0, 120) . "...";
                 $post->edukia = $edukia;
                 $post->user = $post->user->name;
             }else{
-                $post['parrafoa'] = substr($edukia, 0, 450);
+                $post['parrafoa'] = substr($edukia, 0, 120) . "...";
                 $post['edukia'] = $edukia;
                 $post['user'] = $post->user->name;
             };
