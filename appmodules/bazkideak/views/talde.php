@@ -24,7 +24,7 @@ class TaldeView {
         //Mostrar form para agregar talde
         $js_europio = file_get_contents(CUSTOM_STATIC_DIR ."/js/errockalde.js");
         $html = $form->get_form() . $js_europio;
-        print Template('Talde berria')->show($html);
+        render_final_back($html, "Talde berria");
     }
 
     public function editar($obj=array(), $bazkideak=array(), $errores=array()) {
@@ -53,14 +53,20 @@ class TaldeView {
         //Mostrar form para editar talde
         $js_europio = file_get_contents(CUSTOM_STATIC_DIR ."/js/errockalde.js");
         $html = $form->get_form() . $js_europio;
-        print Template('Taldea editatu')->show($html);
+        render_final_back($html, "Taldea editatu");
     }
 
     public function listar($coleccion=array()) {
         $this->preparar_coleccion_listar($coleccion);
         $str = new CustomCollectorViewer($coleccion, 'bazkideak', 'talde',
             False, True, True);
-        print Template('Taldeen zerrenda')->show($str->get_table());
+        render_final_back($str->get_table(), "Taldeen zerrenda");
+    }
+
+    public function añadir_disco($taldea=array()) {
+        $plantilla = file_get_contents( CUSTOM_STATIC_DIR . '/html/back/bazkideak/diskoa_gehitu_mezua.html');
+        $render = Template($plantilla)->render($taldea);
+        render_final_back($render, "Diskoa");
     }
 
     public function kontaktua() {
@@ -209,12 +215,6 @@ class TaldeView {
 
         //Mostrar
         print Template('Taldeak', CUSTOM_PUBLIC_TEMPLATE)->show($render_bazkidea);
-    }
-
-    public function añadir_disco($taldea=array()) {
-        $plantilla = file_get_contents( CUSTOM_STATIC_DIR . '/html/back/bazkideak/diskoa_gehitu_mezua.html');
-        $render = Template($plantilla)->render($taldea);
-        print Template('Taldeen zerrenda')->show($render);
     }
 
     # ==========================================================================

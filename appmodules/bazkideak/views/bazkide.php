@@ -14,7 +14,7 @@ class BazkideView {
         $form->add_text('pasahitza', 'pasahitza', @$_POST['pasahitza']);
         $form->add_submit('Bazkidea gehitu');
         $form->add_errorzone($errores);
-        print Template('Bazkide berria')->show($form->get_form());
+        render_final_back($form->get_form(), "Bazkide berria");
     }
 
     public function editar($obj=array(), $errores=array()) {
@@ -30,7 +30,7 @@ class BazkideView {
         $form->add_text('erabiltzailea', 'erabiltzailea', $obj->user->name);
         $form->add_submit('Aldaketak gorde');
         $form->add_errorzone($errores);
-        print Template('Bazkideta editatu')->show($form->get_form());
+        render_final_back($form->get_form(), "Bazkidea editatu");
     }
 
     public function listar($coleccion=array()) {
@@ -40,7 +40,8 @@ class BazkideView {
         }
         $str = new CustomCollectorViewer($coleccion, 'bazkideak', 'bazkide',
             False, True, True);
-        print Template('Bazkide zerrenda')->show($str->get_table());
+
+        render_final_back($str->get_table(), "Bazkide zerrenda");
     }
 }
 

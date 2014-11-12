@@ -33,7 +33,7 @@ class EkitaldiaView {
 
         $js_datepicker = file_get_contents(CUSTOM_STATIC_DIR ."/js/datepickerCustom.js");
         $html = $js_datepicker . $form->get_form();
-        print Template('Ekitaldi berria')->show($html);
+        render_final_back($html, "Ekitaldi berria");
     }
 
     public function editar($obj=array(), $ekitaldimotak, $lekuak, $errores = array()) {
@@ -69,8 +69,7 @@ class EkitaldiaView {
 
         $form->add_submit('Ekitaldia aldatu');
         $form->add_errorzone($errores);
-
-        print Template('Ekitaldia aldatu')->show($form->get_form());
+        render_final_back($form->get_form(), "Ekitaldia aldatu");
     }
 
     public function listar($coleccion=array()) {
@@ -83,7 +82,7 @@ class EkitaldiaView {
 
         $tabla = new CustomCollectorViewer($coleccion, 'ekitaldiak',  'ekitaldia',
             False, True, True);
-        print Template('Ekitaldien zerrenda')->show($tabla->get_table());
+        render_final_back($tabla->get_table(), "Ekitaldien zerrenda");
     }
 
     public function ekitaldiak($ekitaldiak=array()) {

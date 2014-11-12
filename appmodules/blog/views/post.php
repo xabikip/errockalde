@@ -16,7 +16,7 @@ class postView {
 
         $js_europio = file_get_contents(CUSTOM_STATIC_DIR ."/js/errockalde.js");
         $html = $js_europio . $form->get_form();
-        print Template('Artikulu berria')->show($html);
+        render_final_back($html, "Artikulu berria");
     }
 
     public function editar($obj=array(),$errores=array(), $kategoriak) {
@@ -44,7 +44,7 @@ class postView {
 
         $js_europio = file_get_contents(CUSTOM_STATIC_DIR ."/js/errockalde.js");
         $html = $js_europio . $form->get_form();
-        print Template('Aldatu artikulua')->show($html);
+        render_final_back($html, "Artikulua aldatu");
     }
 
     public function listar($coleccion=array()) {
@@ -56,7 +56,7 @@ class postView {
 
         $str = new CustomCollectorViewer($coleccion, 'blog', 'post',
             false, True, True);
-        print Template('Listado de post')->show($str->get_table());
+        render_final_back($str->get_table(), "Artikulu zerrenda");
     }
 
     public function post($post=array(), $kategoriak) {

@@ -39,4 +39,17 @@ function validar_hora($errores=array(), $campoHora){
         return $errores;
 }
 
+function render_final_back($str, $titulo='') {
+        $template = file_get_contents(CUSTOM_TEMPLATE );
+        $dict = array(
+            "TITLE"=>$titulo,
+            "CONTENIDO"=>$str,
+            "user"=>$_SESSION['username']
+        );
+        $render_final = Template($template)->render($dict);
+        print $render_final;
+}
+
+
+
 ?>

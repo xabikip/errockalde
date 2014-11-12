@@ -19,7 +19,7 @@ class DiskoaView {
         //Mostrar form para agregar talde
         $js_europio = file_get_contents(CUSTOM_STATIC_DIR ."/js/errockalde.js");
         $html = $form->get_form() . $js_europio;
-        print Template('Diskoa gehitu')->show($html);
+        render_final_back($html, "Diskoa gehitu");
 
     }
 
@@ -46,20 +46,20 @@ class DiskoaView {
         //Mostrar form para agregar talde
         $js_europio = file_get_contents(CUSTOM_STATIC_DIR ."js/errockalde.js");
         $html = $form->get_form() . $js_europio;
-        print Template('Diskoa editatu')->show($html);
+        render_final_back($html, "Diskoa editatu");
     }
 
     public function listar($coleccion=array()) {
         $this->preparar_coleccion_listar($coleccion);
         $str = new CustomCollectorViewer($coleccion, 'bazkideak', 'diskoa',
             False, True, True);
-        print Template('Disko zerrenda')->show($str->get_table());
+        render_final_back($str->get_table(), "Disko zerrenda");
     }
 
     public function preguntar($obj=array()) {
         $plantilla = file_get_contents( CUSTOM_STATIC_DIR . '/html/back/bazkideak/diskoa_gehitu_berriz.html');
         $render = Template($plantilla)->render($obj);
-        print Template('Taldeen zerrenda')->show($render);
+        render_final_back($render, "Diskoak");
     }
 
      # ==========================================================================

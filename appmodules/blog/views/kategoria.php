@@ -7,7 +7,7 @@ class kategoriaView {
         $form->add_text('deitura','deitura', @$_POST['deitura']);
         $form->add_submit('Kategoria gehitu');
         $form->add_errorzone($errores);
-        print Template('Kategoria gehitu')->show($form->get_form());
+        render_final_back($form->get_form(), "Kategoria gehitu");
     }
 
     public function editar($obj=array(), $errores=array()) {
@@ -16,13 +16,13 @@ class kategoriaView {
         $form->add_text('deitura','deitura', $obj->deitura);
         $form->add_submit('Aldatu');
         $form->add_errorzone($errores);
-        print Template('Editar kategoria')->show($form->get_form());
+        render_final_back($form->get_form(), "Kategoria aldatu");
     }
 
     public function listar($coleccion=array()) {
         $str = new CustomCollectorViewer($coleccion, 'blog', 'kategoria',
             False, True, True);
-        print Template('Listado de kategoria')->show($str->get_table());
+        render_final_back($str->get_table(), "Kategoria zerrenda");
     }
 }
 
