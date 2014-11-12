@@ -78,6 +78,7 @@ class EkitaldiaView {
             $obj->lekua = $obj->lekua->izena;
             $obj->ekitaldimota = $obj->ekitaldimota->deitura;
             unset($obj->deskribapena);
+            unset($obj->slug);
         }
 
         $tabla = new CustomCollectorViewer($coleccion, 'ekitaldiak',  'ekitaldia',

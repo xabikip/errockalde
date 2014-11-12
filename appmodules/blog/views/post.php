@@ -51,6 +51,7 @@ class postView {
         foreach ($coleccion as $obj) {
             $obj->kategoria = $obj->kategoria->deitura;
             $obj->user = $obj->user->name;
+            unset($obj->slug);
         }
 
         $str = new CustomCollectorViewer($coleccion, 'blog', 'post',

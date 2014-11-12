@@ -71,6 +71,7 @@ class DiskoaView {
             $id = $obj->talde;
             $taldea = DataHandler('talde')->filter("talde_id = $id");
             $obj->talde = $taldea[0]['izena'];
+            unset($obj->abestiak);
         }
     }
 
