@@ -5,11 +5,11 @@
 * Generador de tablas HTML para listado de objetos en EuropioEngine
 *
 * This file is part of Europio CollectorViewer PlugIn.
-* Europio CollectorViewer PlugIn is free software: you can redistribute it 
-* and/or modify it under the terms of the GNU General Public License as 
+* Europio CollectorViewer PlugIn is free software: you can redistribute it
+* and/or modify it under the terms of the GNU General Public License as
 * published by the Free Software Foundation, either version 3 of the License, or
 * (at your option) any later version.
-* Europio CollectorViewer PlugIn is distributed in the hope that it will be 
+* Europio CollectorViewer PlugIn is distributed in the hope that it will be
 * useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 * GNU General Public License for more details.
@@ -38,12 +38,13 @@ class CollectorViewer {
             'eliminar'=>$eliminar);
         $this->set_buttons();
     }
-    
+
     function set_buttons() {
+        $func = self::__set_render_funcname();
         foreach($this->buttons as $tipoboton=>$mostrar) {
             if(!$mostrar) {
-                $fuente1 = Template($this->table)->get_regex($tipoboton, False);
-                $fuente2 = Template($this->table)->get_regex("th{$tipoboton}",
+                $fuente1 = Template($this->table)->$func($tipoboton, False);
+                $fuente2 = Template($this->table)->$func("th{$tipoboton}",
                     False);
                 $tbl = str_replace(array($fuente1, $fuente2), "", $this->table);
                 $this->table = $tbl;
@@ -53,7 +54,8 @@ class CollectorViewer {
 
     function get_thcols() {
         $cadena = "";
-        $fuente = Template($this->table)->get_regex('tdtitle', False);
+        $func = self::__set_render_funcname();
+        $fuente = Template($this->table)->$func('tdtitle', False);
         if(isset($this->collection[0])) {
             foreach($this->collection[0] as $k=>$v) {
                 $title = str_replace("_", " ", strtoupper($k));
@@ -63,16 +65,18 @@ class CollectorViewer {
 
         return $cadena;
     }
-    
+
     function render_thcols() {
+        $func = self::__set_render_funcname();
         $columnas = str_replace('<!--tdtitle-->', '', $this->get_thcols());
-        $fuente = Template($this->table)->get_regex('tdtitle', False);
+        $fuente = Template($this->table)->$func('tdtitle', False);
         $this->table = str_replace($fuente, $columnas, $this->table);
     }
-    
+
     function get_tdcols() {
         $cadena = "";
-        $fuente = Template($this->table)->get_regex('tdvalue', False);
+        $func = self::__set_render_funcname();
+        $fuente = Template($this->table)->$func('tdvalue', False);
         if(isset($this->collection[0])) {
             foreach($this->collection[0] as $k=>$v) {
                 $cadena .= str_replace("{tdvalue}", "{{$k}}", $fuente);
@@ -81,10 +85,11 @@ class CollectorViewer {
 
         return $cadena;
     }
-    
+
     function render_tdcols() {
         $columnas = str_replace('<!--tdvalue-->', '', $this->get_tdcols());
-        $fuente = Template($this->table)->get_regex('tdvalue', False);
+        $func = self::__set_render_funcname();
+        $fuente = Template($this->table)->$func('tdvalue', False);
         $this->table = str_replace($fuente, $columnas, $this->table);
     }
 
@@ -103,7 +108,7 @@ class CollectorViewer {
         $this->table = Template($this->table)->render_regex('listado',
             $this->collection);
     }
-    
+
     function get_table() {
         $this->render_rows();
         $dict = array('action'=>$this->action,
@@ -111,13 +116,18 @@ class CollectorViewer {
         $this->table = Template($this->table)->render($dict);
         return $this->table;
     }
+
+    private static function __set_render_funcname() {
+        return (USE_PCRE) ? 'get_regex' : 'get_substr';
+    }
 }
 
 
-# Alias para compatibilidad pseudo estática 
+# Alias para compatibilidad pseudo estática
 function CollectorViewer($collection=array(), $modulo='', $modelo='',
     $ver=True, $editar=True, $eliminar=True) {
     return new CollectorViewer($collection, $modulo, $modelo, $ver, $editar,
         $eliminar);
 }
 ?>
+
