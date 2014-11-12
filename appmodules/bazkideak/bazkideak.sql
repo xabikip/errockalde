@@ -30,3 +30,13 @@ CREATE TABLE diskoa (
         INDEX (talde),
         FOREIGN KEY (talde) REFERENCES talde (talde_id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS bazkidetalde (
+    connector_id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY
+    , compuesto INT(11) NOT NULL
+    , INDEX (compuesto)
+    , FOREIGN KEY (compuesto) REFERENCES talde (talde_id) ON DELETE CASCADE
+    , compositor INT(11) NOT NULL
+    , INDEX (compositor)
+    , FOREIGN KEY (compositor) REFERENCES bazkide (bazkide_id) ON DELETE CASCADE
+)ENGINE=InnoDB;
