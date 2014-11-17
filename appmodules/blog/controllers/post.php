@@ -25,6 +25,12 @@ class postController extends Controller {
 
         $errores = $this->validaciones();
 
+        $slugger = new Slugger();
+        $this->model->slug =  $slugger->slugify(get_data('titularra'));
+        $slug = $this->model->slug;
+        $post = DataHandler('post', DH_FORMAT_OBJECT)->filter("slug=$slug");
+        ($post == null) ?  : $errores["titularra"]  = ERROR_MSG_TITLE_DUPLICATE;
+
         if($errores) {
             (!$id) ? $this->agregar($errores) : $this->editar($id, $errores);exit();
         }
@@ -44,8 +50,6 @@ class postController extends Controller {
             $this->model->user = Pattern::composite('User', $user);
         }
 
-        $slugger = new Slugger();
-        $this->model->slug =  $slugger->slugify(get_data('titularra'));
         $this->model->save();
 
         $this->__set_aditional_properties();
