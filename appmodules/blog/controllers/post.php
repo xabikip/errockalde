@@ -2,7 +2,7 @@
 
 class postController extends Controller {
 
-    # Nivel de acceso mínimo requerido para el recurso
+    # Erabiltzailen baimen maila
     private static $level = 30;
 
     public function agregar($errores=array()) {
@@ -21,6 +21,7 @@ class postController extends Controller {
 
     public function guardar() {
         @SessionHandler()->check_state(self::$level);
+
         $id = get_data('id');
 
         $errores = $this->validaciones();
@@ -39,7 +40,12 @@ class postController extends Controller {
 
         $this->model->titularra = get_data('titularra');
 
-        (!$id) ? $this->model->sortua = date('Y-m-d') : $this->model->aldatua = date('Y-m-d');
+        if (!$id){
+            $this->model->sortua = date('Y-m-d');
+        }else {
+            $this->model->aldatua = date('Y-m-d');
+            $this->model->sortua = get_data("sortua");
+        }
 
         $kategoria = Pattern::factory('kategoria', get_data('kategoria') );
         $this->model->kategoria = Pattern::composite('kategoria', $kategoria);

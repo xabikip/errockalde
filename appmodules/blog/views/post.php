@@ -39,6 +39,7 @@ class postView {
         $form->fields[] = $render;
 
         $form->add_hidden('id', $obj->post_id);
+        $form->add_hidden('sortua', $obj->sortua);
         $form->add_submit('Aritkulua editatu');
         $form->add_errorzone($errores);
 
