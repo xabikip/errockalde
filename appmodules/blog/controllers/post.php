@@ -2,7 +2,7 @@
 
 class postController extends Controller {
 
-    # Erabiltzailen baimen maila
+    # Rekurtsoa erabiltzeko baimen maila
     private static $level = 30;
 
     public function agregar($errores=array()) {
@@ -26,6 +26,7 @@ class postController extends Controller {
 
         $errores = $this->validaciones();
 
+        # Slug berdina daukan postik dagoen ikusi
         $slugger = new Slugger();
         $this->model->slug =  $slugger->slugify(get_data('titularra'));
         $slug = $this->model->slug;
@@ -33,7 +34,8 @@ class postController extends Controller {
         ($post == null) ?  : $errores["titularra"]  = ERROR_MSG_TITLE_DUPLICATE;
 
         if($errores) {
-            (!$id) ? $this->agregar($errores) : $this->editar($id, $errores);exit();
+            (!$id) ? $this->agregar($errores) : $this->editar($id, $errores);
+            exit();
         }
 
         $this->model->post_id = $id;
@@ -58,6 +60,7 @@ class postController extends Controller {
 
         $this->model->save();
 
+        # __call fntzio magikoari deia
         $this->__set_aditional_properties();
 
 
@@ -78,6 +81,8 @@ class postController extends Controller {
     public function listar() {
         @SessionHandler()->check_state(self::$level);
         $userid = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
+
+        # Admin ez bada, erabiltzailearen postak bakarrik ekarri
         if($userid > 1) {
             $list = DataHandler('post', DH_FORMAT_OBJECT)->filter("user=$userid");
         } else {
