@@ -10,25 +10,6 @@
 </script>
 <script>
 
-//funcion para limpiar propiedad style y class en tinymce
-function limpiar_cadena() {
-    regex = new RegExp("\ style=\"(.){0,}\"", 'g');
-    textarea = document.getElementById('edukia_4').value;
-    resultado = textarea.replace(regex, "");
-    document.getElementById('edukia_4').value = resultado;
-
-    regex = new RegExp("\ class=\"(.){0,}\"", 'g');
-    textarea = document.getElementById('edukia_4').value;
-    resultado = textarea.replace(regex, "");
-    document.getElementById('edukia_4').value = resultado;
-
-
-    textarea = document.getElementById('edukia_4').value;
-    resultado = textarea.replace(/&ntilde;/g, 'ñ');
-    resultado = resultado.replace(/&nbsp;/g, ' ');
-    document.getElementById('edukia_4').value = resultado;
-}
-
 window.onload = function() {
     pagina = get_pagina_actual();
     switch(pagina) {
@@ -57,7 +38,6 @@ function set_encode_post() {
     europiocode = new EuropioCode();
 
     document.getElementsByTagName('form')[0].onsubmit = function(){
-        limpiar_cadena();
         parrafoa = europiocode.encode('parrafoa_3');
         europiocode.encode_preformat('edukia_4');
     };
