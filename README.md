@@ -73,7 +73,7 @@ creada con [Europio Engine](http://www.europio.org/).
                              REGLAS DE MOD SECURITY A ELIMINAR
         ===============================================================================
         /etc/modsecurity/base_rules/modsecurity_crs_41_sql_injection_attacks.conf
-        Lines: 64, 76, 77
+        Lines: 64, 76, 77, 155, 235
 
         /etc/modsecurity/base_rules/modsecurity_crs_21_protocol_anomalies.conf
         Lines: 47, 48, 65, 66
