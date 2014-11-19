@@ -34,4 +34,46 @@ creada con [Europio Engine](http://www.europio.org/).
 
 ##Instalación
 
-        TODO
+        ===============================================================================
+                                 INSTALACIÓN DE ERROCKALDE
+        ===============================================================================
+        1. AVISO: nótese que allow_url_fopen debe estar en on en el php.ini
+
+        2. Crear base de datos
+           mysql -uroot -p -e "CREATE DATABASE nombredb;"
+
+        3. Crear usuario para la DB de la aplicación
+           mysql -uroot -p -e "CREATE USER 'usuario'@'localhost' IDENTIFIED BY 'contraseña';"
+
+        4. Otorgar permisos al usuario de la base de datos, creado:
+           mysql -uroot -p -e "USE nombredb; GRANT ALL ON nombredb TO usuario;"
+
+        5. Crear directorio con permisos de escritura
+
+        6. Ejecutar archivo create_uploads_tree.sh
+
+        7. Crear base de datos de usuarios
+           cd core/cli
+           ./europio --user-setup nombredb
+
+        8. importar archivos SQL
+           mysql -u root -p nombredb < appmodules/bazkideak/bazkideak.sql
+           mysql -u root -p nombredb < appmodules/ekitaldiak/ekitaldiak.sql
+           mysql -u root -p nombredb < appmodules/blog/blog.sql
+
+        9. Copiar config.ini.dist como config.ini
+
+        10. Editar config.ini:
+            - datos de la db
+            - WRITABLE_DIR
+            - PRODUCTION = True
+
+
+        ===============================================================================
+                             REGLAS DE MOD SECURITY A ELIMINAR
+        ===============================================================================
+        /etc/modsecurity/base_rules/modsecurity_crs_41_sql_injection_attacks.conf
+        Lines: 64, 76, 77
+
+        /etc/modsecurity/base_rules/modsecurity_crs_21_protocol_anomalies.conf
+        Lines: 47, 48, 65, 66
