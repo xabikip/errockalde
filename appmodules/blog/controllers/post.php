@@ -26,12 +26,15 @@ class postController extends Controller {
 
         $errores = $this->validaciones();
 
-        # Slug berdina daukan postik dagoen ikusi
-        $slugger = new Slugger();
-        $this->model->slug =  $slugger->slugify(get_data('titularra'));
-        $slug = $this->model->slug;
-        $post = DataHandler('post', DH_FORMAT_OBJECT)->filter("slug=$slug");
-        ($post == null) ?  : $errores["titularra"]  = ERROR_MSG_TITLE_DUPLICATE;
+        if(!$errores) {
+            $slugger = new Slugger();
+            $slug = $slugger->slugify(get_data('titularra'));
+            $post = DataHandler('post', DH_FORMAT_OBJECT)->filter("slug=$slug");
+            if($post != null){
+                if($post[0]->post_id != $id) $errores["titularra"]  = ERROR_MSG_TITLE_DUPLICATE;
+            }
+
+        }
 
         if($errores) {
             (!$id) ? $this->agregar($errores) : $this->editar($id, $errores);
@@ -41,6 +44,8 @@ class postController extends Controller {
         $this->model->post_id = $id;
 
         $this->model->titularra = get_data('titularra');
+
+        $this->model->slug = $slug;
 
         if (!$id){
             $this->model->sortua = date('Y-m-d');
