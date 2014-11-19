@@ -3,14 +3,12 @@
 class TaldeView {
 
     //Mostrar form para agregar talde
-    public function agregar($bazkideak, $errores=array()) {
-        Dict::set_dict_for_webform($bazkideak, 'izena', @$_POST['izena']);
+    public function agregar($errores=array()) {
 
         //Armar un formulario
         $form = new WebFormPRO('/bazkideak/talde/guardar');
         $form->add_text('izena', 'Taldearen izena', @$_POST['izena']);
         $form->add_hidden('customurl', 'customurl', @$_POST['customurl']);
-        $form->add_checkbox('bazkideak', 'Taldekideak', $bazkideak);
         $form->add_text('web', 'Web orria', @$_POST['web']);
         $form->add_text('emaila', 'Emaila', @$_POST['emaila']);
         $form->add_text('telefonoa', 'Telefonoa', @$_POST['telefonoa']);
@@ -27,15 +25,13 @@ class TaldeView {
         render_final_back($html, "Talde berria");
     }
 
-    public function editar($obj=array(), $bazkideak=array(), $errores=array()) {
-        Dict::set_dict_for_webform($bazkideak, 'izena', @$_POST['izena']);
+    public function editar($obj=array(), $errores=array()) {
 
         //Armar un formulario
         $form = new WebFormPRO('/bazkideak/talde/guardar');
         $form->add_hidden('id', $obj->talde_id);
         $form->add_text('izena', 'izena', $obj->izena);
         $form->add_text('customurl', 'customurl', $obj->customurl);
-        $form->add_checkbox('bazkideak', 'Taldekideak', $bazkideak);
         $form->add_text('web', 'Web orria', $obj->web);
         $form->add_text('emaila', 'emaila', $obj->emaila);
         $form->add_text('telefonoa', 'telefonoa', $obj->telefonoa);
@@ -156,11 +152,6 @@ class TaldeView {
     public function taldea($taldea=array()) {
         $id = $taldea->talde_id;
 
-        //Añado propiedad
-        foreach ($taldea->bazkide_collection as $obj) {
-            $obj->bazkide_izena = $obj->izena;
-        }
-
         //Render grupo
         $plantilla = file_get_contents( CUSTOM_STATIC_DIR . '/html/front/bazkideak/taldea.html');
         $render_taldea = Template($plantilla)->render($taldea);
@@ -209,12 +200,8 @@ class TaldeView {
         $youtube  = WRITABLE_DIR . YOUTUBE_DIR . "/{$id}.ini";
         $render_youtube  = $this->render_exist($youtube, $render_diskoa, $id, "YOUTUBE");
 
-        //Render bazkide
-        $render_bazkidea = Template($render_youtube)->render_regex('BAZKIDEAK',
-            $taldea->bazkide_collection);
-
         //Mostrar
-        print Template('Taldeak', CUSTOM_PUBLIC_TEMPLATE)->show($render_bazkidea);
+        print Template('Taldeak', CUSTOM_PUBLIC_TEMPLATE)->show($render_youtube);
     }
 
     # ==========================================================================
@@ -223,7 +210,6 @@ class TaldeView {
 
     private function preparar_coleccion_listar(&$coleccion) {
         foreach ($coleccion as $obj) {
-            unset($obj->bazkide_collection);
             unset($obj->diskoa_collection);
             unset($obj->web);
             unset($obj->deskribapena);

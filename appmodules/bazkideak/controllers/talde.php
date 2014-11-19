@@ -1,26 +1,19 @@
 <?php
 
-import('appmodules.bazkideak.models.talde');
-import('appmodules.bazkideak.views.talde');
-
 class TaldeController extends Controller {
 
     public function agregar($errores=array()) {
         $level = 1; # Nivel de acceso mínimo requerido para el recurso
         @SessionHandler()->check_state($level);
-        $bazkide_collector = CollectorObject::get('Bazkide');
-        $bazkideak = $bazkide_collector->collection;
-        $this->view->agregar($bazkideak, $errores);
+        $this->view->agregar($errores);
     }
 
     public function editar($id=0, $errores=array()) {
         $level = 1; # Nivel de acceso mínimo requerido para el recurso
         @SessionHandler()->check_state($level);
-        $bazkide_collector = CollectorObject::get('Bazkide');
-        $bazkideak = $bazkide_collector->collection;
         $this->model->talde_id = $id;
         $this->model->get();
-        $this->view->editar($this->model, $bazkideak, $errores);
+        $this->view->editar($this->model, $errores);
     }
 
     public function guardar() {
@@ -47,9 +40,6 @@ class TaldeController extends Controller {
         $this->__set_aditional_properties();
 
         if (get_data('youtube') !== "") $this->guardar_youtube();
-
-        $bazkideak = get_data('bazkideak');
-        $this->guardar_bazkide($bazkideak);
 
         $campoImagen = 'argazkia';
         guardar_imagen($this->imagen, $campoImagen);
@@ -123,7 +113,7 @@ class TaldeController extends Controller {
     private function validaciones(){
         $errores = array();
 
-        $requeridos = array("izena", "emaila", "bazkideak" );
+        $requeridos = array("izena", "emaila");
         $errores = validar_requeridos($errores, $requeridos);
 
         $campoMail = 'emaila';
@@ -136,16 +126,6 @@ class TaldeController extends Controller {
 
         return $errores;
     }
-
-
-    private function guardar_bazkide($bazkideak){
-        foreach ($bazkideak as $bazkide) {
-            $this->model->add_bazkide(Pattern::factory('Bazkide', $bazkide));
-        }
-        $lc = new LogicalConnector($this->model, 'bazkide');
-        $lc->save();
-    }
-
 
     private function parse_video_id($youtube_decode){
         if(strpos($youtube_decode, "&#38;") > 0){
