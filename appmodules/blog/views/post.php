@@ -82,7 +82,7 @@ class postView {
         $render_post = Template($render_post)->render_regex('KATEGORIAK', $kategoriak);
 
         //Render data
-        if($post->aldatua <= 0){
+        if($post->aldatua == "0000-00-00"){
             $render_post = $this->eliminar_bloque("ALDATUA", $render_post);
         }else{
             $render_post = $this->eliminar_bloque("SORTUA", $render_post);
@@ -152,7 +152,7 @@ class postView {
     private function eliminar_bloque($identificador, $plantilla) {
         $identificador = $identificador;
         $bloque_eliminar = Template($plantilla)->get_substr($identificador);
-        return $render_eliminado = str_replace($bloque_eliminar, "", $plantilla);
+        return str_replace($bloque_eliminar, "", $plantilla);
     }
 
 }
