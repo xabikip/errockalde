@@ -135,7 +135,7 @@ class postView {
                 $render_post = $this->eliminar_bloque("MUSIKAGUNE{$id}", $render_post);
             }
 
-            if($post->aldatua <= 0){
+            if($post->aldatua == "0000-00-00"){
                 $render_post = $this->eliminar_bloque("ALDATUA{$id}", $render_post);
             }else{
                 $render_post = $this->eliminar_bloque("SORTUA{$id}", $render_post);
