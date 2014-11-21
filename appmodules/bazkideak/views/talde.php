@@ -242,7 +242,7 @@ class TaldeView {
 
     private function eliminar_bloque($identificador, $plantilla) {
         $identificador = $identificador;
-        $bloque_eliminar = Template($plantilla)->get_substr($identificador);
+        $bloque_eliminar = Template($plantilla)->get_substr($identificador, FALSE);
         return $render_eliminado = str_replace($bloque_eliminar, "", $plantilla);
     }
 

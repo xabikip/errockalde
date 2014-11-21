@@ -151,7 +151,7 @@ class postView {
 
     private function eliminar_bloque($identificador, $plantilla) {
         $identificador = $identificador;
-        $bloque_eliminar = Template($plantilla)->get_substr($identificador);
+        $bloque_eliminar = Template($plantilla)->get_substr($identificador, FALSE);
         return str_replace($bloque_eliminar, "", $plantilla);
     }
 
