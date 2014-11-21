@@ -87,6 +87,7 @@ function set_encode_diskoa() {
 
     document.getElementsByTagName('form')[0].onsubmit = function(){
         europiocode.encode('bandcamp_6');
+        europiocode.encode_preformat('abestiak_5');
     };
 }
 
