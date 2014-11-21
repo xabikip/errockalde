@@ -37,13 +37,14 @@ class DiskoaController extends Controller {
         $this->model->izena = get_data('izena');
         $this->model->data = get_data('data');
         $this->model->iraupena = get_data('iraupena');
-        $this->model->abestiak = get_data('abestiak');
         $this->model->talde = get_data('taldea');
         $this->model->save();
 
         $this->__set_aditional_properties();
 
         if (get_data('bandcamp') !== "") $this->guardar_bandcamp();
+
+        if (get_data('abestiak') !== "") $this->guardar_abestiak();
 
         $campoImagen = 'azala';
         guardar_imagen($this->imagen, $campoImagen);
@@ -72,6 +73,7 @@ class DiskoaController extends Controller {
         $ini = "/{$this->model->diskoa_id}.ini";
         $id = "/{$this->model->diskoa_id}";
         $this->imagen = WRITABLE_DIR . AZALA_DIR . $id;
+        $this->abestiak =  WRITABLE_DIR . ABESTIAK_DIR . $id;
         $this->bandcamp =  WRITABLE_DIR . BANDCAMP_DIR . $ini;
     }
 
@@ -124,6 +126,12 @@ album_slug= \"$album_slug\"
 album= \"$album\"
 grupo= \"$grupo\"";
         file_put_contents($this->bandcamp, $contenido);
+    }
+
+    private function guardar_abestiak(){
+        $abestiak_encode = isset($_POST['abestiak']) ? EuropioCode::encode($_POST['abestiak']) : '';
+        $abestiak_decode = EuropioCode::decode($abestiak_encode);
+        file_put_contents($this->abestiak, $abestiak_decode);
     }
 
 
