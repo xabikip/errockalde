@@ -8,24 +8,33 @@
 	</div>
 </div>
 <div class="section">
- 	<div class="container">
+	<div class="container">
 		<div class="row">
 			<div class="col-sm-7">
 				<div class="basic-login">
-					<form role="form">
+					<!--msgerror-->
+					<div class="alert alert-danger" role="alert">
+							{msgerror}
+					</div>
+					<!--msgerror-->
+					<form action="/bazkideak/talde/formbidali" method="POST" role="form" id="frmkontaktua">
 						<div class="form-group">
-        				 	<label for="register-username"><i class="icon-user"></i> <b>Zure
-        				 		emaila edo kontaktua:</b></label>
-							<input class="form-control" id="register-username" type="text" placeholder="">
+								<label for="register-username">
+									<b>Zure emaila:</b>
+								</label>
+								<input name="emaila" class="form-control" id="emaila" type="text" placeholder="">
 						</div>
 						<div class="form-group">
-        				 	<label for="register-password"><i class="icon-lock"></i> <b>Izena:</b></label>
-							<input class="form-control" id="register-password" type="text" placeholder="">
+								<label for="izena">
+									<b>Izena:</b>
+								</label>
+								<input class="form-control" id="izena" type="text" placeholder="">
 						</div>
 						<div class="form-group">
-        				 	<label for="register-password2"><i class="icon-lock"></i> <b>Mezua:</b></label>
-									<textarea class="form-control" id="register-password2" rows="10">
-									</textarea>
+							<label for="mezua">
+								<b>Mezua:</b>
+							</label>
+							<textarea name="mezua" class="form-control" id="mezua" rows="10"></textarea>
 						</div>
 						<div class="form-group">
 							<button type="submit" class="btn pull-right">Bialdu</button>
@@ -50,3 +59,11 @@
 		</div>
 	</div>
 </div>
+<script>
+window.onload = function() {
+	document.getElementById('frmkontaktua').onsubmit = function(){
+			europiocode = new EuropioCode();
+			europiocode.encode('mezua');
+	};
+}
+</script>

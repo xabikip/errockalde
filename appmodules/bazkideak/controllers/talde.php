@@ -79,6 +79,7 @@ class TaldeController extends Controller {
         $this->view->taldea($this->model);
     }
 
+    #FIXME creame un modulo
     public function hasiera() {
         $collection_talde = CollectorObject::get('Talde');
         $taldeak = $collection_talde->collection;
@@ -94,8 +95,32 @@ class TaldeController extends Controller {
         $this->view->hasiera($taldeak, $ekitaldiak, $posts);
     }
 
-    public function kontaktua() {
-        $this->view->kontaktua();
+    #FIXME creame un modulo
+    public function kontaktua($result='') {
+        $result = ($result == 'kontaktua') ? '' : $result;
+        $this->view->kontaktua($result);
+    }
+
+    #FIXME creame un modulo
+    public function formbidali() {
+        $errores = $this->validar_contact();
+        if($errores) exit(
+            $this->view->kontaktua("Emaila eta izena beharrezkoak dira"));
+        $msg = EuropioCode::decode(get_data('mezua'));
+
+        if(PRODUCTION) {
+            $emaila = get_data('emaila');
+            $izena = get_data('izena');
+            $mail_to = "Xabi <xabikip@gmail.com>";
+            $mail_head  = "MIME-Version: 1.0\r\n";
+            $mail_head .= "Content-type: text/html; charset=utf-8\r\n";
+            $mail_head .= "To: {$mail_to}\r\n";
+            $mail_head .= "Reply-To: {$izena} <{$emaila}>\r\n";
+            mail($mail_to, "MusikaGunea kontaktua", $msg, $mail_head);
+            $this->view->kontaktua("Mezua bidali da. Ahal bezain laster erantzungo dizugu");
+        }else{
+            $this->view->kontaktua("ERROREA(CONFG.INI->PRODUCTION:FALSE)" );
+        }
     }
 
     public function eliminar($id=0) {
@@ -133,6 +158,18 @@ class TaldeController extends Controller {
         $tipo_permitido = array("image/png", "image/jpeg", "image/gif",
             "image/bmp", "image/jpg");
         $errores= validar_tipoImagen($errores, $tipo_permitido, $campoImagen);
+
+        return $errores;
+    }
+
+    private function validar_contact(){
+        $errores = array();
+
+        $requeridos = array("emaila", "mezua");
+        $errores = validar_requeridos($errores, $requeridos);
+
+        $campoMail = 'emaila';
+        $errores = validar_formato_mail($errores, $campoMail);
 
         return $errores;
     }
