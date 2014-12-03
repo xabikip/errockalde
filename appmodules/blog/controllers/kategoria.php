@@ -23,7 +23,7 @@ class kategoriaController extends Controller {
 
         $errores = array();
         $requeridos = array("deitura");
-        $errores = validar_requeridos($errores, $requeridos);
+        validar_requeridos($errores, $requeridos);
 
         if($errores) {
             (!$id) ? $this->agregar($errores) : $this->editar($id, $errores);exit();

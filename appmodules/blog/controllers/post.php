@@ -154,12 +154,12 @@ class postController extends Controller {
         $errores = array();
 
         $requeridos = array("titularra", "parrafoa", "edukia" );
-        $errores = validar_requeridos($errores, $requeridos);
+        validar_requeridos($errores, $requeridos);
 
         $campoImagen = 'irudia';
         $tipo_permitido = array("image/png", "image/jpeg", "image/gif",
             "image/bmp", "image/jpg");
-        $errores= validar_tipoImagen($errores, $tipo_permitido, $campoImagen);
+        validar_tipoImagen($errores, $tipo_permitido, $campoImagen);
 
         return $errores;
     }

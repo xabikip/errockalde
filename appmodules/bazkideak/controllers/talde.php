@@ -149,15 +149,15 @@ class TaldeController extends Controller {
         $errores = array();
 
         $requeridos = array("izena", "emaila", "bazkideak" );
-        $errores = validar_requeridos($errores, $requeridos);
+        validar_requeridos($errores, $requeridos);
 
         $campoMail = 'emaila';
-        $errores = validar_formato_mail($errores, $campoMail);
+        validar_formato_mail($errores, $campoMail);
 
         $campoImagen = 'argazkia';
         $tipo_permitido = array("image/png", "image/jpeg", "image/gif",
             "image/bmp", "image/jpg");
-        $errores= validar_tipoImagen($errores, $tipo_permitido, $campoImagen);
+        validar_tipoImagen($errores, $tipo_permitido, $campoImagen);
 
         return $errores;
     }

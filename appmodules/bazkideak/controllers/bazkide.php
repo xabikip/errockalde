@@ -68,10 +68,10 @@ class BazkideController extends Controller {
         $errores = array();
 
         $requeridos = array("izena", "emaila", "erabiltzailea" );
-        $errores= validar_requeridos($errores, $requeridos);
+        validar_requeridos($errores, $requeridos);
 
         $campoMail = 'emaila';
-        $errores = validar_formato_mail($errores, $campoMail);
+        validar_formato_mail($errores, $campoMail);
 
         return $errores;
     }

@@ -27,7 +27,7 @@ class EkitaldiMotaController extends Controller {
         $errores = array();
 
         $requeridos = array("deitura");
-        $errores= validar_requeridos($errores, $requeridos);
+        validar_requeridos($errores, $requeridos);
 
         if($errores and get_data('id') == 0) {$this->agregar($errores);exit;}
         if($errores and get_data('id') !== 0) {$this->editar($id, $errores);exit;}
