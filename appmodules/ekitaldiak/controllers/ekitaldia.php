@@ -39,20 +39,12 @@ class EkitaldiaController extends Controller {
         $level = 1; # Nivel de acceso mínimo requerido para el recurso
         @SessionHandler()->check_state($level);
 
-        $errores = array();
+        $errores = $this->validaciones();
 
-        $requeridos = array("data", "ordua", "ekitaldi_izena", "ekitaldimota", "izena");
-        validar_requeridos($errores, $requeridos);
-
-        $campoImagen = 'kartela';
-        $tipo_permitido = array("image/png", "image/jpeg", "image/gif", "image/bmp", "image/jpg");
-        validar_tipoImagen($errores, $tipo_permitido, $campoImagen);
-
-        $campoHora = "ordua";
-        validar_hora($errores, $campoHora);
-
-        if($errores and get_data('id') == 0)  {$this->agregar($errores);exit;}
-        if($errores and get_data('id') !== 0) {$this->editar($id, $errores);exit;}
+        if($errores) {
+            (!$id) ? $this->agregar($errores) : $this->editar($id, $errores);
+            exit();
+        }
 
         $lekua = $this->lekuaGorde();
         // print_r($lekua['0']);exit;
@@ -75,7 +67,6 @@ class EkitaldiaController extends Controller {
         $this->model->save();
 
         $ruta = WRITABLE_DIR . EKITALDI_IRUDI_DIR . "/{$this->model->ekitaldia_id}";
-        // print("Ruta:");print_r($ruta);exit;
         guardar_imagen($ruta, $campoImagen);
 
         HTTPHelper::go("/ekitaldiak/ekitaldia/listar");
@@ -127,7 +118,23 @@ class EkitaldiaController extends Controller {
     #                       PRIVATE FUNCTIONS: Helpers
     # ==========================================================================
 
-     private function lekuaGorde(){
+    private function validaciones(){
+        $errores = array();
+
+        $requeridos = array("data", "ordua", "ekitaldi_izena", "ekitaldimota", "izena");
+        validar_requeridos($errores, $requeridos);
+
+        $campoImagen = 'kartela';
+        $tipo_permitido = array("image/png", "image/jpeg", "image/gif", "image/bmp", "image/jpg");
+        validar_tipoImagen($errores, $tipo_permitido, $campoImagen);
+
+        $campoHora = "ordua";
+        validar_hora($errores, $campoHora);
+
+        return $errores;
+    }
+
+    private function lekuaGorde(){
         $izena = get_data('izena');
         $herria = get_data('herria');
         $helbidea = get_data('helbidea');
