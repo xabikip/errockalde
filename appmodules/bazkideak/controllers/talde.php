@@ -98,14 +98,16 @@ class TaldeController extends Controller {
     #FIXME creame un modulo
     public function kontaktua($result='') {
         $result = ($result == 'kontaktua') ? '' : $result;
-        $this->view->kontaktua($result);
+        $error = 0;
+        $this->view->kontaktua($error, $result);
     }
 
     #FIXME creame un modulo
     public function formbidali() {
         $errores = $this->validar_contact();
+        $error = 1;
         if($errores) exit(
-            $this->view->kontaktua("Emaila eta izena beharrezkoak dira"));
+            $this->view->kontaktua($error, "Emaila eta izena beharrezkoak dira"));
         $msg = EuropioCode::decode(get_data('mezua'));
 
         if(PRODUCTION) {
@@ -115,11 +117,13 @@ class TaldeController extends Controller {
             $mail_head  = "MIME-Version: 1.0\r\n";
             $mail_head .= "Content-type: text/html; charset=utf-8\r\n";
             $mail_head .= "To: {$mail_to}\r\n";
+            $mail_head .= "From: {$izena} <{$emaila}>\r\n";
             $mail_head .= "Reply-To: {$izena} <{$emaila}>\r\n";
             mail($mail_to, "MusikaGunea kontaktua", $msg, $mail_head);
-            $this->view->kontaktua("Mezua bidali da. Ahal bezain laster erantzungo dizugu");
+            $error = 0;
+            $this->view->kontaktua($error, "Mezua bidali da. Ahal bezain azkarren erantzungo dizugu");
         }else{
-            $this->view->kontaktua("ERROREA(CONFG.INI->PRODUCTION:FALSE)" );
+            $this->view->kontaktua($error, "ERROREA(CONFG.INI->PRODUCTION:FALSE)" );
         }
     }
 

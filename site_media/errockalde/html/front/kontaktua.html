@@ -14,9 +14,14 @@
 				<div class="basic-login">
 					<!--msgerror-->
 					<div class="alert alert-danger" role="alert">
-							{msgerror}
+							{msg}
 					</div>
 					<!--msgerror-->
+					<!--msgok-->
+					<div class="alert alert-success" role="alert">
+							{msg}
+					</div>
+					<!--msgok-->
 					<form action="/bazkideak/talde/formbidali" method="POST" role="form" id="frmkontaktua">
 						<div class="form-group">
 								<label for="register-username">
@@ -28,7 +33,7 @@
 								<label for="izena">
 									<b>Izena:</b>
 								</label>
-								<input class="form-control" id="izena" type="text" placeholder="">
+								<input name="izena" class="form-control" id="izena" type="text" placeholder="">
 						</div>
 						<div class="form-group">
 							<label for="mezua">

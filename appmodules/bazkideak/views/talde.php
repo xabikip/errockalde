@@ -69,10 +69,20 @@ class TaldeView {
         render_final_back($render, "Diskoa");
     }
 
-    public function kontaktua($msgerror='') {
+    public function kontaktua($error, $msg='') {
         $plantilla = file_get_contents(CUSTOM_STATIC_DIR . "/html/front/kontaktua.html");
-        if($msgerror == "") $plantilla = $this->eliminar_bloque("msgerror", $plantilla);
-        $plantilla = str_replace("{msgerror}", $msgerror, $plantilla);
+        if($msg == ''){
+            $plantilla = $this->eliminar_bloque("msgerror", $plantilla);
+            $plantilla = $this->eliminar_bloque("msgok", $plantilla);
+        }else{
+            if($error){
+                $plantilla = $this->eliminar_bloque("msgok", $plantilla);
+            }else{
+                $plantilla = $this->eliminar_bloque("msgerror", $plantilla);
+            }
+        }
+
+        $plantilla = str_replace("{msg}", $msg, $plantilla);
         print Template('kontaktua', CUSTOM_PUBLIC_TEMPLATE)->show($plantilla);
     }
 
