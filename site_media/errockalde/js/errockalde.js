@@ -10,22 +10,30 @@
 </script>
 <script>
 
-//funcion para limpiar propiedad style y class en tinymce
+/*
+* Limpia propiedades style y class en tinymce
+* Cambia entidad html de acentos y eñes a alafanumerico
+*/
 function limpiar_cadena() {
-    regex = new RegExp("\ style=\"(.){0,}\"", 'g');
     textarea = document.getElementById('edukia_4').value;
-    resultado = textarea.replace(regex, "");
-    document.getElementById('edukia_4').value = resultado;
 
-    regex = new RegExp("\ class=\"(.){0,}\"", 'g');
-    textarea = document.getElementById('edukia_4').value;
-    resultado = textarea.replace(regex, "");
-    document.getElementById('edukia_4').value = resultado;
+    tabla = {
+        '&aacute;': 'á', '&Aacute;': 'Á',
+        '&eacute;': 'é', '&Eacute;': 'É',
+        '&iacute;': 'í', '&Iacute;': 'Í',
+        '&oacute;': 'ó', '&Oacute;': 'Ó',
+        '&uacute;': 'ú', '&Uacute;': 'Ú',
+        '&ntilde;': 'ñ', '&Ntilde;': 'Ñ',
+        "<br\ \/>": "<br>", "\ class=\"(.){1,}\"": "", "\ style=\"(.){1,}\"": ""
+    };
 
+    resultado = textarea;
 
-    textarea = document.getElementById('edukia_4').value;
-    resultado = textarea.replace(/&ntilde;/g, 'ñ');
-    resultado = resultado.replace(/&nbsp;/g, ' ');
+    for(key in tabla) {
+        regex_html = new RegExp(key, 'g');
+        resultado = resultado.replace(regex_html, tabla[key]);
+    }
+
     document.getElementById('edukia_4').value = resultado;
 }
 
