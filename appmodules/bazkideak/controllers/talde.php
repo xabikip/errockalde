@@ -10,7 +10,8 @@ class TaldeController extends Controller {
         @SessionHandler()->check_state($level);
         $bazkide_collector = CollectorObject::get('Bazkide');
         $bazkideak = $bazkide_collector->collection;
-        $this->view->agregar($bazkideak, $errores);
+        $e = ($errores) ? $errores : array();
+        $this->view->agregar($bazkideak, $e);
     }
 
     public function editar($id=0, $errores=array()) {

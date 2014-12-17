@@ -8,6 +8,7 @@ class TaldeView {
 
         //Armar un formulario
         $form = new WebFormPRO('/bazkideak/talde/guardar');
+        if($errores) $form->fields[] = añadir_errores($errores);
         $form->add_text('izena', 'Taldearen izena', @$_POST['izena']);
         $form->add_hidden('customurl', 'customurl', @$_POST['customurl']);
         $form->add_checkbox('bazkideak', 'Taldekideak', $bazkideak);
@@ -15,7 +16,7 @@ class TaldeView {
         $form->add_text('emaila', 'Emaila', @$_POST['emaila']);
         $form->add_text('telefonoa', 'Telefonoa', @$_POST['telefonoa']);
         $form->add_textarea('deskribapena', 'Deskribapena', @$_POST['deskribapena']);
-        $form->add_textarea('_youtube', ' ', @$_POST['_youtube'], "style='display: none;'");
+        $form->add_hidden('_youtube','', @$_POST['_youtube'], "style='display: none;'");
         $form->add_text('youtube', 'Youtube', @$_POST['youtube']);
         $form->add_file('argazkia', 'Argazkia', @$_POST['file']);
         $form->add_submit('Taldea gehitu');
@@ -32,6 +33,7 @@ class TaldeView {
 
         //Armar un formulario
         $form = new WebFormPRO('/bazkideak/talde/guardar');
+        if($errores) $form->fields[] = añadir_errores($errores);
         $form->add_hidden('id', $obj->talde_id);
         $form->add_text('izena', 'izena', $obj->izena);
         $form->add_text('customurl', 'customurl', $obj->customurl);

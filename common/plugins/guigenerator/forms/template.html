@@ -10,7 +10,7 @@
         width: 70%;
         margin: 3em auto;
     }
-    
+
     form {
         display: table;
         width: 100%;
@@ -20,7 +20,7 @@
         padding: 10px;
         border-bottom: 18px solid #09c;
     }
-    
+
     div.instructions {
         width: 100%;
         margin: 0 auto;
@@ -29,11 +29,11 @@
         font-size: 16px;
         color: #333;
     }
-    
+
     div.tr {
         display: table-row;
     }
-    
+
     label.td, span.td {
         display: table-cell;
         width: 27%;
@@ -42,38 +42,38 @@
         font-weight: bold;
         color: #09c;
     }
-    
+
     div.td {
         display: table-cell;
     }
-    
+
     .top { vertical-align: top; }
     textarea {
         width: 74%;
         height: 8em;
     }
-    
+
     input, textarea, select {
         font-family: sans-serif;
         font-size: 1em;
         color: #444;
     }
-    
+
     .plain {
         border: none;
         cursor: pointer;
     }
-    
+
     a.linkform {
         color: navy;
         text-decoration: none;
     }
-    
+
     a.linkform:hover {
         color: navy;
         text-decoration: underline;
     }
-    
+
     h3.form {
         width: 100%;
         margin: 0 auto;
@@ -132,7 +132,7 @@
                 placeholder="user@example.org"{extras}> <span id="{name}_error"></span>
         </div>
         <!--EMAIL-->
-        
+
         <!--URL-->
         <div class="tr form-group" id="EuWFP_{name}">
             <label for="{id}" class="td control-label">{label}:</label>
@@ -147,7 +147,7 @@
             <a href="{value}" class="linkform"{extras}>{label}</a>
         </div>
         <!--LINK-->
-        
+
         <!--OPTIONCONTAINER-->
         <div class="tr form-group" id="EuWFP_{name}">
             <label for="{id}" class="td control-label">{label}:</label>
@@ -157,7 +157,7 @@
             </select> <span id="{name}_error"></span>
         </div>
         <!--OPTIONCONTAINER-->
-        
+
         <!--FILE-->
         <div class="tr form-group" id="EuWFP_{name}">
             <label for="{id}" class="td control-label">{label}:</label>
@@ -165,7 +165,7 @@
             <span id="{name}_error"></span>
         </div>
         <!--FILE-->
-        
+
         <!--RADIOCONTAINER-->
         <div class="tr" id="EuWFP_{name}">
             <span class="td control-label">{label}:</span>
@@ -189,28 +189,28 @@
             </div>
         </div>
         <!--CHECKBOXCONTAINER-->
-        
+
         <!--TEXTAREA-->
         <div class="tr form-group" id="EuWFP_{name}">
-            <label for="{id}" class="td top control-label">{label}:</label>
+            <label for="{id}" class="td control-label">{label}:</label>
             <textarea name="{name}" id="{id}" placeholder="{placeholder}"{extras}
             class="form-control">{value}</textarea>
             <br><span id="{name}_error"></span>
         </div>
         <!--TEXTAREA-->
-        
+
         <!--FIELDSET-->
         <fieldset><legend><h4>{value}</h4></legend>
             {content}
         </fieldset>
         <!--FIELDSET-->
-        
+
         <!--LAYER-->
         <div class="col-md-{value}">
             {content}
         </div>
         <!--LAYER-->
-        
+
         <!--CAPTCHA-->
         <div class="tr" id="EuWFP_{name}">
             <label for="{id}" class="td control-label">{label}:</label>
@@ -218,7 +218,7 @@
             <input type="text" name="{name}" id="{id}" size="6"> <span id="{name}_error"></span>
         </div>
         <!--CAPTCHA-->
-        
+
         <!--SUBMIT-->
         <div class="tr form-group">
             <button type="submit" class="btn btn-warning" value="{value}"{extras}>{value}</button>
