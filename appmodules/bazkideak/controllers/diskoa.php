@@ -67,6 +67,7 @@ class DiskoaController extends Controller {
         @SessionHandler()->check_state($level);
         $this->model->diskoa_id = $id;
         $this->model->destroy();
+        $this->eliminar_archivos();
         HTTPHelper::go("/bazkideak/diskoa/listar");
     }
 
@@ -133,6 +134,12 @@ grupo= \"$grupo\"";
         $abestiak_encode = isset($_POST['abestiak']) ? EuropioCode::encode($_POST['abestiak']) : '';
         $abestiak_decode = EuropioCode::decode($abestiak_encode);
         file_put_contents($this->abestiak, $abestiak_decode);
+    }
+
+    private function eliminar_archivos(){
+        file_put_contents($this->imagen, '');
+        file_put_contents($this->bandcamp, '');
+        file_put_contents($this->abestiak, '');
     }
 
 

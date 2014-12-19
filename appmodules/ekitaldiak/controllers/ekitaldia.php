@@ -97,7 +97,7 @@ class EkitaldiaController extends Controller {
         @SessionHandler()->check_state($level);
         $this->model->ekitaldia_id = $id;
         $imagen = WRITABLE_DIR . "/ekitaldiak/ekitaldia/kartelak/{$this->model->ekitaldia_id}";
-        unlink($imagen);
+        file_put_contents($imagen, '');
         $this->model->destroy();
         HTTPHelper::go("/ekitaldiak/ekitaldia/listar");
     }

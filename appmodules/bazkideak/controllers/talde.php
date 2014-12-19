@@ -142,7 +142,6 @@ class TaldeController extends Controller {
         $ini = "/{$this->model->talde_id}.ini";
         $img = "/{$this->model->talde_id}";
         $this->imagen = WRITABLE_DIR . IRUDI_DIR . $img;
-        $this->bandcamp =  WRITABLE_DIR . BANDCAMP_DIR . $ini;
         $this->youtube = WRITABLE_DIR . YOUTUBE_DIR . $ini;
     }
 
@@ -215,7 +214,6 @@ class TaldeController extends Controller {
 
     private function eliminar_archivos(){
         file_put_contents($this->imagen, '');
-        file_put_contents($this->bandcamp, '');
         file_put_contents($this->youtube, '');
     }
 
