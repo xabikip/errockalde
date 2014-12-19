@@ -5,6 +5,7 @@ class BazkideView {
     public function agregar($errores=array()) {
 
         $form = new WebFormPRO('/bazkideak/bazkide/guardar');
+        if($errores) $form->fields[] = añadir_errores($errores);
         $form->add_text('izena','izena', @$_POST['izena']);
         $form->add_text('abizena', 'abizena', @$_POST['abizena']);
         $form->add_text('goitizena', 'goitizena', @$_POST['goitizena']);
@@ -20,7 +21,7 @@ class BazkideView {
     public function editar($obj=array(), $errores=array()) {
 
         $form = new WebFormPRO('/bazkideak/bazkide/guardar');
-
+        if($errores) $form->fields[] = añadir_errores($errores);
         $form->add_hidden('id', $obj->bazkide_id);
         $form->add_text('izena','izena', $obj->izena, null);
         $form->add_text('abizena', 'abizena', $obj->abizena);

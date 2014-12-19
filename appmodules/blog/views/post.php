@@ -6,6 +6,7 @@ class postView {
         Dict::set_dict_for_webform($kategoriak, 'deitura', @$_POST['deitura']);
 
         $form = new WebFormPRO('/blog/post/guardar');
+        if($errores) $form->fields[] = añadir_errores($errores);
         $form->add_select('kategoria', 'kategoria', $kategoriak);
         $form->add_textarea('titularra','titularra', @$_POST['titularra']);
         $form->add_textarea('parrafoa', 'parrafoa', @$_POST['parrafoa']);
@@ -28,6 +29,7 @@ class postView {
         $obj->edukia = EuropioCode::decode($edukia);;
 
         $form = new WebFormPRO('/blog/post/guardar');
+        if($errores) $form->fields[] = añadir_errores($errores);
         $form->add_select('kategoria', 'kategoria', $kategoriak);
         $form->add_textarea('titularra','titularra', $obj->titularra);
         $form->add_textarea('parrafoa', 'parrafoa', $obj->parrafoa);

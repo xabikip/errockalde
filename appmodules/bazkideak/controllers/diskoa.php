@@ -7,7 +7,8 @@ class DiskoaController extends Controller {
         @SessionHandler()->check_state($level);
         $talde_collector = CollectorObject::get('Talde');
         $taldeak = $talde_collector->collection;
-        $this->view->agregar($taldeak, $errores);
+        $e = ($errores) ? $errores : array();
+        $this->view->agregar($taldeak, $e);
     }
 
     public function editar($id=0, $errores=array()) {

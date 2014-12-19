@@ -6,6 +6,7 @@ class DiskoaView {
         Dict::set_dict_for_webform($taldeak, 'izena', @$_POST['taldea_id']);
 
         $form = new WebFormPRO('/bazkideak/diskoa/guardar');
+        if($errores) $form->fields[] = añadir_errores($errores);
         $form->add_select('taldea', 'Taldea', $taldeak);
         $form->add_text('izena', 'Diskoaren izena', @$_POST['izena']);
         $form->add_text('data', 'Data', @$_POST['data']);
@@ -27,6 +28,7 @@ class DiskoaView {
         Dict::set_dict_for_webform($taldeak, 'izena', $obj->talde);
 
         $form = new WebFormPro('/bazkideak/diskoa/guardar');
+        if($errores) $form->fields[] = añadir_errores($errores);
         $form->add_select('taldea', 'Taldea', $taldeak);
         $form->add_text('izena', 'Diskoaren izena', $obj->izena);
         $form->add_text('data', 'Data', $obj->data);

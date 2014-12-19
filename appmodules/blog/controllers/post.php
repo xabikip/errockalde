@@ -8,7 +8,8 @@ class postController extends Controller {
     public function agregar($errores=array()) {
         @SessionHandler()->check_state(self::$level);
         $kat= CollectorObject::get('kategoria'); $kat = $kat->collection;
-        $this->view->agregar($kat, $errores);
+        $e = ($errores) ? $errores : array();
+        $this->view->agregar($kat, $e);
     }
 
     public function editar($id=0, $errores=array()) {

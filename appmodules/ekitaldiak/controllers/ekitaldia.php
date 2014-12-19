@@ -16,8 +16,8 @@ class EkitaldiaController extends Controller {
 
         $lekua_collector = CollectorObject::get('Lekua');
         $lekuak = $lekua_collector->collection;
-
-        $this->view->agregar($ekitaldimotak, $lekuak, $errores);
+        $e = ($errores) ? $errores : array();
+        $this->view->agregar($ekitaldimotak, $lekuak, $e);
     }
 
     public function editar($id=0, $errores=array()) {

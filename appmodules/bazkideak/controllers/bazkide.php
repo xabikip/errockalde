@@ -8,7 +8,8 @@ class BazkideController extends Controller {
     public function agregar($errores) {
         $level = 1; # Nivel de acceso mínimo requerido para el recurso
         @SessionHandler()->check_state($level);
-        $this->view->agregar($errores);
+        $e = ($errores) ? $errores : array();
+        $this->view->agregar($e);
     }
 
     public function editar($id=0, $errores=array()) {
