@@ -159,7 +159,7 @@ class postController extends Controller {
 
         $campoImagen = 'irudia';
         $tipo_permitido = array("image/png", "image/jpeg", "image/gif",
-            "image/bmp", "image/jpg");
+            "image/bmp", "image/jpg", "image/pjpeg", "image/jpe");
         validar_tipoImagen($errores, $tipo_permitido, $campoImagen);
 
         return $errores;
