@@ -12,11 +12,16 @@ function validar_requeridos(&$errores=array(), $requeridos=array()){
 
 function validar_tipoImagen(&$errores=array(), $tipo_permitido=array(), $campoImagen){
       $tipo = isset($_FILES[$campoImagen]['type']) ? $_FILES[$campoImagen]['type'] : "image/jpg";
-      if($_FILES[$campoImagen]['error']== 1){
-                $errores[$campoImagen] = ERROR_MSG_IMG_MAXSIZE;
-      }else if (!in_array($tipo, $tipo_permitido) AND $_FILES[$campoImagen]['error'] !== 4){
-                $errores[$campoImagen] = ERROR_MSG_MYME_TYPE;
+      if($_FILES[$campoImagen]['error'] !== 0){
+        if($_FILES[$campoImagen]['error'] == 1){
+                  $errores[$campoImagen] = ERROR_MSG_IMG_MAXSIZE;
+        }else if (!in_array($tipo, $tipo_permitido) AND $_FILES[$campoImagen]['error'] !== 4){
+                  $errores[$campoImagen] = ERROR_MSG_MYME_TYPE;
+        }else{
+          $errores[$campoImagen] = ERROR_MSG_IMG;
+        }
       }
+
 
 }
 
