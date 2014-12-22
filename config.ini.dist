@@ -57,6 +57,7 @@ CUSTOM_LOGIN_TEMPLATE =  ; ruta física del login HTML (nulo para el template po
 HTTP_ERROR_403 =      ; ruta física absoluta del archivo HTML para error 403
 HTTP_ERROR_403_API =  ; ruta física absoluta del archivo HTML para error API no habilitada
 HTTP_ERROR_404 =      ; ruta física absoluta del archivo HTML para error 404
+HTTP_ERROR_EE1001 =   ; ruta física absoluta del archivo HTML para error EE1001 (debug en producción)
 
 
 [SESSIONS]
@@ -76,3 +77,10 @@ SECURITY_LAYER_ENCRYPT_PASSWORD_HASH = md5 ; Algoritmo de cifrado a utilizar sol
 collectorviewer  = true  ; common/plugins/collectorviewver
 securitylayer    = true  ; common/plugins/securitylayer
 webform          = true  ; common/plugins/webform
+guigenerator     = true  ; common/plugins/guigenerator
+
+
+[EXPERIMENTALES]
+; se recomienda activar estas funcionalidades solo para hackers y programadores
+; ampliamente experimentados. caso contrario, dejar desactivadas.
+ENABLE_CLASS2FUNC = false

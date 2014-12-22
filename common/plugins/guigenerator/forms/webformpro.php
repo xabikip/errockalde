@@ -80,8 +80,8 @@ class WebFormPRO {
                                     valor por defecto: captcha
      * @param  string  $extras      cualquier string a incluir dentro del tag
                                     <span> donde se muestra la pregunta
-     * @param  string  $dbfile      si desea utilizar su propio archivo de
-                                    base de datos, ruta (desde APP_DIR) del
+     * @param  string  $dbfile      si desea utilizar su propio archivo de 
+                                    base de datos, ruta (desde APP_DIR) del 
                                     archivo de base de datos
      * @param  int     $col         entero entre 1 y 12 que representa el tamaño
                                     de la grilla ocupada por el campo.
@@ -141,9 +141,9 @@ class WebFormPRO {
                                     como valor
      * @return void
     */
-    public function add_errorzone($errores=array()) {
+    public function add_errorzone($errores=array(), $title="Warning!") {
         $json_errores = json_encode($errores);
-        $this->add_field('ERROR-ZONE', $this->id, null, $json_errores, null, 0);
+        $this->add_field('ERROR-ZONE', $this->id, $title, $json_errores, null, 0);
     }
 
     /**
@@ -370,7 +370,7 @@ class WebFormPRO {
                         por medio de la propiedad $form
     */
     public function get_form() {
-        $formtag = $this->get_code('FORM');
+        $formtag = $this->get_code('FORM') . $this->get_code('ALERT');
         $dict = array(
             "formid" => $this->id,
             "method" => $this->method,
@@ -430,7 +430,7 @@ class WebFormPRO {
      * Retorna tags que requieren una apertura y cierre
      *
      * @param  string  $key         (requerido) el nombre del identificado
-                                    necesario para obtener el código HTML desde
+                                    necesario para obtener el código HTML desde 
                                     la plantilla
      * @param  string  $value       (requerido) un valor requerido a sustituir
                                     en los tags de apertura (varía de acuerdo

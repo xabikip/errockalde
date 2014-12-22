@@ -30,10 +30,13 @@ class UserController extends Controller {
         $this->view->show_form(False, False, $user, $level, '', 'Editar', $id);
     }
 
-    public function guardar() {
+    public function guardar($redirect=true) {
         @SessionHandler()->check_state(1);
+        $uri = $_SERVER['REQUEST_URI'];
+        $redirect = ($uri == "/users/user/guardar") ? True : $redirect;
+
         $badpwd = False;
-        $id = (isset($_POST['id'])) ? $_POST['id'] : 0;
+        $id = (isset($_POST['user_id'])) ? $_POST['user_id'] : 0;
         $tit = ($id > 0) ? 'Editar' : 'Agregar';
         $this->model->user_id = $id;
 
@@ -43,10 +46,24 @@ class UserController extends Controller {
 
         if(!$user_exists and !$badpwd) {
             $this->model->save($pwd);
-            HTTPHelper::go("/users/user/listar");
+            if($redirect) {
+                HTTPHelper::go("/users/user/listar");
+            } else {
+                return $this->model->user_id;
+            }
         } else {
-            $this->view->show_form($user_exists, $badpwd, $this->model->name, 
-                $this->model->level, $_POST['pwd'], $tit, $id);
+            if($redirect) {
+                $this->view->show_form($user_exists, $badpwd, $this->model->name, 
+                    $this->model->level, $_POST['pwd'], $tit, $id);
+            } else {
+                $u = ($user_exists) ? 'ERROR 1001: user exists' : 0;
+                $p = ($badpwd) ? 'ERROR 1002: invalid password' : 0;
+                $errores = array(
+                    'user'=> $u,
+                    'pass'=> $p,
+                );
+                return $errores;
+            }
         }
     }
 
@@ -114,8 +131,7 @@ class UserController extends Controller {
         $badpwd = false;
         $pwd_ = $_POST['pwd'];
         if(strlen($pwd_) < 6) $badpwd = True;
-        $pwd = (!$badpwd) ? str_replace(' ', '', 
-            SessionHelper::get_pwd()) : False;
+        $pwd = (!$badpwd) ? SessionHelper::get_pwd() : False;
         if($pwd_ == '' && $id > 0) $badpwd = False;
         return array($pwd, $badpwd);
     }

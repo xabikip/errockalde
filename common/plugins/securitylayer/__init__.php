@@ -34,7 +34,7 @@ class SecurityLayer {
     }
 
     private static function is_password($key='') {
-        $password_names = array('pass', 'clave', 'contrasenia');
+        $password_names = array('pass', 'clave', 'contrasenia', 'pwd');
         foreach($password_names as $name) {
             if(strpos($key, $name) !== False) return True;
         }

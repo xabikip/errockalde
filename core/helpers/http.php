@@ -22,7 +22,12 @@ class HTTPHelper {
         print file_get_contents(APP_DIR . self::get_page(403));
         exit();
     }
-    
+
+    public static function exit_by_ee1001() {
+        print file_get_contents(APP_DIR . self::get_page('EE1001'));
+        exit();
+    }
+ 
     public static function return_api_not_enabled() {
         header('HTTP/1.1 403 Forbidden');
         $default_page = "core/helpers/templates/403API.html";
@@ -39,6 +44,7 @@ class HTTPHelper {
         $constants = array(
             403=>defined("HTTP_ERROR_403") ? HTTP_ERROR_403 : NULL,
             404=>defined("HTTP_ERROR_404") ? HTTP_ERROR_404 : NULL,
+            'EE1001'=>defined("HTTP_ERROR_EE1001") ? HTTP_ERROR_EE1001 : NULL,
         );
         $default_page = "core/helpers/templates/$num.html";
         $custom_page = $constants[$num];

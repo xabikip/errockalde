@@ -23,7 +23,7 @@
 * @license    http://www.gnu.org/licenses/gpl.txt  GNU GPL 3.0
 * @author     Eugenia Bahit <ebahit@member.fsf.org>
 * @link       http://www.europio.org
-* @version    3.4.67
+* @version    3.5.5 beta (revno 85)
 */
 
 require_once 'settings.php';
@@ -44,6 +44,7 @@ import('core.data.datahandler');
 
 import('core.orm_engine.mysqlilayer');
 
+import('core.orm_engine.objects.object');
 import('core.orm_engine.objects.standardobject');
 import('core.orm_engine.objects.serializedobject');
 import('core.orm_engine.objects.collectorobject');
@@ -55,6 +56,13 @@ import('core.sessions.handler');
 
 import('core.mvc_engine.controller');
 import('core.mvc_engine.front_controller');
+
+import('core.dev_tools.helper');
+import('core.dev_tools.debugger');
+import('core.dev_tools.logger');
+import('core.dev_tools.error_handler');
+import('core.dev_tools.lang_improvement.class2func');
+import('core.dev_tools.lang_improvement.phpfunc2method');
 
 import('core.aliases');
 
@@ -72,7 +80,6 @@ Autoload::get_installed_modules();
 # Archivos del usuario son cargados desde user_imports.php
 # Si este archivo no existe en la raíz de la app, debe ser creado
 import('user_imports', False);
-
 
 # Arrancar el motor de la aplicación
 FrontController::start();

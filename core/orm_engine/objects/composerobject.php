@@ -20,6 +20,9 @@ abstract class ComposerObject extends StandardObject {
         }
     }
 
+    function __toString() {
+        return 'object';
+    }
 }
 
 ?>

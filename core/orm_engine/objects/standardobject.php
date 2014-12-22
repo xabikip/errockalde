@@ -13,9 +13,10 @@ import('core.orm_engine.orm.orm');
 import('core.helpers.patterns');
 
 
-abstract class StandardObject {
+abstract class StandardObject extends Object {
 
     function save() {
+        @$this->__tolog();
         list($vars, $tbl, $idname) = ORMHandler::analize($this);
         if($this->$idname == 0) {
             $this->$idname = ORM::create($this);
@@ -25,6 +26,7 @@ abstract class StandardObject {
     }
 
     function get() {
+        @$this->__tolog();
         $data = ORM::read($this);
         foreach($data as $property=>$value) {
             if(is_null($this->$property) && !is_null($value)) {
@@ -37,6 +39,7 @@ abstract class StandardObject {
     }
     
     function destroy() {
+        @$this->__tolog();
         ORM::delete($this);
     }
 
