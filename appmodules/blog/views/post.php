@@ -9,7 +9,8 @@ class postView {
         $form->add_select('kategoria', 'kategoria', $kategoriak);
         $form->add_textarea('titularra','titularra', @$_POST['titularra']);
         $form->add_textarea('parrafoa', 'parrafoa', @$_POST['parrafoa']);
-        $form->add_textarea('edukia', 'edukia', @$_POST['edukia'], 'class="editme"');
+        $edukia = EuropioCode::decode_preformat(@$_POST['edukia']);
+        $form->add_textarea('edukia', 'edukia', $edukia, 'class="editme"');
         $form->add_file('irudia', 'irudia', @$_POST['irudia']);
         $form->add_submit('Artikulua gehitu');
         $form->add_errorzone($errores, "Kontuz!");
@@ -25,7 +26,7 @@ class postView {
         $parrafoa = file_get_contents(WRITABLE_DIR . PARRAFO_DIR . "/{$obj->post_id}" );
         $edukia = file_get_contents(WRITABLE_DIR . EDUKI_DIR . "/{$obj->post_id}" );
         $obj->parrafoa = EuropioCode::decode($parrafoa);;
-        $obj->edukia = EuropioCode::decode($edukia);;
+        $obj->edukia = EuropioCode::decode_preformat($edukia);;
 
         $form = new WebFormPRO('/blog/post/guardar');
         $form->add_select('kategoria', 'kategoria', $kategoriak);
