@@ -6,7 +6,7 @@ function get_data($campo){
 
 function validar_requeridos(&$errores=array(), $requeridos=array()){
       foreach ($requeridos as $value) {
-            if (get_data($value) == null) $errores[$value]  = ERROR_MSG_REQUIERE;
+            if (get_data($value) == null) $errores[$value]  = "$value " . ERROR_MSG_REQUIERE;
       }
 }
 
@@ -14,11 +14,11 @@ function validar_tipoImagen(&$errores=array(), $tipo_permitido=array(), $campoIm
       $tipo = isset($_FILES[$campoImagen]['type']) ? $_FILES[$campoImagen]['type'] : "image/jpg";
       if($_FILES[$campoImagen]['error'] !== 0){
         if($_FILES[$campoImagen]['error'] == 1){
-                  $errores[$campoImagen] = ERROR_MSG_IMG_MAXSIZE;
+            $errores[$campoImagen] = ERROR_MSG_IMG_MAXSIZE;
         }else if (!in_array($tipo, $tipo_permitido) AND $_FILES[$campoImagen]['error'] !== 4){
-                  $errores[$campoImagen] = ERROR_MSG_MYME_TYPE;
-        }else{
-          $errores[$campoImagen] = ERROR_MSG_IMG;
+            $errores[$campoImagen] = ERROR_MSG_MYME_TYPE;
+        }else if($_FILES[$campoImagen]['error'] !== 4){
+            $errores[$campoImagen] = ERROR_MSG_IMG;
         }
       }
 
@@ -52,12 +52,6 @@ function render_final_back($str, $titulo='') {
         );
         $render_final = Template($template)->render($dict);
         print $render_final;
-}
-
-function añadir_errores($errores=array()){
-        $html_error = file_get_contents(CUSTOM_STATIC_DIR ."/html/back/msgerror.html");
-        $msg = nl2br(join(chr(10), array_unique($errores)));
-        return str_replace("{msgerror}", $msg, $html_error);
 }
 
 

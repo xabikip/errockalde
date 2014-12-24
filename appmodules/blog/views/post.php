@@ -6,14 +6,13 @@ class postView {
         Dict::set_dict_for_webform($kategoriak, 'deitura', @$_POST['deitura']);
 
         $form = new WebFormPRO('/blog/post/guardar');
-        if($errores) $form->fields[] = añadir_errores($errores);
         $form->add_select('kategoria', 'kategoria', $kategoriak);
         $form->add_textarea('titularra','titularra', @$_POST['titularra']);
         $form->add_textarea('parrafoa', 'parrafoa', @$_POST['parrafoa']);
         $form->add_textarea('edukia', 'edukia', @$_POST['edukia'], 'class="editme"');
         $form->add_file('irudia', 'irudia', @$_POST['irudia']);
         $form->add_submit('Artikulua gehitu');
-        $form->add_errorzone($errores);
+        $form->add_errorzone($errores, "Kontuz!");
 
         $js_europio = file_get_contents(CUSTOM_STATIC_DIR ."/js/errockalde.js");
         $html = $js_europio . $form->get_form();
@@ -29,7 +28,6 @@ class postView {
         $obj->edukia = EuropioCode::decode($edukia);;
 
         $form = new WebFormPRO('/blog/post/guardar');
-        if($errores) $form->fields[] = añadir_errores($errores);
         $form->add_select('kategoria', 'kategoria', $kategoriak);
         $form->add_textarea('titularra','titularra', $obj->titularra);
         $form->add_textarea('parrafoa', 'parrafoa', $obj->parrafoa);
@@ -43,7 +41,7 @@ class postView {
         $form->add_hidden('id', $obj->post_id);
         $form->add_hidden('sortua', $obj->sortua);
         $form->add_submit('Aritkulua editatu');
-        $form->add_errorzone($errores);
+        $form->add_errorzone($errores, "Kontuz!");
 
         $js_europio = file_get_contents(CUSTOM_STATIC_DIR ."/js/errockalde.js");
         $html = $js_europio . $form->get_form();

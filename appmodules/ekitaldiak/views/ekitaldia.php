@@ -6,7 +6,6 @@ class EkitaldiaView {
         Dict::set_dict_for_webform($ekitaldimotak, 'deitura', @$_POST['deitura']);
 
         $form = new WebFormPRO('/ekitaldiak/ekitaldia/guardar');
-        if($errores) $form->fields[] = añadir_errores($errores);
         $form->add_text('ekitaldi_izena', 'Ekitaldiaren Izena',@$_POST['ekitaldi_izena']);
         $form->add_select('ekitaldimota', 'Ekitaldi Mota', $ekitaldimotak);
         $form->add_textarea('deskribapena', 'deskribapena', @$_POST['deskribapena']);
@@ -30,7 +29,7 @@ class EkitaldiaView {
 
         $form->add_file('kartela', 'kartela', @$_POST['file']);
         $form->add_submit('Ekitaldia gehitu');
-        $form->add_errorzone($errores);
+        $form->add_errorzone($errores, "Kontuz!");
 
         $js_datepicker = file_get_contents(CUSTOM_STATIC_DIR ."/js/datepickerCustom.js");
         $html = $js_datepicker . $form->get_form();
@@ -41,7 +40,6 @@ class EkitaldiaView {
         Dict::set_dict_for_webform($ekitaldimotak, 'deitura', $obj->ekitaldimota->ekitaldimota_id);
 
         $form = new WebFormPRO('/ekitaldiak/ekitaldia/guardar');
-        if($errores) $form->fields[] = añadir_errores($errores);
         $form->add_hidden('id', $obj->ekitaldia_id);
         $form->add_text('ekitaldi_izena', 'Ekitaldiaren Izena',$obj->izena);
         $form->add_select('ekitaldimota','Ekitaldi Mota', $ekitaldimotak);
@@ -70,7 +68,7 @@ class EkitaldiaView {
         $form->fields[] = $render;
 
         $form->add_submit('Ekitaldia aldatu');
-        $form->add_errorzone($errores);
+        $form->add_errorzone($errores, "Kontuz!");
         render_final_back($form->get_form(), "Ekitaldia aldatu");
     }
 

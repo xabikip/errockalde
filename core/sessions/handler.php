@@ -31,9 +31,9 @@ class SessionBaseHandler {
         $_SESSION['username'] = $data['name'];
         $this->state = True;
         if(isset($_SESSION['uri'])) {
-            $is_login = ($_SESSION['uri'] != "/users/user/login");
-            $is_logout = ($_SESSION['uri'] != "/users/user/logout");
-            if(!$is_login && !$is_logout) {
+            $is_login = ($_SESSION['uri'] == "/users/user/login");
+            $is_logout = ($_SESSION['uri'] == "/users/user/logout");
+            if(!$is_login and !$is_logout) {
                 HTTPHelper::go($_SESSION['uri']);
             } else {
                 HTTPHelper::go(DEFAULT_VIEW);

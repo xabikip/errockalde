@@ -8,7 +8,6 @@ class TaldeView {
 
         //Armar un formulario
         $form = new WebFormPRO('/bazkideak/talde/guardar');
-        if($errores) $form->fields[] = añadir_errores($errores);
         $form->add_text('izena', 'Taldearen izena', @$_POST['izena']);
         $form->add_hidden('customurl', 'customurl', @$_POST['customurl']);
         $form->add_checkbox('bazkideak', 'Taldekideak', $bazkideak);
@@ -20,7 +19,7 @@ class TaldeView {
         $form->add_text('youtube', 'Youtube', @$_POST['youtube']);
         $form->add_file('argazkia', 'Argazkia', @$_POST['file']);
         $form->add_submit('Taldea gehitu');
-        $form->add_errorzone($errores);
+        $form->add_errorzone($errores, "Kontuz!");
 
         //Mostrar form para agregar talde
         $js_europio = file_get_contents(CUSTOM_STATIC_DIR ."/js/errockalde.js");
@@ -33,7 +32,6 @@ class TaldeView {
 
         //Armar un formulario
         $form = new WebFormPRO('/bazkideak/talde/guardar');
-        if($errores) $form->fields[] = añadir_errores($errores);
         $form->add_hidden('id', $obj->talde_id);
         $form->add_text('izena', 'izena', $obj->izena);
         $form->add_text('customurl', 'customurl', $obj->customurl);
@@ -50,7 +48,7 @@ class TaldeView {
         $form->fields[] = $render;
 
         $form->add_submit('Gorde');
-        $form->add_errorzone($errores);
+        $form->add_errorzone($errores, "Kontuz!");
 
         //Mostrar form para editar talde
         $js_europio = file_get_contents(CUSTOM_STATIC_DIR ."/js/errockalde.js");

@@ -5,7 +5,6 @@ class BazkideView {
     public function agregar($errores=array()) {
 
         $form = new WebFormPRO('/bazkideak/bazkide/guardar');
-        if($errores) $form->fields[] = añadir_errores($errores);
         $form->add_text('izena','izena', @$_POST['izena']);
         $form->add_text('abizena', 'abizena', @$_POST['abizena']);
         $form->add_text('goitizena', 'goitizena', @$_POST['goitizena']);
@@ -14,14 +13,13 @@ class BazkideView {
         $form->add_text('erabiltzailea', 'erabiltzailea', @$_POST['erabiltzailea']);
         $form->add_text('pasahitza', 'pasahitza', @$_POST['pasahitza']);
         $form->add_submit('Bazkidea gehitu');
-        $form->add_errorzone($errores);
+        $form->add_errorzone($errores, "Kontuz!");
         render_final_back($form->get_form(), "Bazkide berria");
     }
 
     public function editar($obj=array(), $errores=array()) {
 
         $form = new WebFormPRO('/bazkideak/bazkide/guardar');
-        if($errores) $form->fields[] = añadir_errores($errores);
         $form->add_hidden('id', $obj->bazkide_id);
         $form->add_text('izena','izena', $obj->izena, null);
         $form->add_text('abizena', 'abizena', $obj->abizena);
@@ -30,7 +28,7 @@ class BazkideView {
         $form->add_text('telefonoa', 'telefonoa', $obj->telefonoa);
         $form->add_text('erabiltzailea', 'erabiltzailea', $obj->user->name);
         $form->add_submit('Aldaketak gorde');
-        $form->add_errorzone($errores);
+        $form->add_errorzone($errores, "Kontuz!");
         render_final_back($form->get_form(), "Bazkidea editatu");
     }
 
