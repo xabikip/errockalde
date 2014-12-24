@@ -87,9 +87,9 @@ class postController extends Controller {
     public function listar() {
         @SessionHandler()->check_state(self::$level);
         $userid = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
-
+        $level = isset($_SESSION['level']) ? $_SESSION['level'] : 0;
         # Admin ez bada, erabiltzailearen postak bakarrik ekarri
-        if($userid > 1) {
+        if($level > 1) {
             $list = DataHandler('post', DH_FORMAT_OBJECT)->filter("user=$userid");
         } else {
             $collection = CollectorObject::get('post');
