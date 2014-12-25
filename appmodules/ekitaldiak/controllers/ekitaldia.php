@@ -109,7 +109,7 @@ class EkitaldiaController extends Controller {
     }
 
     public function get_ultimos_eventos() {
-        $ultimos = DataHandler('ekitaldia', DH_FORMAT_OBJECT)->get_latest(4);
+        $ultimos = DataHandler('ekitaldia', DH_FORMAT_OBJECT)->get_latest(2);
         $this->apidata = $ultimos;
     }
 
