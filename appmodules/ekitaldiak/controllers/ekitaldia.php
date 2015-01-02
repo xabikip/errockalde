@@ -80,8 +80,7 @@ class EkitaldiaController extends Controller {
     }
 
     public function ekitaldiak() {
-        $collection = CollectorObject::get('Ekitaldia');
-        $list = $collection->collection;
+        $list = DataHandler('ekitaldia', DH_FORMAT_OBJECT)->filter("data>" . date('Y-m-d'), DH_FILTER_GT);
         $this->view->ekitaldiak($list);
     }
 

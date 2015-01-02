@@ -40,3 +40,13 @@ CREATE TABLE IF NOT EXISTS bazkidetalde (
     , INDEX (compositor)
     , FOREIGN KEY (compositor) REFERENCES bazkide (bazkide_id) ON DELETE CASCADE
 )ENGINE=InnoDB;
+
+CREATE TABLE pasahitzberria (
+    pasahitzberria_id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    token VARCHAR(200) NOT NULL,
+    passberria VARCHAR(25) NOT NULL,
+    data TIMESTAMP NOT NULL,
+    user INT(11) NOT NULL,
+        INDEX (user),
+        FOREIGN KEY (user) REFERENCES user (user_id)
+) ENGINE=InnoDB;

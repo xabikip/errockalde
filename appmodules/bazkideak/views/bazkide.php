@@ -11,10 +11,14 @@ class BazkideView {
         $form->add_text('emaila', 'emaila', @$_POST['emaila']);
         $form->add_text('telefonoa', 'telefonoa', @$_POST['telefonoa']);
         $form->add_text('erabiltzailea', 'erabiltzailea', @$_POST['erabiltzailea']);
-        $form->add_text('pasahitza', 'pasahitza', @$_POST['pasahitza']);
+        $form->add_password('pasahitza', 'pasahitza', @$_POST['pasahitza']);
         $form->add_submit('Bazkidea gehitu');
         $form->add_errorzone($errores, "Kontuz!");
-        render_final_back($form->get_form(), "Bazkide berria");
+
+        //Mostrar form para agregar talde
+        $js_europio = file_get_contents(CUSTOM_STATIC_DIR ."/js/errockalde.js");
+        $html = $form->get_form() . $js_europio;
+        render_final_back($html, "Bazkide berria");
     }
 
     public function editar($obj=array(), $errores=array()) {
@@ -41,6 +45,22 @@ class BazkideView {
             False, True, True);
 
         render_final_back($str->get_table(), "Bazkide zerrenda");
+    }
+
+    public function berreskuratu($errores, $ok){
+        $html = file_get_contents( CUSTOM_STATIC_DIR . "/html/back/berreskuratu.html");
+        if(!$errores){
+            $html = Template($html)->delete("ALERT");
+        }
+        if(!$ok){
+            $html = Template($html)->delete("OK");
+        }
+        print $html;
+    }
+
+    public function ongiberreskuratu(){
+        $html = file_get_contents( CUSTOM_STATIC_DIR . "/html/back/ongiBerreskuratua.html");
+        print $html;
     }
 }
 

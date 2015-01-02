@@ -40,6 +40,7 @@ function limpiar_cadena() {
 
 window.onload = function() {
     pagina = get_pagina_actual();
+    encode_password();
     switch(pagina) {
         case 'post': set_encode_post(); break;
         case 'talde': set_encode_talde(); break;
@@ -97,6 +98,14 @@ function set_encode_diskoa() {
     document.getElementsByTagName('form')[0].onsubmit = function(){
         europiocode.encode('bandcamp_6');
         europiocode.encode_preformat('abestiak_5');
+    };
+}
+
+function encode_password() {
+    europiocode = new EuropioCode();
+
+    document.getElementsByTagName('form')[0].onsubmit = function(){
+        europiocode.encode('pasahitza_7');
     };
 }
 

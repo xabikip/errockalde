@@ -16,9 +16,9 @@ class SessionHelper {
         if(isset($_POST['pwd'])) {
             if(defined('SECURITY_LAYER_ENCRYPT_PASSWORD')) {
                 if(!SECURITY_LAYER_ENCRYPT_PASSWORD) {
-                    $p = md5($_POST['pwd']);
+                    $p = md5(EuropioCode::reverse($_POST['pwd']));
                 } else {
-                    $p = $_POST['pwd'];
+                    $p = EuropioCode::reverse($_POST['pwd']);
                 }
             }
         }
