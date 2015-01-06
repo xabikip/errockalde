@@ -1,0 +1,39 @@
+
+
+[$date] [client $client] ERROR DE MAPEO
+=========================================================================
+        URI: {$_SERVER['REQUEST_URI']}
+    DESTINO: $uri
+     MODELO: $model
+
+[ANÁLISIS GENERAL]
+
+  Propiedades reales de la clase...... $clsvars_str
+  Campos en la tabla.................. $fields_str
+  Propiedades del objeto.............. $objvars_str
+
+[ANÁLISIS DE PROPIEDADES]
+
+  Propiedades del modelo que no están en la tabla:  $model2table
+  Propiedades del objeto que no están en la tabla:  $object2table
+  Propiedades del objeto que no están en el modelo: $object2model
+
+[AYUDA]
+
+  Compare diferencias en el análisis de propiedades, teniendo en cuenta 
+  que:
+
+     Todo modelo debe tener una tabla cuyo nombre sea igual al del 
+     modelo (en minúsculas)
+     
+     Todo modelo debe tener una propiedad llamada como el modelo seguida
+     de _id (todo en minúsculas)
+
+     Todos los campos de tabla deben tener los mismos nombres que las 
+     propiedades
+
+     Propiedades de tipo object deben ser campos de tipo entero en la 
+     tabla
+
+     Propiedades de tipo array no pueden ser campos de tabla
+

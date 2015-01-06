@@ -87,11 +87,18 @@
 
 <body>
     <!--TITLE--><h3 class="form"{extras}>{label}</h3><!--TITLE-->
+
     <!--INSTRUCTIONS-->
     <div class="instructions"{extras}>
         <p>{label}</p>
     </div>
     <!--INSTRUCTIONS-->
+
+    <!--ALERT-->
+    <div class="alert alert-danger" id="EuWFP_alert">Por favor, revise los 
+        errores y vuelva a intentarlo</div>
+    <!--ALERT-->
+
     <!--FORM-->
     <form id="{formid}" method="{method}" action="{action}"
         enctype="multipart/form-data">
@@ -192,7 +199,7 @@
         
         <!--TEXTAREA-->
         <div class="tr form-group" id="EuWFP_{name}">
-            <label for="{id}" class="td top control-label">{label}:</label>
+            <label for="{id}" class="td control-label">{label}:</label>
             <textarea name="{name}" id="{id}" placeholder="{placeholder}"{extras}
             class="form-control">{value}</textarea>
             <br><span id="{name}_error"></span>
@@ -229,8 +236,16 @@
     <!--ERROR-ZONE-->
     <script>
     var EuWFP_campos_error = {value};
+    var EuWFP_error_msg = "";
+    var EuWFP_error_msg_ini = "<b>{label}</b><br>";
     for(var EuWFP_key in EuWFP_campos_error) {
         document.getElementById('EuWFP_' + EuWFP_key).className = "tr form-group has-error";
+        EuWFP_error_msg += EuWFP_campos_error[EuWFP_key] + "<br>";
+        document.getElementById('EuWFP_alert').style.display = 'block';
+        document.getElementById('EuWFP_alert').innerHTML = EuWFP_error_msg_ini + EuWFP_error_msg;
+    }
+    if(EuWFP_error_msg == '') {
+        document.getElementById('EuWFP_alert').style.display = 'none';
     }
     </script>
     <!--ERROR-ZONE-->

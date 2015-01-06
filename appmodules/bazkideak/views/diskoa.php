@@ -10,11 +10,11 @@ class DiskoaView {
         $form->add_text('izena', 'Diskoaren izena', @$_POST['izena']);
         $form->add_text('data', 'Data', @$_POST['data']);
         $form->add_text('iraupena', 'Iraupena', @$_POST['iraupena']);
-        $form->add_textarea('abestiak', 'Abestiak', @$_POST['abestiak']);
+        $form->add_textarea('abestiak', 'Abestiak', @$_POST['abestiak'], 'class="editme"');
         $form->add_textarea('bandcamp', 'Bandcamp', @$_POST['bandcamp']);
         $form->add_file('azala', 'Azala', @$_POST['azala']);
         $form->add_submit('Diskoa gehitu');
-        $form->add_errorzone($errores);
+        $form->add_errorzone($errores, "Kontuz!");
 
         //Mostrar form para agregar talde
         $js_europio = file_get_contents(CUSTOM_STATIC_DIR ."/js/errockalde.js");
@@ -27,12 +27,11 @@ class DiskoaView {
         Dict::set_dict_for_webform($taldeak, 'izena', $obj->talde);
 
         $form = new WebFormPro('/bazkideak/diskoa/guardar');
-        $form->add_hidden('id', $obj->diskoa_id);
         $form->add_select('taldea', 'Taldea', $taldeak);
         $form->add_text('izena', 'Diskoaren izena', $obj->izena);
         $form->add_text('data', 'Data', $obj->data);
         $form->add_text('iraupena', 'Iraupena', $obj->iraupena);
-        $form->add_textarea('abestiak', 'Abestiak', $obj->abestiak);
+        $form->add_textarea('abestiak', 'Abestiak', $obj->abestiak,'class="editme"');
         $form->add_textarea('bandcamp', 'Bandcamp', @$_POST['bandcamp']);
 
         $form->add_file('azala', 'azala');
@@ -40,11 +39,12 @@ class DiskoaView {
         $render = Template($html_irudia)->render($obj);
         $form->fields[] = $render;
 
+        $form->add_hidden('id', $obj->diskoa_id);
         $form->add_submit('Aldatu');
-        $form->add_errorzone($errores);
+        $form->add_errorzone($errores, "Kontuz!");
 
         //Mostrar form para agregar talde
-        $js_europio = file_get_contents(CUSTOM_STATIC_DIR ."js/errockalde.js");
+        $js_europio = file_get_contents(CUSTOM_STATIC_DIR ."/js/errockalde.js");
         $html = $form->get_form() . $js_europio;
         render_final_back($html, "Diskoa editatu");
     }
@@ -62,7 +62,7 @@ class DiskoaView {
         render_final_back($render, "Diskoak");
     }
 
-     # ==========================================================================
+    # ==========================================================================
     #                       PRIVATE FUNCTIONS: Helpers
     # ==========================================================================
 

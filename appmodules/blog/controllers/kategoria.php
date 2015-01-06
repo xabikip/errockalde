@@ -5,7 +5,8 @@ class kategoriaController extends Controller {
     public function agregar($errores=array()) {
         $level = 1; # Nivel de acceso mínimo requerido para el recurso
         @SessionHandler()->check_state($level);
-        $this->view->agregar($errores);
+        $e = ($errores) ? $errores : array();
+        $this->view->agregar($e);
     }
 
     public function editar($id=0, $errores=array()) {
@@ -23,7 +24,7 @@ class kategoriaController extends Controller {
 
         $errores = array();
         $requeridos = array("deitura");
-        $errores = validar_requeridos($errores, $requeridos);
+        validar_requeridos($errores, $requeridos);
 
         if($errores) {
             (!$id) ? $this->agregar($errores) : $this->editar($id, $errores);exit();

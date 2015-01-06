@@ -14,7 +14,13 @@ class SessionHelper {
     public static function get_pwd() {
         $p = "";
         if(isset($_POST['pwd'])) {
-            $p = md5(htmlentities(strip_tags($_POST['pwd'])));
+            if(defined('SECURITY_LAYER_ENCRYPT_PASSWORD')) {
+                if(!SECURITY_LAYER_ENCRYPT_PASSWORD) {
+                    $p = md5(EuropioCode::reverse($_POST['pwd']));
+                } else {
+                    $p = EuropioCode::reverse($_POST['pwd']);
+                }
+            }
         }
         return $p;
     }

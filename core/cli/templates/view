@@ -3,18 +3,18 @@
 class ClassNameView { 
 
     public function agregar() {
-        $form = new WebForm('/MODULO/ARCHIVO/guardar');
+        $form = new WebFormPRO('/MODULO/ARCHIVO/guardar');
         # ...
         $form->add_submit('Agregar');
-        print Template('Agregar ClassName')->show($form->show());
+        print Template('Agregar ClassName')->show($form->get_form());
     }
     
     public function editar($obj=array()) {
-        $form = new WebForm('/MODULO/ARCHIVO/guardar');
+        $form = new WebFormPRO('/MODULO/ARCHIVO/guardar');
         $form->add_hidden('id', $obj->ARCHIVO_id);
         # ...
         $form->add_submit('Agregar');
-        print Template('Editar ClassName')->show($form->show());
+        print Template('Editar ClassName')->show($form->get_form());
     }
 
     public function listar($coleccion=array()) {

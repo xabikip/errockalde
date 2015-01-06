@@ -16,8 +16,8 @@ class EkitaldiaController extends Controller {
 
         $lekua_collector = CollectorObject::get('Lekua');
         $lekuak = $lekua_collector->collection;
-
-        $this->view->agregar($ekitaldimotak, $lekuak, $errores);
+        $e = ($errores) ? $errores : array();
+        $this->view->agregar($ekitaldimotak, $lekuak, $e);
     }
 
     public function editar($id=0, $errores=array()) {
@@ -39,25 +39,17 @@ class EkitaldiaController extends Controller {
         $level = 1; # Nivel de acceso mínimo requerido para el recurso
         @SessionHandler()->check_state($level);
 
-        $errores = array();
+        $errores = $this->validaciones();
 
-        $requeridos = array("data", "ordua", "ekitaldi_izena", "ekitaldimota", "izena");
-        $errores= validar_requeridos($errores, $requeridos);
-
-        $campoImagen = 'kartela';
-        $tipo_permitido = array("image/png", "image/jpeg", "image/gif", "image/bmp", "image/jpg");
-        $errores= validar_tipoImagen($errores, $tipo_permitido, $campoImagen);
-
-        $campoHora = "ordua";
-        $errores = validar_hora($errores, $campoHora);
-
-        if($errores and get_data('id') == 0)  {$this->agregar($errores);exit;}
-        if($errores and get_data('id') !== 0) {$this->editar($id, $errores);exit;}
+        $id = get_data('id');
+        if($errores) {
+            (!$id) ? $this->agregar($errores) : $this->editar($id, $errores);
+            exit();
+        }
 
         $lekua = $this->lekuaGorde();
-        // print_r($lekua['0']);exit;
 
-        $this->model->ekitaldia_id = get_data('id');
+        $this->model->ekitaldia_id = $id;
 
         $this->model->lekua = Pattern::composite('Lekua', $lekua);
         $this->model->deskribapena = get_data('deskribapena');
@@ -75,7 +67,6 @@ class EkitaldiaController extends Controller {
         $this->model->save();
 
         $ruta = WRITABLE_DIR . EKITALDI_IRUDI_DIR . "/{$this->model->ekitaldia_id}";
-        // print("Ruta:");print_r($ruta);exit;
         guardar_imagen($ruta, $campoImagen);
 
         HTTPHelper::go("/ekitaldiak/ekitaldia/listar");
@@ -89,8 +80,8 @@ class EkitaldiaController extends Controller {
     }
 
     public function ekitaldiak() {
-        $collection = CollectorObject::get('Ekitaldia');
-        $list = $collection->collection;
+        $atzo = date('Y-m-d', strtotime(' -1 day'));
+        $list = DataHandler('ekitaldia', DH_FORMAT_OBJECT)->filter("data>" . $atzo, DH_FILTER_GT);
         $this->view->ekitaldiak($list);
     }
 
@@ -106,7 +97,7 @@ class EkitaldiaController extends Controller {
         @SessionHandler()->check_state($level);
         $this->model->ekitaldia_id = $id;
         $imagen = WRITABLE_DIR . "/ekitaldiak/ekitaldia/kartelak/{$this->model->ekitaldia_id}";
-        unlink($imagen);
+        file_put_contents($imagen, '');
         $this->model->destroy();
         HTTPHelper::go("/ekitaldiak/ekitaldia/listar");
     }
@@ -118,7 +109,9 @@ class EkitaldiaController extends Controller {
     }
 
     public function get_ultimos_eventos() {
-        $ultimos = DataHandler('ekitaldia', DH_FORMAT_OBJECT)->get_latest(4);
+        $atzo = date('Y-m-d', strtotime(' -1 day'));
+        $list = DataHandler('ekitaldia', DH_FORMAT_OBJECT)->filter("data>" . $atzo, DH_FILTER_GT);
+        $ultimos = array_slice($list, count($list)-2, 2);
         $this->apidata = $ultimos;
     }
 
@@ -127,7 +120,23 @@ class EkitaldiaController extends Controller {
     #                       PRIVATE FUNCTIONS: Helpers
     # ==========================================================================
 
-     private function lekuaGorde(){
+    private function validaciones(){
+        $errores = array();
+
+        $requeridos = array("data", "ordua", "ekitaldi_izena", "ekitaldimota", "izena");
+        validar_requeridos($errores, $requeridos);
+
+        $campoImagen = 'kartela';
+        $tipo_permitido = array("image/png", "image/jpeg", "image/gif", "image/bmp", "image/jpg");
+        validar_tipoImagen($errores, $tipo_permitido, $campoImagen);
+
+        $campoHora = "ordua";
+        validar_hora($errores, $campoHora);
+
+        return $errores;
+    }
+
+    private function lekuaGorde(){
         $izena = get_data('izena');
         $herria = get_data('herria');
         $helbidea = get_data('helbidea');

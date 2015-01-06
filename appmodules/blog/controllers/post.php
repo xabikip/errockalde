@@ -2,13 +2,14 @@
 
 class postController extends Controller {
 
-    # Nivel de acceso mínimo requerido para el recurso
+    # Rekurtsoa erabiltzeko baimen maila
     private static $level = 30;
 
     public function agregar($errores=array()) {
         @SessionHandler()->check_state(self::$level);
         $kat= CollectorObject::get('kategoria'); $kat = $kat->collection;
-        $this->view->agregar($kat, $errores);
+        $e = ($errores) ? $errores : array();
+        $this->view->agregar($kat, $e);
     }
 
     public function editar($id=0, $errores=array()) {
@@ -21,25 +22,38 @@ class postController extends Controller {
 
     public function guardar() {
         @SessionHandler()->check_state(self::$level);
+
         $id = get_data('id');
 
         $errores = $this->validaciones();
 
-        $slugger = new Slugger();
-        $this->model->slug =  $slugger->slugify(get_data('titularra'));
-        $slug = $this->model->slug;
-        $post = DataHandler('post', DH_FORMAT_OBJECT)->filter("slug=$slug");
-        ($post == null) ?  : $errores["titularra"]  = ERROR_MSG_TITLE_DUPLICATE;
+        if(!$errores) {
+            $slugger = new Slugger();
+            $slug = $slugger->slugify(get_data('titularra'));
+            $post = DataHandler('post', DH_FORMAT_OBJECT)->filter("slug=$slug");
+            if($post != null){
+                if($post[0]->post_id != $id) $errores["titularra"]  = ERROR_MSG_TITLE_DUPLICATE;
+            }
+
+        }
 
         if($errores) {
-            (!$id) ? $this->agregar($errores) : $this->editar($id, $errores);exit();
+            (!$id) ? $this->agregar($errores) : $this->editar($id, $errores);
+            exit();
         }
 
         $this->model->post_id = $id;
 
         $this->model->titularra = get_data('titularra');
 
-        (!$id) ? $this->model->sortua = date('Y-m-d') : $this->model->aldatua = date('Y-m-d');
+        $this->model->slug = $slug;
+
+        if (!$id){
+            $this->model->sortua = date('Y-m-d');
+        }else {
+            $this->model->aldatua = date('Y-m-d');
+            $this->model->sortua = get_data("sortua");
+        }
 
         $kategoria = Pattern::factory('kategoria', get_data('kategoria') );
         $this->model->kategoria = Pattern::composite('kategoria', $kategoria);
@@ -52,6 +66,7 @@ class postController extends Controller {
 
         $this->model->save();
 
+        # __call fntzio magikoari deia
         $this->__set_aditional_properties();
 
 
@@ -72,7 +87,9 @@ class postController extends Controller {
     public function listar() {
         @SessionHandler()->check_state(self::$level);
         $userid = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
-        if($userid > 1) {
+        $level = isset($_SESSION['level']) ? $_SESSION['level'] : 0;
+        # Admin ez bada, erabiltzailearen postak bakarrik ekarri
+        if($level > 1) {
             $list = DataHandler('post', DH_FORMAT_OBJECT)->filter("user=$userid");
         } else {
             $collection = CollectorObject::get('post');
@@ -138,12 +155,12 @@ class postController extends Controller {
         $errores = array();
 
         $requeridos = array("titularra", "parrafoa", "edukia" );
-        $errores = validar_requeridos($errores, $requeridos);
+        validar_requeridos($errores, $requeridos);
 
         $campoImagen = 'irudia';
         $tipo_permitido = array("image/png", "image/jpeg", "image/gif",
-            "image/bmp", "image/jpg");
-        $errores= validar_tipoImagen($errores, $tipo_permitido, $campoImagen);
+            "image/bmp", "image/jpg", "image/pjpeg", "image/jpe");
+        validar_tipoImagen($errores, $tipo_permitido, $campoImagen);
 
         return $errores;
     }

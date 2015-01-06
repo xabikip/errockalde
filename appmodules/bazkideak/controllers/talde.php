@@ -10,7 +10,8 @@ class TaldeController extends Controller {
         @SessionHandler()->check_state($level);
         $bazkide_collector = CollectorObject::get('Bazkide');
         $bazkideak = $bazkide_collector->collection;
-        $this->view->agregar($bazkideak, $errores);
+        $e = ($errores) ? $errores : array();
+        $this->view->agregar($bazkideak, $e);
     }
 
     public function editar($id=0, $errores=array()) {
@@ -79,6 +80,7 @@ class TaldeController extends Controller {
         $this->view->taldea($this->model);
     }
 
+    #FIXME creame un modulo
     public function hasiera() {
         $collection_talde = CollectorObject::get('Talde');
         $taldeak = $collection_talde->collection;
@@ -94,8 +96,36 @@ class TaldeController extends Controller {
         $this->view->hasiera($taldeak, $ekitaldiak, $posts);
     }
 
-    public function kontaktua() {
-        $this->view->kontaktua();
+    #FIXME creame un modulo
+    public function kontaktua($result='') {
+        $result = ($result == 'kontaktua') ? '' : $result;
+        $error = 0;
+        $this->view->kontaktua($error, $result);
+    }
+
+    #FIXME creame un modulo
+    public function formbidali() {
+        $errores = $this->validar_contact();
+        $error = 1;
+        if($errores) exit(
+            $this->view->kontaktua($error, "Emaila eta izena beharrezkoak dira"));
+        $msg = EuropioCode::decode(get_data('mezua'));
+
+        if(PRODUCTION) {
+            $emaila = get_data('emaila');
+            $izena = get_data('izena');
+            $mail_to = "Xabi <xabikip@gmail.com>";
+            $mail_head  = "MIME-Version: 1.0\r\n";
+            $mail_head .= "Content-type: text/html; charset=utf-8\r\n";
+            $mail_head .= "To: {$mail_to}\r\n";
+            $mail_head .= "From: {$izena} <{$emaila}>\r\n";
+            $mail_head .= "Reply-To: {$izena} <{$emaila}>\r\n";
+            mail($mail_to, "MusikaGunea kontaktua", $msg, $mail_head);
+            $error = 0;
+            $this->view->kontaktua($error, "Mezua bidali da. Ahal bezain azkarren erantzungo dizugu");
+        }else{
+            $this->view->kontaktua($error, "ERROREA(CONFG.INI->PRODUCTION:FALSE)" );
+        }
     }
 
     public function eliminar($id=0) {
@@ -112,7 +142,6 @@ class TaldeController extends Controller {
         $ini = "/{$this->model->talde_id}.ini";
         $img = "/{$this->model->talde_id}";
         $this->imagen = WRITABLE_DIR . IRUDI_DIR . $img;
-        $this->bandcamp =  WRITABLE_DIR . BANDCAMP_DIR . $ini;
         $this->youtube = WRITABLE_DIR . YOUTUBE_DIR . $ini;
     }
 
@@ -124,15 +153,27 @@ class TaldeController extends Controller {
         $errores = array();
 
         $requeridos = array("izena", "emaila", "bazkideak" );
-        $errores = validar_requeridos($errores, $requeridos);
+        validar_requeridos($errores, $requeridos);
 
         $campoMail = 'emaila';
-        $errores = validar_formato_mail($errores, $campoMail);
+        validar_formato_mail($errores, $campoMail);
 
         $campoImagen = 'argazkia';
         $tipo_permitido = array("image/png", "image/jpeg", "image/gif",
             "image/bmp", "image/jpg");
-        $errores= validar_tipoImagen($errores, $tipo_permitido, $campoImagen);
+        validar_tipoImagen($errores, $tipo_permitido, $campoImagen);
+
+        return $errores;
+    }
+
+    private function validar_contact(){
+        $errores = array();
+
+        $requeridos = array("emaila", "mezua");
+        $errores = validar_requeridos($errores, $requeridos);
+
+        $campoMail = 'emaila';
+        $errores = validar_formato_mail($errores, $campoMail);
 
         return $errores;
     }
@@ -173,7 +214,6 @@ class TaldeController extends Controller {
 
     private function eliminar_archivos(){
         file_put_contents($this->imagen, '');
-        file_put_contents($this->bandcamp, '');
         file_put_contents($this->youtube, '');
     }
 

@@ -1,0 +1,2 @@
+[$date] [mysql_error] [client $client] ERROR: $error
+[$date] [mysql_error] [client $client] AYUDA: modificar $const en archivo de configuración ". APP_DIR ."config.ini

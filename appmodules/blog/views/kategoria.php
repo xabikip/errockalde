@@ -6,7 +6,7 @@ class kategoriaView {
         $form = new WebFormPRO('/blog/kategoria/guardar');
         $form->add_text('deitura','deitura', @$_POST['deitura']);
         $form->add_submit('Kategoria gehitu');
-        $form->add_errorzone($errores);
+        $form->add_errorzone($errores, "Kontuz!");
         render_final_back($form->get_form(), "Kategoria gehitu");
     }
 
@@ -15,7 +15,7 @@ class kategoriaView {
         $form->add_hidden('id', $obj->kategoria_id);
         $form->add_text('deitura','deitura', $obj->deitura);
         $form->add_submit('Aldatu');
-        $form->add_errorzone($errores);
+        $form->add_errorzone($errores, "Kontuz!");
         render_final_back($form->get_form(), "Kategoria aldatu");
     }
 

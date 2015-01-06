@@ -2,6 +2,7 @@
 
 $actual_path = ini_get('include_path');
 require_once "./settings.php";
+import('core.orm_engine.objects.object');
 import('core.orm_engine.objects.standardobject');
 import('core.data.datahandler');
 import('core.orm_engine.objects.standardobject');

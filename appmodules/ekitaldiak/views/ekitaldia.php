@@ -29,7 +29,7 @@ class EkitaldiaView {
 
         $form->add_file('kartela', 'kartela', @$_POST['file']);
         $form->add_submit('Ekitaldia gehitu');
-        $form->add_errorzone($errores);
+        $form->add_errorzone($errores, "Kontuz!");
 
         $js_datepicker = file_get_contents(CUSTOM_STATIC_DIR ."/js/datepickerCustom.js");
         $html = $js_datepicker . $form->get_form();
@@ -68,7 +68,7 @@ class EkitaldiaView {
         $form->fields[] = $render;
 
         $form->add_submit('Ekitaldia aldatu');
-        $form->add_errorzone($errores);
+        $form->add_errorzone($errores, "Kontuz!");
         render_final_back($form->get_form(), "Ekitaldia aldatu");
     }
 

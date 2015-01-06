@@ -9,10 +9,11 @@ class postView {
         $form->add_select('kategoria', 'kategoria', $kategoriak);
         $form->add_textarea('titularra','titularra', @$_POST['titularra']);
         $form->add_textarea('parrafoa', 'parrafoa', @$_POST['parrafoa']);
-        $form->add_textarea('edukia', 'edukia', @$_POST['edukia'], 'class="editme"');
+        $edukia = EuropioCode::decode_preformat(@$_POST['edukia']);
+        $form->add_textarea('edukia', 'edukia', $edukia, 'class="editme"');
         $form->add_file('irudia', 'irudia', @$_POST['irudia']);
         $form->add_submit('Artikulua gehitu');
-        $form->add_errorzone($errores);
+        $form->add_errorzone($errores, "Kontuz!");
 
         $js_europio = file_get_contents(CUSTOM_STATIC_DIR ."/js/errockalde.js");
         $html = $js_europio . $form->get_form();
@@ -25,7 +26,7 @@ class postView {
         $parrafoa = file_get_contents(WRITABLE_DIR . PARRAFO_DIR . "/{$obj->post_id}" );
         $edukia = file_get_contents(WRITABLE_DIR . EDUKI_DIR . "/{$obj->post_id}" );
         $obj->parrafoa = EuropioCode::decode($parrafoa);;
-        $obj->edukia = EuropioCode::decode($edukia);;
+        $obj->edukia = EuropioCode::decode_preformat($edukia);;
 
         $form = new WebFormPRO('/blog/post/guardar');
         $form->add_select('kategoria', 'kategoria', $kategoriak);
@@ -39,8 +40,9 @@ class postView {
         $form->fields[] = $render;
 
         $form->add_hidden('id', $obj->post_id);
+        $form->add_hidden('sortua', $obj->sortua);
         $form->add_submit('Aritkulua editatu');
-        $form->add_errorzone($errores);
+        $form->add_errorzone($errores, "Kontuz!");
 
         $js_europio = file_get_contents(CUSTOM_STATIC_DIR ."/js/errockalde.js");
         $html = $js_europio . $form->get_form();
@@ -81,7 +83,7 @@ class postView {
         $render_post = Template($render_post)->render_regex('KATEGORIAK', $kategoriak);
 
         //Render data
-        if($post->aldatua <= 0){
+        if($post->aldatua == "0000-00-00"){
             $render_post = $this->eliminar_bloque("ALDATUA", $render_post);
         }else{
             $render_post = $this->eliminar_bloque("SORTUA", $render_post);
@@ -134,7 +136,7 @@ class postView {
                 $render_post = $this->eliminar_bloque("MUSIKAGUNE{$id}", $render_post);
             }
 
-            if($post->aldatua <= 0){
+            if($post->aldatua == "0000-00-00"){
                 $render_post = $this->eliminar_bloque("ALDATUA{$id}", $render_post);
             }else{
                 $render_post = $this->eliminar_bloque("SORTUA{$id}", $render_post);
@@ -150,8 +152,8 @@ class postView {
 
     private function eliminar_bloque($identificador, $plantilla) {
         $identificador = $identificador;
-        $bloque_eliminar = Template($plantilla)->get_substr($identificador);
-        return $render_eliminado = str_replace($bloque_eliminar, "", $plantilla);
+        $bloque_eliminar = Template($plantilla)->get_substr($identificador, FALSE);
+        return str_replace($bloque_eliminar, "", $plantilla);
     }
 
 }

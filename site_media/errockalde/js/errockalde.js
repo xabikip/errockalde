@@ -10,8 +10,37 @@
 </script>
 <script>
 
+/*
+* Limpia propiedades style y class en tinymce
+* Cambia entidad html de acentos y eñes a alafanumerico
+*/
+function limpiar_cadena() {
+    textarea = document.getElementById('edukia_4').value;
+
+    tabla = {
+        '&aacute;': 'á', '&Aacute;': 'Á',
+        '&eacute;': 'é', '&Eacute;': 'É',
+        '&iacute;': 'í', '&Iacute;': 'Í',
+        '&oacute;': 'ó', '&Oacute;': 'Ó',
+        '&uacute;': 'ú', '&Uacute;': 'Ú',
+        '&ntilde;': 'ñ', '&Ntilde;': 'Ñ',
+        '&acute;': '´',
+        "<br\ \/>": "<br>", "\ class=\"(.){1,}\"": "", "\ style=\"(.){1,}\"": ""
+    };
+
+    resultado = textarea;
+
+    for(key in tabla) {
+        regex_html = new RegExp(key, 'g');
+        resultado = resultado.replace(regex_html, tabla[key]);
+    }
+
+    document.getElementById('edukia_4').value = resultado;
+}
+
 window.onload = function() {
     pagina = get_pagina_actual();
+    encode_password();
     switch(pagina) {
         case 'post': set_encode_post(); break;
         case 'talde': set_encode_talde(); break;
@@ -38,6 +67,7 @@ function set_encode_post() {
     europiocode = new EuropioCode();
 
     document.getElementsByTagName('form')[0].onsubmit = function(){
+        limpiar_cadena();
         parrafoa = europiocode.encode('parrafoa_3');
         europiocode.encode_preformat('edukia_4');
     };
@@ -67,6 +97,15 @@ function set_encode_diskoa() {
 
     document.getElementsByTagName('form')[0].onsubmit = function(){
         europiocode.encode('bandcamp_6');
+        europiocode.encode_preformat('abestiak_5');
+    };
+}
+
+function encode_password() {
+    europiocode = new EuropioCode();
+
+    document.getElementsByTagName('form')[0].onsubmit = function(){
+        europiocode.encode('pasahitza_7');
     };
 }
 

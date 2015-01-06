@@ -15,11 +15,11 @@ class TaldeView {
         $form->add_text('emaila', 'Emaila', @$_POST['emaila']);
         $form->add_text('telefonoa', 'Telefonoa', @$_POST['telefonoa']);
         $form->add_textarea('deskribapena', 'Deskribapena', @$_POST['deskribapena']);
-        $form->add_textarea('_youtube', ' ', @$_POST['_youtube'], "style='display: none;'");
+        $form->add_hidden('_youtube','', @$_POST['_youtube'], "style='display: none;'");
         $form->add_text('youtube', 'Youtube', @$_POST['youtube']);
         $form->add_file('argazkia', 'Argazkia', @$_POST['file']);
         $form->add_submit('Taldea gehitu');
-        $form->add_errorzone($errores);
+        $form->add_errorzone($errores, "Kontuz!");
 
         //Mostrar form para agregar talde
         $js_europio = file_get_contents(CUSTOM_STATIC_DIR ."/js/errockalde.js");
@@ -48,7 +48,7 @@ class TaldeView {
         $form->fields[] = $render;
 
         $form->add_submit('Gorde');
-        $form->add_errorzone($errores);
+        $form->add_errorzone($errores, "Kontuz!");
 
         //Mostrar form para editar talde
         $js_europio = file_get_contents(CUSTOM_STATIC_DIR ."/js/errockalde.js");
@@ -69,20 +69,26 @@ class TaldeView {
         render_final_back($render, "Diskoa");
     }
 
-    public function kontaktua() {
-
+    public function kontaktua($error, $msg='') {
         $plantilla = file_get_contents(CUSTOM_STATIC_DIR . "/html/front/kontaktua.html");
+        if($msg == ''){
+            $plantilla = $this->eliminar_bloque("msgerror", $plantilla);
+            $plantilla = $this->eliminar_bloque("msgok", $plantilla);
+        }else{
+            if($error){
+                $plantilla = $this->eliminar_bloque("msgok", $plantilla);
+            }else{
+                $plantilla = $this->eliminar_bloque("msgerror", $plantilla);
+            }
+        }
+
+        $plantilla = str_replace("{msg}", $msg, $plantilla);
         print Template('kontaktua', CUSTOM_PUBLIC_TEMPLATE)->show($plantilla);
     }
 
     public function hasiera($taldeak=array(), $ekitaldiak=array(), $posts=array()) {
-        //Modificar propiedades
-        foreach($ekitaldiak as $obj) {
-            $obj->ekitaldi_izena = $obj->izena;
-            $obj->ordua = substr($obj->ordua, 0, 5);
-        }
 
-        //Añadimos propiedad
+        //Añadimos propiedad a post
         foreach ($posts as $post) {
             $parrafoa = file_get_contents(WRITABLE_DIR . PARRAFO_DIR . "/{$post->post_id}" );
             $edukia = file_get_contents(WRITABLE_DIR . EDUKI_DIR . "/{$post->post_id}" );
@@ -93,16 +99,38 @@ class TaldeView {
         }
 
         $dict = new DictCollection();
-        $dict->set($ekitaldiak);
-        $ekitaldi_zerrenda = $dict->collection;
-
-        $dict = new DictCollection();
         $dict->set($posts);
         $post_zerrenda = $dict->collection;
 
-        //Render ekitaldi, post,slide y talde
+        //Render ekitaldi, post, slide eta talde
         $plantilla = file_get_contents(CUSTOM_STATIC_DIR . "/html/front/hasiera.html");
-        $render_ekitaldiak = Template($plantilla)->render_regex('EKITALDIAK', $ekitaldi_zerrenda);
+
+        if(is_array($ekitaldiak)){
+            //Modificar propiedades
+            foreach($ekitaldiak as $obj) {
+                $obj->ekitaldi_izena = $obj->izena;
+                $obj->ordua = substr($obj->ordua, 0, 5);
+            }
+
+            //Creamos coleccion
+            $dict = new DictCollection();
+            $dict->set($ekitaldiak);
+            $ekitaldi_zerrenda = $dict->collection;
+
+            $render_ekitaldiak = Template($plantilla)->render_regex('EKITALDIAK', $ekitaldi_zerrenda);
+            $render_ekitaldiak = Template($render_ekitaldiak)->delete('EZEKITALDIAK');
+
+            //Render kartela
+            foreach ($ekitaldiak as $ekitaldi) {
+                $imagen = WRITABLE_DIR . EKITALDI_IRUDI_DIR . "/{$ekitaldi->ekitaldia_id}";
+                if (!file_exists($imagen)){
+                    $render_ekitaldiak = $this->eliminar_bloque("KARTELA{$ekitaldi->ekitaldia_id}", $render_ekitaldiak);
+                }
+            }
+        }else{
+            $render_ekitaldiak = Template($plantilla)->delete('EKITALDIAK');
+        }
+
         $render_slide = Template($render_ekitaldiak)->render_regex('SLIDEPOST', $post_zerrenda);
         $render_post = Template($render_slide)->render_regex('POST', $post_zerrenda);
 
@@ -120,14 +148,6 @@ class TaldeView {
                 $render_post = $this->eliminar_bloque("ALDATUA{$post->post_id}", $render_post);
             }else{
                 $render_post = $this->eliminar_bloque("SORTUA{$post->post_id}", $render_post);
-            }
-        }
-
-        //Render kartela
-        foreach ($ekitaldiak as $ekitaldi) {
-            $imagen = WRITABLE_DIR . EKITALDI_IRUDI_DIR . "/{$ekitaldi->ekitaldia_id}";
-            if (!file_exists($imagen)){
-                $render_post = $this->eliminar_bloque("KARTELA{$ekitaldi->ekitaldia_id}", $render_post);
             }
         }
 
@@ -242,7 +262,7 @@ class TaldeView {
 
     private function eliminar_bloque($identificador, $plantilla) {
         $identificador = $identificador;
-        $bloque_eliminar = Template($plantilla)->get_substr($identificador);
+        $bloque_eliminar = Template($plantilla)->get_substr($identificador, FALSE);
         return $render_eliminado = str_replace($bloque_eliminar, "", $plantilla);
     }
 

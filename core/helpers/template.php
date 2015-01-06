@@ -2,12 +2,12 @@
 /**
 * Clase que permite realizar sustituciones estáticas y dinámicas (iterativas)
 *
-* @package      EuropioEngine
-* @subpackage   core.helpers
-* @license      http://www.gnu.org/licenses/gpl.txt  GNU GPL 3.0
-* @author       Eugenia Bahit <ebahit@member.fsf.org>
-* @link         http://www.europio.org
-* @contributor  Jimmy Daniel Barranco
+* @package        EuropioEngine
+* @subpackage     core.helpers
+* @license        http://www.gnu.org/licenses/gpl.txt  GNU GPL 3.0
+* @author         Eugenia Bahit <ebahit@member.fsf.org>
+* @link           http://www.europio.org
+* @contributors   Jimmy Daniel Barranco, Xabi Pico
 */
  
 class Template {
@@ -66,7 +66,12 @@ class Template {
         $no_keys = str_replace($needle, "", $str);
         return ($remove_keys) ? $no_keys : $str;
     }
-   
+
+    function delete($key) {
+        $code = $this->get_substr($key, False);
+        return str_replace($code, '', $this->str);
+    }
+
     function render_regex($key='REGEX', $stack=array(), $use_pcre=USE_PCRE) {
         $originalstr = $this->str;
         $func = ($use_pcre) ? "get_regex" : "get_substr";

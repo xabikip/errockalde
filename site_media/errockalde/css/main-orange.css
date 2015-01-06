@@ -2134,8 +2134,8 @@ span.color-red {
   opacity: 0;
   position: relative;
   height: auto !important;
-  max-height: 450px !important;
-  max-width: 45% !important;
+  max-height: 600px !important;
+  max-width: 32% !important;
 }
 .animate-in .slide-img {
   left: 55%;
