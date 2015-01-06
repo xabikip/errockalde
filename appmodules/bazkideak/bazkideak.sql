@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS bazkidetalde (
 CREATE TABLE pasahitzberria (
     pasahitzberria_id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
     token VARCHAR(200) NOT NULL,
-    passberria VARCHAR(25) NOT NULL,
+    passberria VARCHAR(40) NOT NULL,
     data TIMESTAMP NOT NULL,
     user INT(11) NOT NULL,
         INDEX (user),
