@@ -87,13 +87,8 @@ class TaldeView {
     }
 
     public function hasiera($taldeak=array(), $ekitaldiak=array(), $posts=array()) {
-        //Modificar propiedades
-        foreach($ekitaldiak as $obj) {
-            $obj->ekitaldi_izena = $obj->izena;
-            $obj->ordua = substr($obj->ordua, 0, 5);
-        }
 
-        //Añadimos propiedad
+        //Añadimos propiedad a post
         foreach ($posts as $post) {
             $parrafoa = file_get_contents(WRITABLE_DIR . PARRAFO_DIR . "/{$post->post_id}" );
             $edukia = file_get_contents(WRITABLE_DIR . EDUKI_DIR . "/{$post->post_id}" );
@@ -104,16 +99,38 @@ class TaldeView {
         }
 
         $dict = new DictCollection();
-        $dict->set($ekitaldiak);
-        $ekitaldi_zerrenda = $dict->collection;
-
-        $dict = new DictCollection();
         $dict->set($posts);
         $post_zerrenda = $dict->collection;
 
-        //Render ekitaldi, post,slide y talde
+        //Render ekitaldi, post, slide eta talde
         $plantilla = file_get_contents(CUSTOM_STATIC_DIR . "/html/front/hasiera.html");
-        $render_ekitaldiak = Template($plantilla)->render_regex('EKITALDIAK', $ekitaldi_zerrenda);
+
+        if(is_array($ekitaldiak)){
+            //Modificar propiedades
+            foreach($ekitaldiak as $obj) {
+                $obj->ekitaldi_izena = $obj->izena;
+                $obj->ordua = substr($obj->ordua, 0, 5);
+            }
+
+            //Creamos coleccion
+            $dict = new DictCollection();
+            $dict->set($ekitaldiak);
+            $ekitaldi_zerrenda = $dict->collection;
+
+            $render_ekitaldiak = Template($plantilla)->render_regex('EKITALDIAK', $ekitaldi_zerrenda);
+            $render_ekitaldiak = Template($render_ekitaldiak)->delete('EZEKITALDIAK');
+
+            //Render kartela
+            foreach ($ekitaldiak as $ekitaldi) {
+                $imagen = WRITABLE_DIR . EKITALDI_IRUDI_DIR . "/{$ekitaldi->ekitaldia_id}";
+                if (!file_exists($imagen)){
+                    $render_ekitaldiak = $this->eliminar_bloque("KARTELA{$ekitaldi->ekitaldia_id}", $render_ekitaldiak);
+                }
+            }
+        }else{
+            $render_ekitaldiak = Template($plantilla)->delete('EKITALDIAK');
+        }
+
         $render_slide = Template($render_ekitaldiak)->render_regex('SLIDEPOST', $post_zerrenda);
         $render_post = Template($render_slide)->render_regex('POST', $post_zerrenda);
 
@@ -131,14 +148,6 @@ class TaldeView {
                 $render_post = $this->eliminar_bloque("ALDATUA{$post->post_id}", $render_post);
             }else{
                 $render_post = $this->eliminar_bloque("SORTUA{$post->post_id}", $render_post);
-            }
-        }
-
-        //Render kartela
-        foreach ($ekitaldiak as $ekitaldi) {
-            $imagen = WRITABLE_DIR . EKITALDI_IRUDI_DIR . "/{$ekitaldi->ekitaldia_id}";
-            if (!file_exists($imagen)){
-                $render_post = $this->eliminar_bloque("KARTELA{$ekitaldi->ekitaldia_id}", $render_post);
             }
         }
 
