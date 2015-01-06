@@ -41,15 +41,15 @@ class EkitaldiaController extends Controller {
 
         $errores = $this->validaciones();
 
+        $id = get_data('id');
         if($errores) {
             (!$id) ? $this->agregar($errores) : $this->editar($id, $errores);
             exit();
         }
 
         $lekua = $this->lekuaGorde();
-        // print_r($lekua['0']);exit;
 
-        $this->model->ekitaldia_id = get_data('id');
+        $this->model->ekitaldia_id = $id;
 
         $this->model->lekua = Pattern::composite('Lekua', $lekua);
         $this->model->deskribapena = get_data('deskribapena');
@@ -80,7 +80,8 @@ class EkitaldiaController extends Controller {
     }
 
     public function ekitaldiak() {
-        $list = DataHandler('ekitaldia', DH_FORMAT_OBJECT)->filter("data>" . date('Y-m-d'), DH_FILTER_GT);
+        $atzo = date('Y-m-d', strtotime(' -1 day'));
+        $list = DataHandler('ekitaldia', DH_FORMAT_OBJECT)->filter("data>" . $atzo, DH_FILTER_GT);
         $this->view->ekitaldiak($list);
     }
 
@@ -108,7 +109,9 @@ class EkitaldiaController extends Controller {
     }
 
     public function get_ultimos_eventos() {
-        $ultimos = DataHandler('ekitaldia', DH_FORMAT_OBJECT)->get_latest(2);
+        $atzo = date('Y-m-d', strtotime(' -1 day'));
+        $list = DataHandler('ekitaldia', DH_FORMAT_OBJECT)->filter("data>" . $atzo, DH_FILTER_GT);
+        $ultimos = array_slice($list, count($list)-2, 2);
         $this->apidata = $ultimos;
     }
 
