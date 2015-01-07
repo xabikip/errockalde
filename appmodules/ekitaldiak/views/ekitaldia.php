@@ -96,6 +96,10 @@ class EkitaldiaView {
             $obj->hilabetea = $this->hilabete_izena($data_partes['1']);
             $obj->eguna = $data_partes['2'];
         }
+        function ordenar($a, $b){
+            return strtotime($a->data) - strtotime($b->data);
+        }
+        usort($ekitaldiak, 'ordenar');
 
         //Render ekitaldiak
         $plantilla = file_get_contents(CUSTOM_STATIC_DIR . '/html/front/ekitaldiak/ekitaldiak.html');
