@@ -117,11 +117,9 @@ class TaldeView {
             $dict->set($ekitaldiak);
             $ekitaldi_zerrenda = $dict->collection;
 
-            function ordenar($a, $b){
-                $data = "stdclass.data";
-                return strtotime($a->$data) - strtotime($b->$data);
-            }
-            usort($ekitaldi_zerrenda, 'ordenar');
+            $data = "stdclass.data";
+            foreach($ekitaldi_zerrenda as $row) $datak[] = $row->$data;
+            array_multisort($datak, SORT_ASC, $ekitaldi_zerrenda);
 
             $render_ekitaldiak = Template($plantilla)->render_regex('EKITALDIAK', $ekitaldi_zerrenda);
             $render_ekitaldiak = Template($render_ekitaldiak)->delete('EZEKITALDIAK');

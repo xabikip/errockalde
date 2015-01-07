@@ -96,10 +96,8 @@ class EkitaldiaView {
             $obj->hilabetea = $this->hilabete_izena($data_partes['1']);
             $obj->eguna = $data_partes['2'];
         }
-        function ordenar($a, $b){
-            return strtotime($a->data) - strtotime($b->data);
-        }
-        usort($ekitaldiak, 'ordenar');
+        foreach($ekitaldiak as $row) $datak[] = $row->data;
+        array_multisort($datak, SORT_ASC, $ekitaldiak);
 
         //Render ekitaldiak
         $plantilla = file_get_contents(CUSTOM_STATIC_DIR . '/html/front/ekitaldiak/ekitaldiak.html');
@@ -110,7 +108,6 @@ class EkitaldiaView {
     }
 
     public function ekitaldia($ekitaldia=array()) {
-        // print_r($ekitaldia);exit;
 
         //Modificopropiedades
         $ekitaldia->ordua = substr($ekitaldia->ordua, 0, 5);
