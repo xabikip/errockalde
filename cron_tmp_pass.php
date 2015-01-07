@@ -2,11 +2,14 @@
 <?php
 
 $constants = parse_ini_file('config.ini', False);
-foreach($constants as $constant=>$value) {
-    define($constant, $value);
-}
-$con = mysql_connect(DB_HOST, DB_USER, DB_PASS);
-mysql_select_db(DB_NAME);
-mysql_query("DELETE FROM pasahitzberria WHERE data < NOW() - INTERVAL 1440 MINUTE");
+define('DB_HOST', $constants['DB_HOST']);
+define('DB_USER', $constants['DB_USER']);
+define('DB_PASS', $constants['DB_PASS']);
+define('DB_NAME', $constants['DB_NAME']);
+
+
+$con = new PDO("mysql:host=".DB_HOST.";dbname=".DB_NAME.";charset=utf8", DB_USER, DB_PASS);
+$con->query("DELETE FROM pasahitzberria WHERE data < NOW() - INTERVAL 20 MINUTE");
+$con = null;
 
 ?>
