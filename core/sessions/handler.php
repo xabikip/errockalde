@@ -30,22 +30,19 @@ class SessionBaseHandler {
         $_SESSION['user_id'] = $data['user_id'];
         $_SESSION['username'] = $data['name'];
         $this->state = True;
-        if(isset($_SESSION['uri'])) {
-            $is_login = ($_SESSION['uri'] == "/users/user/login");
-            $is_logout = ($_SESSION['uri'] == "/users/user/logout");
-            if(!$is_login and !$is_logout) {
-                HTTPHelper::go($_SESSION['uri']);
-            } else {
-                HTTPHelper::go(DEFAULT_VIEW);
-            }
-        }
+        if(isset($_SESSION['uri'])) HTTPHelper::go($_SESSION['uri']);
         HTTPHelper::go(DEFAULT_VIEW);
     }
 
     public function destroy_session($login=False) {
         $this->reset_session_vars();
         $this->state = False;
+        $u = "/users/user/";
+        $npages = array("{$u}check", "{$u}login", "{$u}logout");
+        $ruri = $_SERVER['REQUEST_URI'];
         $_SESSION['uri'] = $_SERVER['REQUEST_URI'];
+        if(in_array($ruri, $npages)) $_SESSION['uri'] = DEFAULT_VIEW;
+
         if(!$login) {
             $url = WEB_DIR . "users/user/login";
         } else {
@@ -53,7 +50,7 @@ class SessionBaseHandler {
         }
         exit(HTTPHelper::go($url));
     }
-    
+
     public function reset_session_vars() {
         $_SESSION['login_date'] = 0;
         $_SESSION['level'] = 0;
