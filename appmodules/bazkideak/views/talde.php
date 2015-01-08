@@ -127,10 +127,11 @@ class TaldeView {
             $render_ekitaldiak = Template($render_ekitaldiak)->delete('EZEKITALDIAK');
 
             //Render kartela
-            foreach ($ekitaldiak as $ekitaldi) {
-                $imagen = WRITABLE_DIR . EKITALDI_IRUDI_DIR . "/{$ekitaldi->ekitaldia_id}";
+            foreach ($ekitaldi_zerrenda as $ekitaldi) {
+                $ekitaldia_id = "stdclass.ekitaldia_id";
+                $imagen = WRITABLE_DIR . EKITALDI_IRUDI_DIR . "/{$ekitaldi->$ekitaldia_id}";
                 if (!file_exists($imagen)){
-                    $render_ekitaldiak = $this->eliminar_bloque("KARTELA{$ekitaldi->ekitaldia_id}", $render_ekitaldiak);
+                    $render_ekitaldiak = $this->eliminar_bloque("KARTELA{$ekitaldi->$ekitaldia_id}", $render_ekitaldiak);
                 }
             }
         }else{
