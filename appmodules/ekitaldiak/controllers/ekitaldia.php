@@ -112,8 +112,8 @@ class EkitaldiaController extends Controller {
     public function get_ultimos_eventos() {
         $atzo = date('Y-m-d', strtotime(' -1 day'));
         $list = DataHandler('ekitaldia', DH_FORMAT_OBJECT)->filter("data>" . $atzo, DH_FILTER_GT);
-        $ultimos = array_slice($list, count($list)-2, 2);
-        $this->apidata = $ultimos;
+        // $ultimos = array_slice($list, count($list)-2, 2);
+        $this->apidata = $list;
     }
 
 

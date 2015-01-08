@@ -117,9 +117,11 @@ class TaldeView {
             $dict->set($ekitaldiak);
             $ekitaldi_zerrenda = $dict->collection;
 
+            //ordenamos por fecha ascendente y dejamos las 2 primeras
             $data = "stdclass.data";
             foreach($ekitaldi_zerrenda as $row) $datak[] = $row->$data;
             array_multisort($datak, SORT_ASC, $ekitaldi_zerrenda);
+            $ekitaldi_zerrenda = array_slice($ekitaldi_zerrenda, 0, 2);
 
             $render_ekitaldiak = Template($plantilla)->render_regex('EKITALDIAK', $ekitaldi_zerrenda);
             $render_ekitaldiak = Template($render_ekitaldiak)->delete('EZEKITALDIAK');
