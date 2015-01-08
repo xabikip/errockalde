@@ -9,7 +9,7 @@ define('DB_NAME', $constants['DB_NAME']);
 
 
 $con = new PDO("mysql:host=".DB_HOST.";dbname=".DB_NAME.";charset=utf8", DB_USER, DB_PASS);
-$con->query("DELETE FROM pasahitzberria WHERE data < NOW() - INTERVAL 20 MINUTE");
+$con->query("DELETE FROM pasahitzberria WHERE data < NOW() - INTERVAL 1440 MINUTE");
 $con = null;
 
 ?>
