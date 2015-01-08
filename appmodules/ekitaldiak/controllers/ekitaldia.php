@@ -67,6 +67,7 @@ class EkitaldiaController extends Controller {
         $this->model->save();
 
         $ruta = WRITABLE_DIR . EKITALDI_IRUDI_DIR . "/{$this->model->ekitaldia_id}";
+        $campoImagen = 'kartela';
         guardar_imagen($ruta, $campoImagen);
 
         HTTPHelper::go("/ekitaldiak/ekitaldia/listar");
