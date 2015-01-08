@@ -40,7 +40,6 @@ class EkitaldiaView {
         Dict::set_dict_for_webform($ekitaldimotak, 'deitura', $obj->ekitaldimota->ekitaldimota_id);
 
         $form = new WebFormPRO('/ekitaldiak/ekitaldia/guardar');
-        $form->add_hidden('id', $obj->ekitaldia_id);
         $form->add_text('ekitaldi_izena', 'Ekitaldiaren Izena',$obj->izena);
         $form->add_select('ekitaldimota','Ekitaldi Mota', $ekitaldimotak);
         $form->add_textarea('deskribapena', 'deskribapena', $obj->deskribapena);
@@ -66,10 +65,13 @@ class EkitaldiaView {
         $html_irudia = file_get_contents( CUSTOM_STATIC_DIR . '/html/back/ekitaldiak/edit_ekitaldi_irudia.html');
         $render = Template($html_irudia)->render($obj);
         $form->fields[] = $render;
-
+        $form->add_hidden('id', $obj->ekitaldia_id);
         $form->add_submit('Ekitaldia aldatu');
         $form->add_errorzone($errores, "Kontuz!");
-        render_final_back($form->get_form(), "Ekitaldia aldatu");
+
+        $js_datepicker = file_get_contents(CUSTOM_STATIC_DIR ."/js/datepickerCustom.js");
+        $html = $js_datepicker . $form->get_form();
+        render_final_back($html, "Ekitaldia aldatu");
     }
 
     public function listar($coleccion=array()) {
