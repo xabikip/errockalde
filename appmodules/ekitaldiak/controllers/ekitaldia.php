@@ -128,8 +128,12 @@ class EkitaldiaController extends Controller {
         validar_requeridos($errores, $requeridos);
 
         $campoImagen = 'kartela';
-        $tipo_permitido = array("image/png", "image/jpeg", "image/gif", "image/bmp", "image/jpg");
-        validar_tipoImagen($errores, $tipo_permitido, $campoImagen);
+        $mime_permitidos = array(
+            "image/png; charset=binary", "image/jpeg; charset=binary",
+            "image/gif; charset=binary", "image/bmp; charset=binary",
+            "image/jpg; charset=binary", "image/tiff; charset=binary",
+        );
+        validar_tipoImagen($errores, $mime_permitidos, $campoImagen);
 
         $campoHora = "ordua";
         validar_hora($errores, $campoHora);
