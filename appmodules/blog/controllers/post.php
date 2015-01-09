@@ -81,6 +81,18 @@ class postController extends Controller {
         $campoImagen = 'irudia';
         guardar_imagen($this->irudia, $campoImagen);
 
+        //indicate which file to resize (can be any type jpg/png/gif/etc...)
+        // $file = $this->irudia ;
+
+        //indicate the path and name for the new resized file
+        // $resizedFile = WRITABLE_DIR . POST_IRUDI_DIR . "/thumb_home/{$this->model->post_id}";
+
+        //call the function (when passing path to pic)
+        // smart_resize_image($file , null, 375 , 255 , true , $resizedFile , false , false ,100 );
+        //call the function (when passing pic as string)
+        // smart_resize_image(null , file_get_contents($file), SET_YOUR_WIDTH , SET_YOUR_HIGHT , false , $resizedFile , false , false ,100 );
+
+
         HTTPHelper::go("/blog/post/listar");
     }
 
@@ -158,9 +170,11 @@ class postController extends Controller {
         validar_requeridos($errores, $requeridos);
 
         $campoImagen = 'irudia';
-        $tipo_permitido = array("image/png", "image/jpeg", "image/gif",
-            "image/bmp", "image/jpg", "image/pjpeg", "image/jpe");
-        validar_tipoImagen($errores, $tipo_permitido, $campoImagen);
+        $mime_permitidos = array(
+            "image/png", "image/jpeg", "image/gif", "image/bmp",
+            "image/jpg", "image/tiff",
+        );
+        validar_tipoImagen($errores, $mime_permitidos, $campoImagen);
 
         return $errores;
     }

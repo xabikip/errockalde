@@ -15,7 +15,7 @@ function validar_tipoImagen(&$errores=array(), $mime_permitidos=array(), $campoI
         if($_FILES[$campoImagen]['error'] == 1){
            $errores[$campoImagen] = ERROR_MSG_IMG_MAXSIZE;
         }else if($_FILES[$campoImagen]['error'] == 0){
-            $finfo = new finfo(FILEINFO_MIME);
+            $finfo = new finfo(FILEINFO_MIME_TYPE);
             $mime = $finfo->file($_FILES[$campoImagen]['tmp_name']);
             $permitido = in_array($mime, $mime_permitidos);
             if(!$permitido) {

@@ -129,9 +129,8 @@ class EkitaldiaController extends Controller {
 
         $campoImagen = 'kartela';
         $mime_permitidos = array(
-            "image/png; charset=binary", "image/jpeg; charset=binary",
-            "image/gif; charset=binary", "image/bmp; charset=binary",
-            "image/jpg; charset=binary", "image/tiff; charset=binary",
+            "image/png", "image/jpeg", "image/gif", "image/bmp",
+            "image/jpg", "image/tiff",
         );
         validar_tipoImagen($errores, $mime_permitidos, $campoImagen);
 
