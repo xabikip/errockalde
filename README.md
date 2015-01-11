@@ -1,4 +1,4 @@
-#Errockalde
+#ASTINDDU
 
 Plataforma online para la organización interna de un colectivo de grupos de música
 creada con [Europio Engine](http://www.europio.org/).
@@ -35,7 +35,7 @@ creada con [Europio Engine](http://www.europio.org/).
 ##Instalación
 
         ===============================================================================
-                                 INSTALACIÓN DE ERROCKALDE
+                                 INSTALACIÓN DE ASTINDDU
         ===============================================================================
         1. AVISO: nótese que allow_url_fopen debe estar en on en el php.ini
 

@@ -22,7 +22,7 @@ class TaldeView {
         $form->add_errorzone($errores, "Kontuz!");
 
         //Mostrar form para agregar talde
-        $js_europio = file_get_contents(CUSTOM_STATIC_DIR ."/js/errockalde.js");
+        $js_europio = file_get_contents(CUSTOM_STATIC_DIR ."/js/astinddu.js");
         $html = $form->get_form() . $js_europio;
         render_final_back($html, "Talde berria");
     }
@@ -51,7 +51,7 @@ class TaldeView {
         $form->add_errorzone($errores, "Kontuz!");
 
         //Mostrar form para editar talde
-        $js_europio = file_get_contents(CUSTOM_STATIC_DIR ."/js/errockalde.js");
+        $js_europio = file_get_contents(CUSTOM_STATIC_DIR ."/js/astinddu.js");
         $html = $form->get_form() . $js_europio;
         render_final_back($html, "Taldea editatu");
     }

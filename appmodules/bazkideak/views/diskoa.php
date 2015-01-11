@@ -17,7 +17,7 @@ class DiskoaView {
         $form->add_errorzone($errores, "Kontuz!");
 
         //Mostrar form para agregar talde
-        $js_europio = file_get_contents(CUSTOM_STATIC_DIR ."/js/errockalde.js");
+        $js_europio = file_get_contents(CUSTOM_STATIC_DIR ."/js/astinddu.js");
         $html = $form->get_form() . $js_europio;
         render_final_back($html, "Diskoa gehitu");
 
@@ -44,7 +44,7 @@ class DiskoaView {
         $form->add_errorzone($errores, "Kontuz!");
 
         //Mostrar form para agregar talde
-        $js_europio = file_get_contents(CUSTOM_STATIC_DIR ."/js/errockalde.js");
+        $js_europio = file_get_contents(CUSTOM_STATIC_DIR ."/js/astinddu.js");
         $html = $form->get_form() . $js_europio;
         render_final_back($html, "Diskoa editatu");
     }

@@ -15,7 +15,7 @@ class postView {
         $form->add_submit('Artikulua gehitu');
         $form->add_errorzone($errores, "Kontuz!");
 
-        $js_europio = file_get_contents(CUSTOM_STATIC_DIR ."/js/errockalde.js");
+        $js_europio = file_get_contents(CUSTOM_STATIC_DIR ."/js/astinddu.js");
         $html = $js_europio . $form->get_form();
         render_final_back($html, "Artikulu berria");
     }
@@ -44,7 +44,7 @@ class postView {
         $form->add_submit('Aritkulua editatu');
         $form->add_errorzone($errores, "Kontuz!");
 
-        $js_europio = file_get_contents(CUSTOM_STATIC_DIR ."/js/errockalde.js");
+        $js_europio = file_get_contents(CUSTOM_STATIC_DIR ."/js/astinddu.js");
         $html = $js_europio . $form->get_form();
         render_final_back($html, "Artikulua aldatu");
     }
