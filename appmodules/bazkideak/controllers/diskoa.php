@@ -89,7 +89,7 @@ class DiskoaController extends Controller {
         $requeridos = array("izena");
         validar_requeridos($errores, $requeridos);
 
-        $campoImagen = 'argazkia';
+        $campoImagen = 'azala';
         $tipo_permitido = array("image/png", "image/jpeg", "image/gif",
             "image/bmp", "image/jpg");
         validar_tipoImagen($errores, $tipo_permitido, $campoImagen);
