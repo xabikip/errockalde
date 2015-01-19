@@ -23,6 +23,10 @@ h1.atalka{
 }
 
 /*----------------------------------TALDEAK-----------------------------------*/
+.talde-bloke{
+  height: 260px;
+}
+
 .talde-irudi img{
   max-height: 170px;
 }
