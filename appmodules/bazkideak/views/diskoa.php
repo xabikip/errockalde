@@ -25,6 +25,12 @@ class DiskoaView {
 
     public function editar($obj=array(), $taldeak, $errores=array()) {
         Dict::set_dict_for_webform($taldeak, 'izena', $obj->talde);
+        $abestiak = WRITABLE_DIR . ABESTIAK_DIR . "/{$obj->diskoa_id}";
+        if (file_exists($abestiak)){
+            $abestiak = file_get_contents($abestiak);
+            $abestiak = EuropioCode::decode_preformat($abestiak);
+            $obj->abestiak = $abestiak;
+        }
 
         $form = new WebFormPro('/bazkideak/diskoa/guardar');
         $form->add_select('taldea', 'Taldea', $taldeak);

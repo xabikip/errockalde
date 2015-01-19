@@ -132,8 +132,7 @@ grupo= \"$grupo\"";
 
     private function guardar_abestiak(){
         $abestiak_encode = isset($_POST['abestiak']) ? EuropioCode::encode($_POST['abestiak']) : '';
-        $abestiak_decode = EuropioCode::decode($abestiak_encode);
-        file_put_contents($this->abestiak, $abestiak_decode);
+        file_put_contents($this->abestiak, $abestiak_encode);
     }
 
     private function eliminar_archivos(){

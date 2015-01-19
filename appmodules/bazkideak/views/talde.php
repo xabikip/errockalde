@@ -32,7 +32,6 @@ class TaldeView {
 
         //Armar un formulario
         $form = new WebFormPRO('/bazkideak/talde/guardar');
-        $form->add_hidden('id', $obj->talde_id);
         $form->add_text('izena', 'izena', $obj->izena);
         $form->add_text('customurl', 'customurl', $obj->customurl);
         $form->add_checkbox('bazkideak', 'Taldekideak', $bazkideak);
@@ -47,6 +46,7 @@ class TaldeView {
         $render = Template($html_irudia)->render($obj);
         $form->fields[] = $render;
 
+        $form->add_hidden('id', $obj->talde_id);
         $form->add_submit('Gorde');
         $form->add_errorzone($errores, "Kontuz!");
 
@@ -217,6 +217,12 @@ class TaldeView {
                     $obj->disko_izena = $obj->izena;
                     $disko_ezabatu[] = $diskoa_id;
                 } else{
+                    $abestiak = WRITABLE_DIR . ABESTIAK_DIR . "/{$diskoa_id}";
+                    if (file_exists($abestiak)){
+                        $abestiak = file_get_contents($abestiak);
+                        $abestiak = EuropioCode::decode_preformat($abestiak);
+                        $obj->abestiak = $abestiak;
+                    }
                     $obj->disko_izena = $obj->izena;
                     $bandcamp_ezabatu[] = $diskoa_id;
                 }
