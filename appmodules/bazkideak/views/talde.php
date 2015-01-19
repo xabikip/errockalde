@@ -163,6 +163,11 @@ class TaldeView {
 
 
     public function taldeak($taldeak=array()) {
+        foreach($taldeak as $talde) $talde->izena = ucwords($talde->izena);
+
+        foreach($taldeak as $talde) $izenak[] = $talde->izena;
+        array_multisort($izenak, SORT_ASC, $taldeak);
+
         //Render taldeak
         $plantilla = file_get_contents(CUSTOM_STATIC_DIR . '/html/front/bazkideak/taldeak.html');
         $render_taldeak = Template($plantilla)->render_regex('TALDEAK', $taldeak);
