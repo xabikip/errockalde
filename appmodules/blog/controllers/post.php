@@ -81,10 +81,10 @@ class postController extends Controller {
         $campoImagen = 'irudia';
         guardar_imagen($this->irudia, $campoImagen);
 
-        $img = new Imagick($this->irudia);
-        $img->resizeImage("380", "252", Imagick::FILTER_LANCZOS, 0);
-        $img->writeImage(WRITABLE_DIR . POST_IRUDI_DIR . "/thumb_home");
-        $img->destroy();
+        // $img = new Imagick($this->irudia);
+        // $img->resizeImage("380", "252", Imagick::FILTER_LANCZOS, 0);
+        // $img->writeImage(WRITABLE_DIR . POST_IRUDI_DIR . "/thumb_home");
+        // $img->destroy();
 
         HTTPHelper::go("/blog/post/listar");
     }
@@ -120,7 +120,9 @@ class postController extends Controller {
         $this->model->post_id = $post[0]['post_id'];
         $this->model->get();
 
-        $this->view->post($this->model, $kategoriak);
+        $ultimos = DataHandler('post', DH_FORMAT_OBJECT)->get_latest(4);
+
+        $this->view->post($this->model, $kategoriak, $ultimos);
     }
 
     public function posts() {

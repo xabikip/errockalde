@@ -61,7 +61,7 @@ class postView {
         render_final_back($str->get_table(), "Artikulu zerrenda");
     }
 
-    public function post($post=array(), $kategoriak) {
+    public function post($post=array(), $kategoriak, $ultimos=array()) {//print_r($ultimos);exit;
 
         $post->kategoria = $post->kategoria->deitura;
         $post->user = $post->user->name;
@@ -81,6 +81,12 @@ class postView {
 
         //Render kategoriak
         $render_post = Template($render_post)->render_regex('KATEGORIAK', $kategoriak);
+        foreach($ultimos as $post) $post->slugultimo
+        // $render_post = Template($render_post)->delete('ULTIMOS', $kategoriak);
+        // print_r($kategoriak);print_r($ultimos);exit;
+
+        //Render ultimos
+        // $render_post = Template($render_post)->render_regex('ULTIMOS', $ultimos);
 
         //Render data
         if($post->aldatua == "0000-00-00"){
