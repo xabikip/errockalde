@@ -75,18 +75,22 @@ class postView {
         $post->parrafoa = $parrafoa;
         $post->edukia = $edukia;
 
+        foreach($ultimos as &$posta){
+            $posta->slugultimos = $posta->slug;
+            $posta->titularraultimos = $posta->titularra;
+            unset($posta->slug);
+            unset($posta->titularra);
+        }
+
         //Render post
         $plantilla = file_get_contents( CUSTOM_STATIC_DIR . '/html/front/blog/post.html');
         $render_post = Template($plantilla)->render($post);
 
         //Render kategoriak
         $render_post = Template($render_post)->render_regex('KATEGORIAK', $kategoriak);
-        foreach($ultimos as $post) $post->slugultimo
-        // $render_post = Template($render_post)->delete('ULTIMOS', $kategoriak);
-        // print_r($kategoriak);print_r($ultimos);exit;
 
         //Render ultimos
-        // $render_post = Template($render_post)->render_regex('ULTIMOS', $ultimos);
+        $render_post = Template($render_post)->render_regex('ULTIMOS', $ultimos);
 
         //Render data
         if($post->aldatua == "0000-00-00"){
