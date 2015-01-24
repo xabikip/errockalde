@@ -87,10 +87,15 @@ class postController extends Controller {
         $campoImagen = 'irudia';
         guardar_imagen($this->irudia, $campoImagen);
 
-        // $img = new Imagick($this->irudia);
-        // $img->resizeImage("380", "252", Imagick::FILTER_LANCZOS, 0);
-        // $img->writeImage(WRITABLE_DIR . POST_IRUDI_DIR . "/thumb_home");
-        // $img->destroy();
+        //indicate which file to resize (can be any type jpg/png/gif/etc...)
+        $file = $this->irudia;
+
+        $id= "/{$this->model->post_id}";
+        //indicate the path and name for the new resized file
+        $resizedFile = WRITABLE_DIR . POST_THUMB_DIR . $id;
+
+        //call the function (when passing path to pic)
+        smart_resize_image($file , null, 380 , 0 , true , $resizedFile , false , false ,100 );
 
         HTTPHelper::go("/blog/post/listar");
     }
