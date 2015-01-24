@@ -7,6 +7,8 @@ class post extends StandardObject {
         $this->titularra = '';
         $this->sortua    = '';
         $this->aldatua   = '';
+        $this->urtea   = '';
+        $this->hilabetea   = '';
         $this->slug      = '';
         $this->kategoria = $kategoria;
         $this->user      = $user;

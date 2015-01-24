@@ -22,6 +22,18 @@ h1.atalka{
   float:left;
 }
 
+ul.post li a{
+  font-size: 1.3em;
+}
+
+ul.post li li{
+  margin-left: 14px;
+}
+
+ul.post li li a{
+  font-size: 1em;
+}
+
 /*----------------------------------TALDEAK-----------------------------------*/
 .talde-bloke{
   height: 260px;

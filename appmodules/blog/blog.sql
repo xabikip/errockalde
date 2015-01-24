@@ -9,6 +9,8 @@ CREATE TABLE post (
     titularra VARCHAR(250),
     sortua DATE NOT NULL,
     aldatua DATE NOT NULL,
+    urtea VARCHAR(4),
+    hilabetea VARCHAR(2),
     slug VARCHAR(300),
     kategoria INT(11),
     FOREIGN KEY (kategoria)

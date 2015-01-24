@@ -50,9 +50,15 @@ class postController extends Controller {
 
         if (!$id){
             $this->model->sortua = date('Y-m-d');
+            $partes = explode("-", $this->model->sortua);
+            $this->model->urtea = $partes[0];
+            $this->model->hilabetea = $partes[1];
         }else {
             $this->model->aldatua = date('Y-m-d');
             $this->model->sortua = get_data("sortua");
+            $partes = explode("-", $this->model->aldatua);
+            $this->model->urtea = $partes[0];
+            $this->model->hilabetea = $partes[1];
         }
 
         $kategoria = Pattern::factory('kategoria', get_data('kategoria') );
@@ -139,6 +145,19 @@ class postController extends Controller {
         $kategoriak = $collection->collection;
 
         $posts = DataHandler('post', DH_FORMAT_OBJECT)->filter("kategoria=$id");
+        $this->view->posts($posts, $kategoriak);
+    }
+
+    public function posts_data($data='') {
+        $collection = CollectorObject::get('kategoria');
+        $kategoriak = $collection->collection;
+        $partes = explode("-",$data);
+        $hilabetea = $partes[1];
+        $urtea = $partes[0];
+        $todos_posts = DataHandler('post', DH_FORMAT_OBJECT)->filter("hilabetea=$hilabetea");
+        foreach ($todos_posts as $obj) {
+            if($obj->urtea == $urtea) $posts[] = $obj;
+        }
         $this->view->posts($posts, $kategoriak);
     }
 

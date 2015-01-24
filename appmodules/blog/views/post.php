@@ -54,6 +54,8 @@ class postView {
             $obj->kategoria = $obj->kategoria->deitura;
             $obj->user = $obj->user->name;
             unset($obj->slug);
+            unset($obj->urtea);
+            unset($obj->hilabetea);
         }
 
         $str = new CustomCollectorViewer($coleccion, 'blog', 'post',
@@ -61,7 +63,33 @@ class postView {
         render_final_back($str->get_table(), "Artikulu zerrenda");
     }
 
-    public function post($post=array(), $kategoriak, $ultimos=array()) {//print_r($ultimos);exit;
+    public function post($post=array(), $kategoriak, $ultimos=array(), $todos=array()) {
+        // $ejemplo=array();
+        // $ejemplo = (array("2015" =>
+        //                         array("12"),
+        //                   "2014" =>
+        //                         array("01","02","03")
+        //                   )
+        //             );
+        // print_r($ejemplo);
+        // foreach($todos as $bat){
+        //     $datak[] = $bat->sortua;
+        // }print_r($datak);
+
+        // foreach($todos as $one){
+        //     $partes = explode("-", $one->sortua);
+        //     $años[] = $partes[0];
+        //     $meses[] = $partes[1];
+        // }print_r($años);print_r($meses);
+        // $años_unicos = array();
+        // foreach($años as $año){
+        //     if(!in_array($año, $años_unicos)) $años_unicos[] = $año;
+        // }print_r($años_unicos);
+        // $meses_unicos = array();
+        // foreach($meses as $mes){
+        //     if(!in_array($mes, $meses_unicos)) $meses_unicos[] = $mes;
+        // }print_r($meses_unicos);
+
 
         $post->kategoria = $post->kategoria->deitura;
         $post->user = $post->user->name;
@@ -124,8 +152,7 @@ class postView {
                 $post['parrafoa'] = substr($edukia, 0, 120) . "...";
                 $post['edukia'] = $edukia;
                 $post['user'] = $post->user->name;
-            };
-
+            }
         }
 
         //Render post
