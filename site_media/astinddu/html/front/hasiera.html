@@ -70,6 +70,12 @@
             <div class="post-comments-count">
              <i class="fa fa-user"></i>{stdclass.name}
             </div>
+            <div class="post-comments-count">
+              <i class="fa fa-comment-o"></i>
+                <a href="/post/{stdclass.slug}#disqus_thread" data-disqus-identifier="{stdclass.post_id}" title="iruzkinak">
+                  0
+                </a>
+            </div>
           </div>
           <!--IRUDIA{stdclass.post_id}-->
           <a href="/post/{stdclass.slug}">
@@ -97,3 +103,15 @@
     </div>
   </div>
 </div>
+<script type="text/javascript">
+/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+var disqus_shortname = 'astinddu'; // required: replace example with your forum shortname
+
+/* * * DON'T EDIT BELOW THIS LINE * * */
+(function () {
+    var s = document.createElement('script'); s.async = true;
+    s.type = 'text/javascript';
+    s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+}());
+</script>
