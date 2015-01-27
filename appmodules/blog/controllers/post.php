@@ -56,7 +56,7 @@ class postController extends Controller {
         }else {
             $this->model->aldatua = date('Y-m-d');
             $this->model->sortua = get_data("sortua");
-            $partes = explode("-", $this->model->aldatua);
+            $partes = explode("-", $this->model->sortua);
             $this->model->urtea = $partes[0];
             $this->model->hilabetea = $partes[1];
         }
@@ -140,7 +140,7 @@ class postController extends Controller {
         $collection = CollectorObject::get('kategoria');
         $kategoriak = $collection->collection;
 
-        $collection = CollectorObject::get('Post');
+        $collection = CollectorObject::get('post');
         $list = $collection->collection;
         $this->view->posts($list, $kategoriak);
     }
@@ -156,13 +156,9 @@ class postController extends Controller {
     public function posts_data($data='') {
         $collection = CollectorObject::get('kategoria');
         $kategoriak = $collection->collection;
-        $partes = explode("-",$data);
-        $hilabetea = $partes[1];
-        $urtea = $partes[0];
-        $todos_posts = DataHandler('post', DH_FORMAT_OBJECT)->filter("hilabetea=$hilabetea");
-        foreach ($todos_posts as $obj) {
-            if($obj->urtea == $urtea) $posts[] = $obj;
-        }
+
+        $posts = postHelper::data_tartean("$data-01", "$data-31");
+
         $this->view->posts($posts, $kategoriak);
     }
 
