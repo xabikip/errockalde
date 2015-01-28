@@ -83,7 +83,15 @@ class EkitaldiaController extends Controller {
     public function ekitaldiak() {
         $atzo = date('Y-m-d', strtotime(' -1 day'));
         $list = DataHandler('ekitaldia', DH_FORMAT_OBJECT)->filter("data>" . $atzo, DH_FILTER_GT);
-        $this->view->ekitaldiak($list);
+        $sort= SORT_ASC;
+        $this->view->ekitaldiak($list, $sort);
+    }
+
+    public function ekitaldiak_artxibo() {
+        $atzo = date('Y-m-d', strtotime(' -1 day'));
+        $list = DataHandler('ekitaldia', DH_FORMAT_OBJECT)->filter("data<" . $atzo, DH_FILTER_LT);
+        $sort= SORT_DESC;
+        $this->view->ekitaldiak($list, $sort);
     }
 
     public function ekitaldia($id=0) {
