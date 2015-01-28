@@ -1448,7 +1448,7 @@ span.color-red {
   transition: all .25s ease;
 }
 .portfolio-item:hover {
-  border: 8px solid #e67e22;
+  border: 2px solid #e67e22;
 }
 .portfolio-item:hover .portfolio-image img {
   position: relative;
