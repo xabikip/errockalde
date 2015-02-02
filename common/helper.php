@@ -52,6 +52,10 @@ function render_final_back($str, $titulo='') {
             "CONTENIDO"=>$str,
             "user"=>$_SESSION['username']
         );
+        $level = isset($_SESSION['level']) ? $_SESSION['level'] : 0;
+        if($level > 1){
+          $template = Template($template)->delete('ADMIN');
+        }
         $render_final = Template($template)->render($dict);
         print $render_final;
 }
