@@ -99,7 +99,7 @@ class EkitaldiaView {
             $obj->eguna = $data_partes['2'];
         }
         foreach($ekitaldiak as $row) $datak[] = $row->data;
-        array_multisort($datak, $sort, $ekitaldiak);
+        if($ekitaldiak) array_multisort($datak, $sort, $ekitaldiak);
 
         //Render ekitaldiak
         $plantilla = file_get_contents(CUSTOM_STATIC_DIR . '/html/front/ekitaldiak/ekitaldiak.html');
