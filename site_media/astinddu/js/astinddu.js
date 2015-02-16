@@ -1,7 +1,7 @@
 <script src="//tinymce.cachefly.net/4.1/tinymce.min.js"></script>
 <script>
         tinymce.init({
-          // plugins: "code",
+          plugins: "code",
           selector:'textarea.editme',
           language_url : '/site_media/astinddu/js/eu.js',
           toolbar: "undo redo | styleselect | bold italic ",
@@ -24,8 +24,11 @@ function limpiar_cadena() {
         '&oacute;': 'ó', '&Oacute;': 'Ó',
         '&uacute;': 'ú', '&Uacute;': 'Ú',
         '&ntilde;': 'ñ', '&Ntilde;': 'Ñ',
-        '&acute;': '´',
-        "<br\ \/>": "<br>", "\ class=\"(.){1,}\"": "", "\ style=\"(.){1,}\"": ""
+        '&acute;': '´', '&nbsp;': ' ',
+        "<br\ \/>": "<br>",
+        "\ class=\"(.){1,}\"": "",
+        "\ style=\"(.){1,}\"": "",
+        "\ dir=\"(.){1,}\"": ""
     };
 
     resultado = textarea;
