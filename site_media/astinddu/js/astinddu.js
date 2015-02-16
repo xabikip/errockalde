@@ -28,9 +28,7 @@ function limpiar_cadena() {
         '&ldquo;': '"', '&rdquo;': '"',
         '&hellip;': '...', '&rsquo;': "'",
         "<br\ \/>": "<br>",
-        "\ class=\"(.){1,}\"": "",
-        "\ style=\"(.){1,}\"": "",
-        "\ dir=\"(.){1,}\"": ""
+        '(class|style|dir)="[^>]*"': ""
     };
 
     resultado = textarea;
