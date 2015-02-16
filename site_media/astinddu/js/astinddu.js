@@ -4,7 +4,7 @@
           plugins: "code",
           selector:'textarea.editme',
           language_url : '/site_media/astinddu/js/eu.js',
-          toolbar: "undo redo | styleselect | bold italic ",
+          toolbar: "undo redo | styleselect | bold italic | code",
           menubar: "insert edit"
         });
 </script>
