@@ -28,7 +28,7 @@ function limpiar_cadena() {
         '&ldquo;': '"', '&rdquo;': '"',
         '&hellip;': '...', '&rsquo;': "'",
         "<br\ \/>": "<br>",
-        '(class|style|dir)="[^>]*"': ""
+        '( class| style| dir)="[^>]*"': ""
     };
 
     resultado = textarea;
