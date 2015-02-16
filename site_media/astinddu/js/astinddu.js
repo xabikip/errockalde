@@ -25,6 +25,8 @@ function limpiar_cadena() {
         '&uacute;': 'ú', '&Uacute;': 'Ú',
         '&ntilde;': 'ñ', '&Ntilde;': 'Ñ',
         '&acute;': '´', '&nbsp;': ' ',
+        '&ldquo;': '"', '&rdquo;': '"',
+        '&hellip;': '...',
         "<br\ \/>": "<br>",
         "\ class=\"(.){1,}\"": "",
         "\ style=\"(.){1,}\"": "",
